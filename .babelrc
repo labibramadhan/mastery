@@ -1,0 +1,12 @@
+{
+  "presets": [
+    "stage-1"
+  ],
+  "plugins": [
+    "add-module-exports",
+    "transform-runtime",
+    "transform-decorators-legacy",
+    "transform-es2015-modules-commonjs"
+  ],
+  "sourceMaps": "inline"
+}

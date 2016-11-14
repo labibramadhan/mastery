@@ -1,0 +1,78 @@
+{
+  "name": "hapi-api-starter",
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "license": "Apache-2.0",
+  "author": "Muhammad Labib Ramadhan (mlabib.ramadhan@gmail.com)",
+  "scripts": {
+    "lint": "eslint src test --fix",
+    "clean": "del build",
+    "babel:build": "babel src --out-dir build",
+    "babel:watch": "babel -w src --out-dir build",
+    "build": "npm-run-all clean babel:build",
+    "watch": "npm-run-all clean babel:watch",
+    "nodemon:build": "nodemon --watch build .",
+    "nodemon:src": "nodemon --watch src .",
+    "dev:prod": "npm-run-all --parallel watch nodemon:build",
+    "dev": "babel-node src/index.js",
+    "test": "ava"
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "devDependencies": {
+    "ava": "^0.16.0",
+    "babel": "^6.5.2",
+    "babel-cli": "^6.18.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
+    "babel-plugin-transform-regenerator": "^6.16.1",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-1": "^6.16.0",
+    "babel-register": "^6.18.0",
+    "chai": "^3.5.0",
+    "eslint": "^3.9.1",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.6.0",
+    "http-status-codes": "^1.0.6",
+    "mocha": "^3.1.2",
+    "nodemon": "^1.11.0",
+    "npm-run-all": "^3.1.1",
+    "portfinder": "^1.0.10",
+    "pre-commit": "^1.1.3"
+  },
+  "dependencies": {
+    "bcrypt": "^0.8.7",
+    "blipp": "^2.3.0",
+    "bluebird": "^3.4.6",
+    "boom": "^4.2.0",
+    "cookie": "^0.3.1",
+    "del-cli": "^0.2.0",
+    "glob": "^7.1.1",
+    "hapi": "^15.2.0",
+    "hapi-auth-jwt2": "^7.2.0",
+    "hapi-sequelize": "^3.0.4",
+    "hoek": "^4.1.0",
+    "joi": "^9.2.0",
+    "jsonwebtoken": "^7.1.9",
+    "lodash": "^4.16.6",
+    "node-polyglot": "^2.1.0",
+    "sequelize": "^3.25.0",
+    "sqlite3": "^3.1.8",
+    "urijs": "^1.18.2"
+  },
+  "ava": {
+    "files": [
+      "test/spec/**/*.spec.js"
+    ],
+    "concurrency": 10,
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
+  }
+}
