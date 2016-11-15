@@ -5,19 +5,19 @@ import * as HapiSequelize from 'hapi-sequelize';
 import * as HapiAuthJWT2 from 'hapi-auth-jwt2';
 import * as HapiBlipp from 'blipp';
 
-import routesSetup from './setup/routes';
-import { secret } from './setup/config';
+import { secret, db } from './setup/config';
+import { validateAuth } from './services/authentications';
+import { bootServer } from './services/commonServices';
 
 const run = async () => {
+  // initialize a HapiJS server
   const server = new Hapi.Server();
   server.connection({ port: 4444, host: 'localhost' });
 
-  const sequelize = new Sequelize('db', '', '', {
-    host: 'localhost',
-    dialect: 'sqlite',
-    storage: path.resolve(path.join(__dirname, '..', 'db.sqlite')),
-  });
+  // initialize a Sequelize instance
+  const sequelize = new Sequelize('db', '', '', db);
 
+  // register the hapi-sequelize plugin, let it scan /component/**/*Model.js for models
   await server.register({
     register: HapiSequelize,
     options: [
@@ -31,28 +31,25 @@ const run = async () => {
     ],
   });
 
+  // register the hapi-auth-jwt2 plugin
   await server.register(HapiAuthJWT2);
 
-  const validateAuth = (decoded, request, callback) =>
-     callback(null, true, {
-       scope: ['user:findAll', 'user:findOne', 'user:findById', 'user:count'],
-       ...decoded,
-     })
-  ;
-
+  // register the 'jwt' auth schema
   server.auth.strategy('jwt', 'jwt', {
     key: secret,
     validateFunc: validateAuth,
     verifyOptions: { algorithms: ['HS256'] },
   });
 
-  const allRoutes = await routesSetup(server.plugins['hapi-sequelize'].db.getModels());
-  server.route(allRoutes);
+  // boot all available routes and execute boot scripts from /setup/boot directory
+  await bootServer(server);
 
+  // register Blipp for showing all available routes
   await server.register({
     register: HapiBlipp,
   });
 
+  // start the server
   server.start(() => {
     // eslint-disable-next-line no-console
     console.log(`Server running at: ${server.info.uri}`);

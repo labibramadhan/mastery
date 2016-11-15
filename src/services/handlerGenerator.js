@@ -1,11 +1,11 @@
 import Boom from 'boom';
 
-import { parseQueries } from './handlerParser';
+import queryParsers from './queryParsers';
 
 export default function (model) {
   this.findAll = async (request, reply) => {
     try {
-      const queries = parseQueries(request);
+      const queries = queryParsers(request);
       const results = await model.findAll(queries);
       return reply(results);
     } catch (e) {
@@ -15,7 +15,7 @@ export default function (model) {
 
   this.count = async (request, reply) => {
     try {
-      const queries = parseQueries(request);
+      const queries = queryParsers(request);
       const result = await model.count(queries);
       return reply({ count: result });
     } catch (e) {
@@ -25,7 +25,7 @@ export default function (model) {
 
   this.findOne = async (request, reply) => {
     try {
-      const queries = parseQueries(request);
+      const queries = queryParsers(request);
       const result = await model.findOne(queries);
       return reply(result);
     } catch (e) {

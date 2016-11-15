@@ -1,12 +1,14 @@
 import path from 'path';
 
 import { prefix } from '../../setup/config';
-import HandlerGenerator from '../../services/HandlerGenerator';
+import HandlerGenerator from '../../services/handlerGenerator';
 import userControllerLogin from './userControllerLogin';
 
 export default (models) => {
+  // define user component endpoint
   const handler = new HandlerGenerator(models.user);
   return [{
+    // define GET /users route
     method: 'GET',
     path: path.join(prefix, 'users'),
     handler: handler.findAll,
@@ -17,6 +19,7 @@ export default (models) => {
       },
     },
   }, {
+    // define GET /users/count route
     method: 'GET',
     path: path.join(prefix, 'users', 'count'),
     handler: handler.count,
@@ -27,6 +30,7 @@ export default (models) => {
       },
     },
   }, {
+    // define GET /user route
     method: 'GET',
     path: path.join(prefix, 'user'),
     handler: handler.findOne,
@@ -37,10 +41,12 @@ export default (models) => {
       },
     },
   }, {
+    // define PUT /users route
     method: 'PUT',
     path: path.join(prefix, 'user'),
     handler: handler.create,
   }, {
+    // define GET /user/{id} route
     method: 'GET',
     path: path.join(prefix, 'user', '{id}'),
     handler: handler.findById,
@@ -51,6 +57,7 @@ export default (models) => {
       },
     },
   }, {
+    // define /user/login route
     method: 'POST',
     path: path.join(prefix, 'user', 'login'),
     handler: userControllerLogin,

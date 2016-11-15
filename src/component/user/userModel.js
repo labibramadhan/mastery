@@ -5,18 +5,24 @@ export default (sequelize, dataTypes) =>
   sequelize.define('user', {
     username: {
       type: dataTypes.STRING,
+      unique: true,
       allowNull: false,
       validate: {
         len: [4, 15],
         usernamePattern: async (val, next) => {
           const i18n = await locale();
+
+          // username should have at least a lowercase char, an uppercase char, a single number, cannot have space and symbols
           const valid = (val) ? /^[a-zA-Z0-9.\-_$@*!]+$/.test(val) : true;
-          return valid ? next() : next(i18n.t('User.username.invalid'));
+
+          // if username is not valid, return the user.username.invalid translated message
+          return valid ? next() : next(i18n.t('user.username.invalid'));
         },
       },
     },
     email: {
       type: dataTypes.STRING,
+      unique: true,
       allowNull: false,
       validate: {
         isEmail: true,
@@ -24,6 +30,7 @@ export default (sequelize, dataTypes) =>
         len: [6, 255],
       },
       set(val) {
+        // lowercase the email value
         this.setDataValue('email', val.toString().toLowerCase());
       },
     },
@@ -34,11 +41,14 @@ export default (sequelize, dataTypes) =>
         notEmpty: true,
         passwordPattern: async (val, next) => {
           const i18n = await locale();
+
+          // password should have at least an uppercase char, a lowercase char, and a single number
           const valid = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{1,}$/.test(val);
-          return valid ? next() : next(i18n.t('User.password.invalid'));
+          return valid ? next() : next(i18n.t('user.password.invalid'));
         },
       },
       set(val) {
+        // save the encrypted password
         const password = bcrypt.hashSync(val, bcrypt.genSaltSync(8), null);
         this.setDataValue('password', password);
       },
@@ -51,6 +61,7 @@ export default (sequelize, dataTypes) =>
     }],
     instanceMethods: {
       validPassword(password) {
+        // check if password match with current user encrypted password
         return bcrypt.compareSync(password, this.get('password'));
       },
     },

@@ -1,6 +1,6 @@
 {
-  "User.username.invalid": "Username cannot have spaces, symbols and must between 5 - 15 characters.",
-  "User.password.invalid": "Password have at least one upper case, one lower case character and one digit.",
+  "user.username.invalid": "Username cannot have spaces, symbols and must between 5 - 15 characters.",
+  "user.password.invalid": "Password have at least one upper case, one lower case character and one digit.",
 
-  "User.login.failed": "Invalid credentials"
+  "user.login.failed": "Invalid credentials"
 }
