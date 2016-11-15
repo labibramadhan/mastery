@@ -3,7 +3,16 @@
   "version": "1.0.0",
   "main": "build/index.js",
   "license": "Apache-2.0",
-  "author": "Muhammad Labib Ramadhan (mlabib.ramadhan@gmail.com)",
+  "author": "Muhammad Labib Ramadhan",
+  "email": "mlabib.ramadhan@gmail.com",
+  "url": "https://hithub.com/labibramadhan/hapi-api-starter",
+  "keywords": [
+    "hapi",
+    "api",
+    "starter",
+    "sequelize",
+    "generator"
+  ],
   "scripts": {
     "lint": "eslint src test --fix",
     "clean": "del build",
@@ -17,7 +26,7 @@
     "dev": "babel-node src/index.js",
     "test": "ava"
   },
-  "pre-commit": [
+  "precommit": [
     "lint"
   ],
   "devDependencies": {
