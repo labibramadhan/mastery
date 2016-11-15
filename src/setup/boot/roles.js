@@ -12,9 +12,8 @@ export default async (server) => {
     // check if this role name already persists in database
     const roleExists = await models.role.findOne({ where: { name: roleName } });
     if (!roleExists) {
-
       // if not, insert a new one
       await models.role.create({ name: roleName });
     }
   }
-}
+};

@@ -1,4 +1,4 @@
 export default (sequelize, dataTypes) =>
   sequelize.define('userRole', {
-    name: dataTypes.STRING
+    name: dataTypes.STRING,
   }, { freezeTableName: true });

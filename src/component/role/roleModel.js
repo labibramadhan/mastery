@@ -6,6 +6,6 @@ export default (sequelize, dataTypes) =>
     classMethods: {
       associate: (models) => {
         models.role.belongsToMany(models.user, { through: 'userRoleModel' });
-      }
-    }
+      },
+    },
   });
