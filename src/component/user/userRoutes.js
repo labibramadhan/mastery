@@ -1,12 +1,15 @@
 import path from 'path';
 
 import { prefix } from '../../setup/config';
-import HandlerGenerator from '../../services/handlerGenerator';
+import handlersGenerator from '../../services/handlersGenerator';
+import requestValidators from '../../services/requestValidators';
 import userControllerLogin from './userControllerLogin';
 
 export default (models) => {
   // define user component endpoint
-  const handler = new HandlerGenerator(models.user);
+  const handler = new handlersGenerator(models.user);
+  const validators = new requestValidators(models, models.user);
+
   return [{
     // define GET /users route
     method: 'GET',
@@ -16,6 +19,9 @@ export default (models) => {
       auth: {
         strategy: 'jwt',
         scope: 'user:findAll',
+      },
+      validate: {
+        ...validators.findAll
       },
     },
   }, {
@@ -28,6 +34,9 @@ export default (models) => {
         strategy: 'jwt',
         scope: 'user:count',
       },
+      validate: {
+        ...validators.count
+      },
     },
   }, {
     // define GET /user route
@@ -39,12 +48,20 @@ export default (models) => {
         strategy: 'jwt',
         scope: 'user:findOne',
       },
+      validate: {
+        ...validators.findOne
+      },
     },
   }, {
     // define PUT /users route
     method: 'PUT',
     path: path.join(prefix, 'user'),
     handler: handler.create,
+    config: {
+      validate: {
+        ...validators.create
+      },
+    }
   }, {
     // define GET /user/{id} route
     method: 'GET',
@@ -54,6 +71,9 @@ export default (models) => {
       auth: {
         strategy: 'jwt',
         scope: 'user:findById',
+      },
+      validate: {
+        ...validators.findById
       },
     },
   }, {

@@ -1,48 +1,8 @@
 import _ from 'lodash';
+import { applicableMethods } from './requestValidators';
 
 // define all available query parameter except 'where'
 const sequelizeKeys = ['include', 'order', 'limit', 'offset'];
-
-// define what parameters allowed each method
-const methodQueries = {
-  findAll: [
-    'where',
-    'include',
-    'order',
-    'limit',
-    'offset',
-  ],
-  count: [
-    'where',
-    'include',
-    'order',
-    'limit',
-    'offset',
-  ],
-  findOne: [
-    'where',
-    'include',
-    'order',
-    'offset',
-  ],
-  findById: [],
-  create: [],
-};
-
-const getModels = (request) => {
-  const noGetDb = typeof request.getDb !== 'function';
-  const noRequestModels = !request.models;
-
-  if (noGetDb && noRequestModels) {
-    // throw if hapi-sequelize is not registered
-    throw new Error('`request.getDb` or `request.models` are not defined. Be sure to load hapi-sequelize plugin.');
-  }
-
-  // get models instance from hapi-sequelize plugin
-  const { models } = noGetDb ? request : request.getDb();
-
-  return models;
-};
 
 export const parseWhere = (query) => {
   // because where object is not passed inside 'where' parameter, omit all parameters defined in sequelizeKeys variable
@@ -78,17 +38,17 @@ export const parseOffset = (query) => {
   return 0;
 };
 
-const parseOrderArray = (order, models) =>
-  order.map((requestColumn) => {
-    if (Array.isArray(requestColumn)) {
-      return parseOrderArray(requestColumn, models);
+const parseOrderArray = (orderColumns, models) =>
+  orderColumns.map((orderColumn) => {
+    if (Array.isArray(orderColumn)) {
+      return parseOrderArray(orderColumn, models);
     }
 
     let column;
     try {
-      column = JSON.parse(requestColumn);
+      column = JSON.parse(orderColumn);
     } catch (e) {
-      column = requestColumn;
+      column = orderColumn;
     }
 
     if (column.model) column.model = models[column.model];
@@ -101,19 +61,19 @@ export const parseOrder = (request) => {
 
   if (!order) return null;
 
-  const models = getModels(request);
+  const models = request.getDb();
   if (models.isBoom) return models;
 
-  const requestOrderColumns = _.isString(order) ? [order.split(' ')] : order;
+  const orderColumns = _.isString(order) ? [order.split(' ')] : order;
 
-  return parseOrderArray(requestOrderColumns, models);
+  return parseOrderArray(orderColumns, models);
 };
 
 const queryParsers = (request, methodName) => {
   let queries = {};
 
   // try to retrieve where parameters if exists
-  if (_.indexOf(methodQueries[methodName], 'where' > -1)) {
+  if (_.indexOf(applicableMethods[methodName], 'where' > -1)) {
     const where = parseWhere(request.query);
     if (where) {
       queries = { ...queries, ...{ where } };
@@ -121,7 +81,7 @@ const queryParsers = (request, methodName) => {
   }
 
   // try to retrieve limit parameter if exists
-  if (_.indexOf(methodQueries[methodName], 'limit' > -1)) {
+  if (_.indexOf(applicableMethods[methodName], 'limit' > -1)) {
     const { limit } = parseLimit(request.query);
     if (limit) {
       queries = { ...queries, ...{ limit } };
@@ -129,7 +89,7 @@ const queryParsers = (request, methodName) => {
   }
 
   // try to retrieve offset parameter if exists
-  if (_.indexOf(methodQueries[methodName], 'offset' > -1)) {
+  if (_.indexOf(applicableMethods[methodName], 'offset' > -1)) {
     const { offset } = parseOffset(request.query);
     if (offset) {
       queries = { ...queries, ...{ offset } };

@@ -48,3 +48,9 @@ export const getPackage = () => {
   // return the contents of /package.json
   return require(path.join(rootPath, 'package.json'));
 };
+
+export const concatToJoiObject = (joiObject, candidate) => {
+  if (!candidate) return joiObject;
+  else if (candidate.isJoi) return joiObject.concat(candidate);
+  else return joiObject.keys(candidate);
+};
