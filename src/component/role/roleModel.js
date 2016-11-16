@@ -5,7 +5,7 @@ export default (sequelize, dataTypes) =>
     freezeTableName: true,
     classMethods: {
       associate: (models) => {
-        models.role.belongsToMany(models.user, { through: 'userRoleModel' });
+        models.role.belongsToMany(models.user, { through: 'userRole', foreignKey: 'roleId' });
       },
     },
   });

@@ -26,7 +26,7 @@
     "dev": "babel-node src/index.js",
     "test": "ava"
   },
-  "precommit": [
+  "pre-commit": [
     "lint"
   ],
   "devDependencies": {

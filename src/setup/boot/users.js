@@ -4,13 +4,15 @@ export default async (server) => {
   // add a default admin account
   const adminRole = await models.role.find({ where: { name: 'admin' } });
   if (adminRole) {
-    const defaultAdmin = await models.user.find({ where: { username: 'admin' } });
+    let defaultAdmin;
+    defaultAdmin = await models.user.find({ where: { username: 'admin' } });
     if (!defaultAdmin) {
-      await models.user.create({
+      defaultAdmin = await models.user.create({
         username: 'admin',
         email: 'admin101@mailinator.com',
-        password: 'adminpassword',
+        password: 'adminpassword'
       });
+      await defaultAdmin.addRoles(adminRole);
     }
   }
 };

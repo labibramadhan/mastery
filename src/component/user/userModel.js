@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
 import locale from '../../setup/locales';
 
-export default (sequelize, dataTypes) =>
-  sequelize.define('user', {
+export default (sequelize, dataTypes) => {
+  return sequelize.define('user', {
     username: {
       type: dataTypes.STRING,
       unique: true,
@@ -52,17 +52,32 @@ export default (sequelize, dataTypes) =>
         const password = bcrypt.hashSync(val, bcrypt.genSaltSync(8), null);
         this.setDataValue('password', password);
       },
-    },
+    }
   }, {
     freezeTableName: true,
     indexes: [{
       unique: true,
       fields: ['email'],
     }],
+    classMethods: {
+      associate: (models) => {
+        models.user.belongsToMany(models.role, { through: 'userRole', foreignKey: 'userId' });
+      }
+    },
     instanceMethods: {
       validPassword(password) {
         // check if password match with current user encrypted password
         return bcrypt.compareSync(password, this.get('password'));
       },
     },
+    hooks: {
+      async afterCreate(user) {
+        const { role } = this.modelManager.sequelize.models;
+        const authenticatedRole = await role.findOne({ where: { name: 'authenticated' } });
+
+        // give the default 'authenticated' role
+        await user.addRoles(authenticatedRole);
+      }
+    }
   });
+}

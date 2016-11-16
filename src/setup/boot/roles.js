@@ -1,10 +1,10 @@
-import { getAvailableRoles } from '../../services/commonServices';
+import { getPackage } from '../../services/commonServices';
 
 export default async (server) => {
   const { models } = server.plugins['hapi-sequelize'].db;
 
   // retrieve all available roles
-  const availableRoles = getAvailableRoles();
+  const availableRoles = server.plugins[`${getPackage().name}-roles`];
   const availableRolesNames = Object.keys(availableRoles);
 
   // loop each roles name

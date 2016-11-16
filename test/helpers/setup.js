@@ -7,6 +7,8 @@ import * as HapiSequelize from 'hapi-sequelize';
 import * as HapiAuthJWT2 from 'hapi-auth-jwt2';
 
 import { secret } from '../../src/setup/config';
+import { validateAuth } from '../../src/services/authentications';
+import { bootServer } from '../../src/services/commonServices';
 
 const getPort = Promise.promisify(portfinder.getPort);
 const srcPath = path.resolve(path.join(__dirname, '..', '..', 'src'));
@@ -47,17 +49,12 @@ export default async (test) => {
 
     await server.register(HapiAuthJWT2);
 
-    const validateAuth = (decoded, request, callback) =>
-       callback(null, true, {
-         scope: ['user:findAll', 'user:findOne', 'user:findById', 'user:count'],
-         ...decoded,
-       })
-    ;
-
     server.auth.strategy('jwt', 'jwt', {
       key: secret,
       validateFunc: validateAuth,
       verifyOptions: { algorithms: ['HS256'] },
     });
+
+    await bootServer(server);
   });
 };

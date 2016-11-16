@@ -2,15 +2,9 @@ import test from 'ava';
 import path from 'path';
 
 import mockUsers from '../helpers/mock-users';
-import userRoutes from '../../src/component/user/userRoutes';
 import { prefix } from '../../src/setup/config';
 
 mockUsers(test);
-
-test.beforeEach('Handler generator for user', (t) => {
-  const { sequelize, server } = t.context;
-  server.route(userRoutes(sequelize.models));
-});
 
 // eslint-disable-next-line no-shadow
 const confirmRoute = async (t, { path, method }) => {
@@ -35,6 +29,14 @@ const expectedRoutes = [{
   path: path.join(prefix, 'user'),
   method: 'GET',
   type: 'findOne',
+}, {
+  path: path.join(prefix, 'user'),
+  method: 'PUT',
+  type: 'create',
+}, {
+  path: path.join(prefix, 'user', 'login'),
+  method: 'POST',
+  type: 'login',
 }, {
   path: path.join(prefix, 'user', '{id}'),
   method: 'GET',

@@ -4,84 +4,71 @@ import path from 'path';
 import HttpStatus from 'http-status-codes';
 
 import mockUsers from '../helpers/mock-users';
-import userRoutes from '../../src/component/user/userRoutes';
 import { prefix } from '../../src/setup/config';
 
 mockUsers(test);
 
-test.beforeEach('User handler generator', (t) => {
-  const { sequelize, server } = t.context;
-  server.route(userRoutes(sequelize.models));
-});
-
-const payloadLogin = {
-  url: path.join(prefix, 'user', 'login'),
-  method: 'POST',
-};
-test.beforeEach(`login ${payloadLogin.method} ${payloadLogin.url}`, async (t) => {
+test.beforeEach(`login POST ${prefix}user/login`, async (t) => {
   const { users, server } = t.context;
-  const { user1 } = users;
+  const { admin1 } = users;
 
   const { result } = await server.inject({
+    url: `${prefix}user/login`,
+    method: 'POST',
     payload: {
-      username: user1.username,
+      username: admin1.username,
       password: 'Asdqwe123',
     },
-    ...payloadLogin,
   });
 
   // eslint-disable-next-line no-param-reassign
   t.context.token = result.token;
 });
 
-const queryFindAll = {
-  url: `${path.join(prefix, 'users')}?${URI.buildQuery({ username: 'user1' }).toString()}`,
-  method: 'GET',
-};
-test(`findAll ${queryFindAll.method} ${queryFindAll.url}`, async (t) => {
+test(`findAll GET ${prefix}users?${URI.buildQuery({ username: 'authenticated1' }).toString()}`, async (t) => {
   const { users, server, token } = t.context;
-  const { user1 } = users;
+  const { authenticated1 } = users;
 
-  const { result, statusCode } = await server.inject({ ...queryFindAll, url: `${queryFindAll.url}&token=${token}` });
+  const { result, statusCode } = await server.inject({
+    url: `${prefix}users?${URI.buildQuery({ username: 'authenticated1', token: token }).toString()}`,
+    method: 'GET',
+  });
   t.is(statusCode, HttpStatus.OK);
   t.is(result.length, 1);
-  t.is(result[0].id, user1.id);
+  t.is(result[0].id, authenticated1.id);
 });
 
-const queryFindOne = {
-  url: `${path.join(prefix, 'user')}?${URI.buildQuery({ username: 'user2' }).toString()}`,
-  method: 'GET',
-};
-test(`findOne ${queryFindOne.method} ${queryFindOne.url}`, async (t) => {
+test(`findOne GET ${prefix}user?${URI.buildQuery({ username: 'authenticated2' }).toString()}`, async (t) => {
   const { users, server, token } = t.context;
-  const { user2 } = users;
+  const { authenticated2 } = users;
 
-  const { result, statusCode } = await server.inject({ ...queryFindOne, url: `${queryFindOne.url}&token=${token}` });
+  const { result, statusCode } = await server.inject({
+    url: `${prefix}user?${URI.buildQuery({ username: 'authenticated2', token: token }).toString()}`,
+    method: 'GET',
+  });
   t.is(statusCode, HttpStatus.OK);
-  t.is(result.id, user2.id);
+  t.is(result.id, authenticated2.id);
 });
 
-const queryFindById = {
-  url: path.join(prefix, 'user', '3'),
-  method: 'GET',
-};
-test(`findById ${queryFindById.method} ${queryFindById.url}`, async (t) => {
+test(`findById GET ${prefix}user/{id}`, async (t) => {
   const { users, server, token } = t.context;
-  const { user3 } = users;
+  const { authenticated2 } = users;
 
-  const { result, statusCode } = await server.inject({ ...queryFindById, url: `${queryFindById.url}?token=${token}` });
+  const { result, statusCode } = await server.inject({
+    url: path.join(prefix, 'user', authenticated2.id.toString()) + `?token=${token}`,
+    method: 'GET',
+  });
   t.is(statusCode, HttpStatus.OK);
-  t.is(result.id, user3.id);
+  t.is(result.id, authenticated2.id);
 });
 
-const queryCount = {
-  url: `${path.join(prefix, 'users', 'count')}?${URI.buildQuery({ username: ['user1', 'user2'] })}`,
-  method: 'GET',
-};
-test(`count ${queryCount.method} ${queryCount.url}`, async (t) => {
+test(`count GET ${prefix}users/count?${URI.buildQuery({ username: ['authenticated1', 'authenticated2'] })}`, async (t) => {
   const { server, token } = t.context;
 
-  const { result, statusCode } = await server.inject({ ...queryCount, url: `${queryCount.url}&token=${token}` });
+  const { result, statusCode } = await server.inject({
+    url: `${prefix}users/count?${URI.buildQuery({ username: ['authenticated1', 'authenticated2'], token: token })}`,
+    method: 'GET',
+  });
   t.is(statusCode, HttpStatus.OK);
   t.is(result.count, 2);
 });
