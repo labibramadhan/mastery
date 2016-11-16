@@ -56,6 +56,13 @@ export const sequelizeOperators = {
   $col: Joi.any(),
 };
 
+export const buildTokenValidation = () => {
+  const JWTRegEx = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_.+\/=]+$/g;
+  return Joi.object().keys({
+    token: Joi.string().regex(JWTRegEx)
+  });
+};
+
 export const buildWhereValidation = (model) => {
   const modelAttributes = Object.keys(model.attributes);
   const validAttributes = modelAttributes.reduce((params, attribute) => {
@@ -155,6 +162,12 @@ const requestValidators = function(models, model) {
       );
       matchedValidators = _.set(matchedValidators, 'payload', payloadValidation);
     }
+
+    const tokenValidation = concatToJoiObject(
+      buildTokenValidation(),
+      _.get(matchedValidators, 'query')
+    );
+    matchedValidators = _.set(matchedValidators, 'query', tokenValidation);
 
     _self[sourceMethod] = matchedValidators;
   });
