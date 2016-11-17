@@ -11,6 +11,7 @@ exports.register = async (server, options, next) => {
   // retrieve all available roles and its permissions defined inside /setup/roles directory
   const rolesDefinition = glob.sync(rolesGlob);
   rolesDefinition.forEach((role) => {
+    // eslint-disable-next-line global-require,import/no-dynamic-require
     const roleObj = require(role);
 
     // merge current role to a single variable contains all roles
@@ -18,12 +19,14 @@ exports.register = async (server, options, next) => {
   });
 
   const JSONPackage = getPackage();
-  server.plugins[`${JSONPackage.name}-roles`] = availableRoles;
+
+  // eslint-disable-next-line no-param-reassign
+  server.plugins[`${JSONPackage.name}-acl`] = availableRoles;
 
   return next();
 };
 
 exports.register.attributes = {
-  name: `${getPackage().name}-roles`,
-  version: '1.0.0'
+  name: `${getPackage().name}-acl`,
+  version: '1.0.0',
 };

@@ -27,7 +27,7 @@ export const applicableMethods = {
   ],
   findById: [],
   create: [
-    'payload'
+    'payload',
   ],
 };
 
@@ -56,53 +56,11 @@ export const sequelizeOperators = {
   $col: Joi.any(),
 };
 
-export const buildIncludeValidation = (models) => {
-  let validIncludeString = [];
-  let validIncludeModel = [];
-  let validIncludeWhere = [];
-  let validIncludeAs = [];
-  _.each(models, (m) => {
-    const associatedModelNames = Object.keys(m.associations);
-    const modelHasAssociations = associatedModelNames && associatedModelNames.length;
-    const thisValidIncludeString = modelHasAssociations ? Joi.string().valid(...associatedModelNames) : Joi.valid(null);
-    validIncludeString = [...validIncludeString, thisValidIncludeString];
-    validIncludeModel = [...validIncludeModel, thisValidIncludeString];
-
-    const whereValidation = buildWhereValidation(m);
-    validIncludeWhere = [...validIncludeWhere, Joi.alternatives().when('model', {
-      is: m.name,
-      then: whereValidation
-    })];
-
-    const associatedModelAliases = _.map(m.associations, (assoc => assoc.as));
-    validIncludeAs = [...validIncludeAs, Joi.alternatives().when('model', {
-      is: m.name,
-      then: Joi.string().valid(...associatedModelAliases)
-    })];
-  });
-
-  const validIncludeObject = Joi.object().keys({
-    model: validIncludeModel,
-    where: validIncludeWhere,
-    as: validIncludeAs,
-    include: Joi.lazy(() => validInclude),
-  });
-
-  const validInclude = {
-    include: [
-      Joi.array().items(validIncludeString, validIncludeObject),
-      validIncludeString,
-      validIncludeObject,
-    ],
-  };
-  return validInclude;
-};
-
 export const buildWhereValidation = (model) => {
   const modelAttributes = Object.keys(model.attributes);
   const validAttributes = modelAttributes.reduce((params, attribute) => {
     // TODO: use joi-sequelize
-    params[attribute] = Joi.any();
+    params[attribute] = Joi.any(); // eslint-disable-line no-param-reassign
     return params;
   }, {});
   return Joi.object().keys({
@@ -111,11 +69,56 @@ export const buildWhereValidation = (model) => {
   });
 };
 
+export const buildIncludeValidation = (models) => {
+  let validIncludeString = [];
+  let validIncludeModel = [];
+  let validIncludeWhere = [];
+  let validIncludeAs = [];
+  _.each(models, (m) => {
+    const associatedModelNames = Object.keys(m.associations);
+    const modelHasAssociations = associatedModelNames && associatedModelNames.length;
+    const thisValidIncludeString = modelHasAssociations
+      ? Joi.string().valid(...associatedModelNames)
+      : Joi.valid(null);
+    validIncludeString = [...validIncludeString, thisValidIncludeString];
+    validIncludeModel = [...validIncludeModel, thisValidIncludeString];
+
+    const whereValidation = buildWhereValidation(m);
+    validIncludeWhere = [...validIncludeWhere, Joi.alternatives().when('model', {
+      is: m.name,
+      then: whereValidation,
+    })];
+
+    const associatedModelAliases = _.map(m.associations, (assoc => assoc.as));
+    validIncludeAs = [...validIncludeAs, Joi.alternatives().when('model', {
+      is: m.name,
+      then: Joi.string().valid(...associatedModelAliases),
+    })];
+  });
+
+  const validIncludeObject = Joi.object().keys({
+    model: validIncludeModel,
+    where: validIncludeWhere,
+    as: validIncludeAs,
+    include: Joi.lazy(() => validInclude), // eslint-disable-line no-use-before-define
+  });
+
+  const validInclude = [
+    Joi.array().items(validIncludeString, validIncludeObject),
+    validIncludeString,
+    validIncludeObject,
+  ];
+  return Joi.object().keys({
+    include: validInclude,
+    'include[]': validInclude,
+  });
+};
+
 export const buildPayloadValidation = (model) => {
   const modelAttributes = Object.keys(model.attributes);
   const validAttributes = modelAttributes.reduce((params, attribute) => {
     // TODO: use joi-sequelize
-    params[attribute] = Joi.any();
+    params[attribute] = Joi.any(); // eslint-disable-line no-param-reassign
     return params;
   }, {});
   return Joi.object().keys({
@@ -124,53 +127,51 @@ export const buildPayloadValidation = (model) => {
 };
 
 export const buildTokenValidation = () => {
-  const JWTRegEx = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_.+\/=]+$/g;
+  const JWTRegEx = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_.+/=]+$/g;
   return Joi.object().keys({
-    token: Joi.string().regex(JWTRegEx)
+    token: Joi.string().regex(JWTRegEx),
   });
 };
 
-const requestValidators = function(models, model) {
-  const _self = this;
+export default function (models, model) {
+  const self = this;
   _.each(applicableMethods, (methods, sourceMethod) => {
-    let matchedValidators = {};
+    let validators = {};
 
     const hasWhere = applicableMethods[sourceMethod].includes('where');
     const hasInclude = applicableMethods[sourceMethod].includes('include');
     const hasPayload = applicableMethods[sourceMethod].includes('payload');
 
-    if (hasInclude) {
-      const includeValidation = concatToJoiObject(
-        buildIncludeValidation(models),
-        _.get(matchedValidators, 'query')
-      );
-      matchedValidators = _.set(matchedValidators, 'query', includeValidation);
-    }
-
     if (hasWhere) {
       const whereValidation = concatToJoiObject(
         buildWhereValidation(model),
-        _.get(matchedValidators, 'query')
+        _.get(validators, 'query'),
       );
-      matchedValidators = _.set(matchedValidators, 'query', whereValidation);
+      validators = _.set(validators, 'query', whereValidation);
+    }
+
+    if (hasInclude) {
+      const includeValidation = concatToJoiObject(
+        buildIncludeValidation(models),
+        _.get(validators, 'query'),
+      );
+      validators = _.set(validators, 'query', includeValidation);
     }
 
     if (hasPayload) {
       const payloadValidation = concatToJoiObject(
         buildPayloadValidation(model),
-        _.get(matchedValidators, 'payload')
+        _.get(validators, 'payload'),
       );
-      matchedValidators = _.set(matchedValidators, 'payload', payloadValidation);
+      validators = _.set(validators, 'payload', payloadValidation);
     }
 
     const tokenValidation = concatToJoiObject(
       buildTokenValidation(),
-      _.get(matchedValidators, 'query')
+      _.get(validators, 'query'),
     );
-    matchedValidators = _.set(matchedValidators, 'query', tokenValidation);
+    validators = _.set(validators, 'query', tokenValidation);
 
-    _self[sourceMethod] = matchedValidators;
+    self[sourceMethod] = validators;
   });
-};
-
-export default requestValidators;
+}

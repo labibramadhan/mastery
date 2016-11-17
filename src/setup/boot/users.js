@@ -10,7 +10,7 @@ export default async (server) => {
       defaultAdmin = await models.user.create({
         username: 'admin',
         email: 'admin101@mailinator.com',
-        password: 'adminpassword'
+        password: 'adminpassword',
       });
       await defaultAdmin.addRoles(adminRole);
     }

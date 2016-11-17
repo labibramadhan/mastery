@@ -2,9 +2,11 @@ import _ from 'lodash';
 
 import { getPackage } from '../services/commonServices';
 
+/* eslint-disable import/prefer-default-export */
+
 export const validateAuth = async (decoded, request, callback) => {
   const { user, role } = request.server.plugins['hapi-sequelize'].db.models;
-  const availableRoles = request.server.plugins[`${getPackage().name}-roles`];
+  const availableRoles = request.server.plugins[`${getPackage().name}-acl`];
 
   // pick only necessary object keys, in this case are username, email, and password
   const requestedCredentials = _.pick(decoded, ['username', 'email', 'password']);
@@ -12,7 +14,7 @@ export const validateAuth = async (decoded, request, callback) => {
   // find current requested user
   const currentUser = await user.findOne({
     include: role,
-    where: requestedCredentials
+    where: requestedCredentials,
   });
   if (currentUser) {
     // get current user roles name
@@ -28,5 +30,5 @@ export const validateAuth = async (decoded, request, callback) => {
       ...credentials,
     });
   }
-  callback(null, false);
+  return callback(null, false);
 };

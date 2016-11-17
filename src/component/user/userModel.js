@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
 import locale from '../../setup/locales';
 
-export default (sequelize, dataTypes) => {
-  return sequelize.define('user', {
+export default (sequelize, dataTypes) =>
+  sequelize.define('user', {
     username: {
       type: dataTypes.STRING,
       unique: true,
@@ -12,7 +12,10 @@ export default (sequelize, dataTypes) => {
         usernamePattern: async (val, next) => {
           const i18n = await locale();
 
-          // username should have at least a lowercase char, an uppercase char, a single number, cannot have space and symbols
+          /**
+           * username should have at least a lowercase char,
+           * an uppercase char, a single number, cannot have space and symbols
+           */
           const valid = (val) ? /^[a-zA-Z0-9.\-_$@*!]+$/.test(val) : true;
 
           // if username is not valid, return the user.username.invalid translated message
@@ -52,7 +55,7 @@ export default (sequelize, dataTypes) => {
         const password = bcrypt.hashSync(val, bcrypt.genSaltSync(8), null);
         this.setDataValue('password', password);
       },
-    }
+    },
   }, {
     freezeTableName: true,
     indexes: [{
@@ -62,7 +65,7 @@ export default (sequelize, dataTypes) => {
     classMethods: {
       associate: (models) => {
         models.user.belongsToMany(models.role, { through: 'userRole', foreignKey: 'userId' });
-      }
+      },
     },
     instanceMethods: {
       validPassword(password) {
@@ -77,7 +80,6 @@ export default (sequelize, dataTypes) => {
 
         // give the default 'authenticated' role
         await user.addRoles(authenticatedRole);
-      }
-    }
+      },
+    },
   });
-}

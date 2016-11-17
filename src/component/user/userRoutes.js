@@ -7,8 +7,8 @@ import userControllerLogin from './userControllerLogin';
 
 export default (models) => {
   // define user component endpoint
-  const handler = new handlersGenerator(models.user);
-  const validators = new requestValidators(models, models.user);
+  const handler = new handlersGenerator(models.user); // eslint-disable-line new-cap
+  const validators = new requestValidators(models, models.user); // eslint-disable-line new-cap
 
   return [{
     // define GET /users route
@@ -21,7 +21,7 @@ export default (models) => {
         scope: 'user:findAll',
       },
       validate: {
-        ...validators.findAll
+        ...validators.findAll,
       },
     },
   }, {
@@ -35,7 +35,7 @@ export default (models) => {
         scope: 'user:count',
       },
       validate: {
-        ...validators.count
+        ...validators.count,
       },
     },
   }, {
@@ -49,7 +49,7 @@ export default (models) => {
         scope: 'user:findOne',
       },
       validate: {
-        ...validators.findOne
+        ...validators.findOne,
       },
     },
   }, {
@@ -59,9 +59,9 @@ export default (models) => {
     handler: handler.create,
     config: {
       validate: {
-        ...validators.create
+        ...validators.create,
       },
-    }
+    },
   }, {
     // define GET /user/{id} route
     method: 'GET',
@@ -73,7 +73,7 @@ export default (models) => {
         scope: 'user:findById',
       },
       validate: {
-        ...validators.findById
+        ...validators.findById,
       },
     },
   }, {

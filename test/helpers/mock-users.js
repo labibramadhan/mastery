@@ -40,5 +40,8 @@ export default (test) => {
 
     // eslint-disable-next-line no-param-reassign
     t.context.users = { admin1, admin2, authenticated1, authenticated2 };
+
+    // eslint-disable-next-line no-param-reassign
+    t.context.roles = { adminRole, authenticatedRole };
   });
 };

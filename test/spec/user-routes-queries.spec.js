@@ -1,6 +1,5 @@
 import test from 'ava';
 import URI from 'urijs';
-import path from 'path';
 import HttpStatus from 'http-status-codes';
 
 import mockUsers from '../helpers/mock-users';
@@ -8,11 +7,11 @@ import { prefix } from '../../src/setup/config';
 
 mockUsers(test);
 
-test.beforeEach(`user POST login`, async (t) => {
+test.beforeEach('user POST login', async (t) => {
   const { users, server } = t.context;
   const { admin1 } = users;
 
-  const { result } = await server.inject({
+  const { result, statusCode } = await server.inject({
     url: `${prefix}user/login`,
     method: 'POST',
     payload: {
@@ -21,19 +20,26 @@ test.beforeEach(`user POST login`, async (t) => {
     },
   });
 
+  t.is(statusCode, HttpStatus.OK);
+  t.truthy(result.token);
+
   // eslint-disable-next-line no-param-reassign
   t.context.token = result.token;
 });
 
 
-test(`user GET findAll`, async (t) => {
-  const { users, server, token } = t.context;
+test(`GET findAll ${URI(`${prefix}users`).addQuery({
+  username: 'authenticated1',
+  include: 'role',
+}).toString()}`, async (t) => {
+  const { users, roles, server, token } = t.context;
   const { authenticated1 } = users;
+  const { authenticatedRole } = roles;
 
   const thisTestUrl = URI(`${prefix}users`).addQuery({
     username: 'authenticated1',
     include: 'role',
-    token: token
+    token,
   }).toString();
 
   const { result, statusCode } = await server.inject({
@@ -44,16 +50,21 @@ test(`user GET findAll`, async (t) => {
   t.is(statusCode, HttpStatus.OK);
   t.is(result.length, 1);
   t.is(result[0].id, authenticated1.id);
+  t.is(result[0].roles[0].id, authenticatedRole.id);
 });
 
-test('user GET findOne', async (t) => {
-  const { users, server, token } = t.context;
+test(`GET findOne ${URI(`${prefix}user`).addQuery({
+  username: 'authenticated2',
+  include: JSON.stringify({ model: 'role' }),
+}).toString()}`, async (t) => {
+  const { users, roles, server, token } = t.context;
   const { authenticated2 } = users;
+  const { authenticatedRole } = roles;
 
   const thisTestUrl = URI(`${prefix}user`).addQuery({
     username: 'authenticated2',
     include: JSON.stringify({ model: 'role' }),
-    token: token
+    token,
   }).toString();
 
   const { result, statusCode } = await server.inject({
@@ -63,13 +74,14 @@ test('user GET findOne', async (t) => {
 
   t.is(statusCode, HttpStatus.OK);
   t.is(result.id, authenticated2.id);
+  t.is(result.roles[0].id, authenticatedRole.id);
 });
 
-test(`user GET findById`, async (t) => {
+test(`GET findById ${URI(`${prefix}user/{id}`).toString()}`, async (t) => {
   const { users, server, token } = t.context;
   const { authenticated2 } = users;
 
-  const thisTestUrl = URI(`${prefix}user/${authenticated2.id}`).addQuery({ token: token }).toString();
+  const thisTestUrl = URI(`${prefix}user/${authenticated2.id}`).addQuery({ token }).toString();
 
   const { result, statusCode } = await server.inject({
     url: thisTestUrl,
@@ -80,7 +92,12 @@ test(`user GET findById`, async (t) => {
   t.is(result.id, authenticated2.id);
 });
 
-test(`user GET count`, async (t) => {
+test(`GET count ${URI(`${prefix}users/count`).addQuery({
+  username: [
+    'authenticated1',
+    'authenticated2',
+  ],
+}).toString()}`, async (t) => {
   const { server, token } = t.context;
 
   const thisTestUrl = URI(`${prefix}users/count`).addQuery({
@@ -88,7 +105,7 @@ test(`user GET count`, async (t) => {
       'authenticated1',
       'authenticated2',
     ],
-    token: token
+    token,
   }).toString();
 
   const { result, statusCode } = await server.inject({

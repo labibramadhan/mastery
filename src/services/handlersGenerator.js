@@ -2,7 +2,7 @@ import Boom from 'boom';
 
 import queryParsers from './queryParsers';
 
-export default function(model) {
+export default function (model) {
   this.findAll = async (request, reply) => {
     try {
       const queries = await queryParsers(request, 'findAll');

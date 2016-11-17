@@ -8,7 +8,8 @@ const bootPlugins = async (server) => {
   const pluginPath = path.resolve(path.join(__dirname, '..', 'plugins'));
   const pluginGlob = path.resolve(path.join(pluginPath, '**', '*.js'));
   const plugins = glob.sync(pluginGlob);
-  for (const plugin of plugins) {
+  for (const plugin of plugins) { // eslint-disable-line no-restricted-syntax
+    // eslint-disable-next-line global-require,import/no-dynamic-require
     await server.register(require(plugin));
   }
 };
@@ -25,9 +26,9 @@ const bootScripts = async (server) => {
 
   // retrieve all available boot scripts
   const bootFiles = glob.sync(bootGlob);
-  for (const bootFile of bootFiles) {
+  for (const bootFile of bootFiles) { // eslint-disable-line no-restricted-syntax
     // execute the boot script
-    await require(bootFile)(server);
+    await require(bootFile)(server); // eslint-disable-line global-require,import/no-dynamic-require
   }
 };
 
@@ -46,11 +47,11 @@ export const getPackage = () => {
   const rootPath = path.resolve(path.join(__dirname, '..', '..'));
 
   // return the contents of /package.json
-  return require(path.join(rootPath, 'package.json'));
+  return require(path.join(rootPath, 'package.json')); // eslint-disable-line global-require,import/no-dynamic-require
 };
 
 export const concatToJoiObject = (joiObject, candidate) => {
   if (!candidate) return joiObject;
   else if (candidate.isJoi) return joiObject.concat(candidate);
-  else return joiObject.keys(candidate);
+  return joiObject.keys(candidate);
 };

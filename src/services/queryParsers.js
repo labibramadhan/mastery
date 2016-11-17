@@ -6,9 +6,9 @@ import { applicableMethods } from './requestValidators';
 // define all available query parameter except 'where'
 const sequelizeKeys = ['include', 'order', 'limit', 'offset'];
 
-const getIncludeModelInstance = (includeItem, models) => {
-  return new Promise(async (resolve) => {
-    let include = _.clone(includeItem);
+const getIncludeModelInstance = (includeItem, models) =>
+  new Promise(async (resolve) => {
+    const include = _.clone(includeItem);
     if (include) {
       if (typeof include !== 'object') {
         const singluarOrPluralMatch = Object.keys(models).find((modelName) => {
@@ -21,27 +21,24 @@ const getIncludeModelInstance = (includeItem, models) => {
         }
       }
 
-      if (typeof include === 'string' && models.hasOwnProperty(include)) {
+      if (typeof include === 'string' && typeof models[include] !== 'undefined') {
         return resolve(models[include]);
       } else if (typeof include === 'object') {
         if (
           typeof include.model === 'string' &&
           include.model.length &&
-          models.hasOwnProperty(include.model)
+          typeof models[include.model] !== 'undefined'
         ) {
           include.model = models[include.model];
         }
-        if (include.hasOwnProperty('include')) {
+        if (typeof include.include !== 'undefined') {
           include.include = await getIncludeModelInstance(models, include.include);
-          return resolve(include);
-        } else {
           return resolve(include);
         }
       }
     }
     return resolve(include);
   });
-};
 
 export const parseInclude = async (query, models) => {
   if (typeof query.include === 'undefined') return [];
@@ -50,35 +47,19 @@ export const parseInclude = async (query, models) => {
     ? query.include
     : [query.include];
 
-  const includes = include.map(async (b) => {
-    let a = b;
-    try {
-      a = JSON.parse(b);
-    } catch (e) {
-      //
-    }
-
-    return getIncludeModelInstance(a, models);
-  }).filter(_.identity);
+  const includes = include.map(async b =>
+    getIncludeModelInstance(b, models),
+  ).filter(_.identity);
 
   return await Promise.all(includes);
 };
 
-export const parseWhere = (query) => {
-  // because where object is not passed inside 'where' parameter, omit all parameters defined in sequelizeKeys variable
-  const where = _.omit(_.omit(query, sequelizeKeys), 'token');
-
-  Object.keys(where).forEach((key) => {
-    try {
-      // parse each where parameter value with JSON.parse() in case its value is an object
-      where[key] = JSON.parse(where[key]);
-    } catch (e) {
-      //
-    }
-  });
-
-  return where;
-};
+export const parseWhere = query =>
+  /**
+   * because where object is not passed inside 'where' parameter,
+   * omit all parameters defined in sequelizeKeys variable
+   */
+  _.omit(_.omit(query, sequelizeKeys), 'token');
 
 export const parseLimit = (query) => {
   const { limit } = query;
@@ -137,7 +118,7 @@ const queryParsers = async (request, methodName) => {
   if (applicableMethods[methodName].includes('include')) {
     const include = await parseInclude(request.query, models);
     if (include) {
-      queries = { ...queries, ...{ include } };
+      queries = { ...queries, include };
     }
   }
 
@@ -145,7 +126,7 @@ const queryParsers = async (request, methodName) => {
   if (applicableMethods[methodName].includes('where')) {
     const where = parseWhere(request.query);
     if (where) {
-      queries = { ...queries, ...{ where } };
+      queries = { ...queries, where };
     }
   }
 
@@ -153,7 +134,7 @@ const queryParsers = async (request, methodName) => {
   if (applicableMethods[methodName].includes('limit')) {
     const { limit } = parseLimit(request.query);
     if (limit) {
-      queries = { ...queries, ...{ limit } };
+      queries = { ...queries, limit };
     }
   }
 
@@ -161,7 +142,7 @@ const queryParsers = async (request, methodName) => {
   if (applicableMethods[methodName].includes('offset')) {
     const { offset } = parseOffset(request.query);
     if (offset) {
-      queries = { ...queries, ...{ offset } };
+      queries = { ...queries, offset };
     }
   }
   return queries;

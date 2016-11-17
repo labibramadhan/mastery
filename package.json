@@ -70,6 +70,7 @@
     "jsonwebtoken": "^7.1.9",
     "lodash": "^4.16.6",
     "node-polyglot": "^2.1.0",
+    "qs": "^6.3.0",
     "sequelize": "^3.25.0",
     "sqlite3": "^3.1.8",
     "urijs": "^1.18.2"
@@ -80,6 +81,7 @@
     ],
     "concurrency": 10,
     "verbose": true,
+    "failFast": true,
     "require": [
       "babel-register"
     ],
