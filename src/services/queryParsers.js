@@ -1,8 +1,68 @@
 import _ from 'lodash';
+import Promise from 'bluebird';
+
 import { applicableMethods } from './requestValidators';
 
 // define all available query parameter except 'where'
 const sequelizeKeys = ['include', 'order', 'limit', 'offset'];
+
+const getIncludeModelInstance = (includeItem, models) => {
+  return new Promise(async (resolve) => {
+    let include = _.clone(includeItem);
+    if (include) {
+      if (typeof include !== 'object') {
+        const singluarOrPluralMatch = Object.keys(models).find((modelName) => {
+          const { _singular, _plural } = models[modelName];
+          return _singular === include || _plural === include;
+        });
+
+        if (singluarOrPluralMatch) {
+          return resolve(models[singluarOrPluralMatch]);
+        }
+      }
+
+      if (typeof include === 'string' && models.hasOwnProperty(include)) {
+        return resolve(models[include]);
+      } else if (typeof include === 'object') {
+        if (
+          typeof include.model === 'string' &&
+          include.model.length &&
+          models.hasOwnProperty(include.model)
+        ) {
+          include.model = models[include.model];
+        }
+        if (include.hasOwnProperty('include')) {
+          include.include = await getIncludeModelInstance(models, include.include);
+          return resolve(include);
+        } else {
+          return resolve(include);
+        }
+      }
+    }
+    return resolve(include);
+  });
+};
+
+export const parseInclude = async (query, models) => {
+  if (typeof query.include === 'undefined') return [];
+
+  const include = Array.isArray(query.include)
+    ? query.include
+    : [query.include];
+
+  const includes = include.map(async (b) => {
+    let a = b;
+    try {
+      a = JSON.parse(b);
+    } catch (e) {
+      //
+    }
+
+    return getIncludeModelInstance(a, models);
+  }).filter(_.identity);
+
+  return await Promise.all(includes);
+};
 
 export const parseWhere = (query) => {
   // because where object is not passed inside 'where' parameter, omit all parameters defined in sequelizeKeys variable
@@ -69,27 +129,36 @@ export const parseOrder = (request) => {
   return parseOrderArray(orderColumns, models);
 };
 
-const queryParsers = (request, methodName) => {
+const queryParsers = async (request, methodName) => {
   let queries = {};
+  const { models } = request.server.plugins['hapi-sequelize'].db;
 
-  // try to retrieve where parameters if exists
-  if (_.indexOf(applicableMethods[methodName], 'where' > -1)) {
+  // try to parse include parameters if exists
+  if (applicableMethods[methodName].includes('include')) {
+    const include = await parseInclude(request.query, models);
+    if (include) {
+      queries = { ...queries, ...{ include } };
+    }
+  }
+
+  // try to parse where parameters if exists
+  if (applicableMethods[methodName].includes('where')) {
     const where = parseWhere(request.query);
     if (where) {
       queries = { ...queries, ...{ where } };
     }
   }
 
-  // try to retrieve limit parameter if exists
-  if (_.indexOf(applicableMethods[methodName], 'limit' > -1)) {
+  // try to parse limit parameter if exists
+  if (applicableMethods[methodName].includes('limit')) {
     const { limit } = parseLimit(request.query);
     if (limit) {
       queries = { ...queries, ...{ limit } };
     }
   }
 
-  // try to retrieve offset parameter if exists
-  if (_.indexOf(applicableMethods[methodName], 'offset' > -1)) {
+  // try to parse offset parameter if exists
+  if (applicableMethods[methodName].includes('offset')) {
     const { offset } = parseOffset(request.query);
     if (offset) {
       queries = { ...queries, ...{ offset } };

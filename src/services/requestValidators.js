@@ -56,26 +56,6 @@ export const sequelizeOperators = {
   $col: Joi.any(),
 };
 
-export const buildTokenValidation = () => {
-  const JWTRegEx = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_.+\/=]+$/g;
-  return Joi.object().keys({
-    token: Joi.string().regex(JWTRegEx)
-  });
-};
-
-export const buildWhereValidation = (model) => {
-  const modelAttributes = Object.keys(model.attributes);
-  const validAttributes = modelAttributes.reduce((params, attribute) => {
-    // TODO: use joi-sequelize
-    params[attribute] = Joi.any();
-    return params;
-  }, {});
-  return Joi.object().keys({
-    ...validAttributes,
-    ...sequelizeOperators,
-  });
-};
-
 export const buildIncludeValidation = (models) => {
   let validIncludeString = [];
   let validIncludeModel = [];
@@ -118,6 +98,19 @@ export const buildIncludeValidation = (models) => {
   return validInclude;
 };
 
+export const buildWhereValidation = (model) => {
+  const modelAttributes = Object.keys(model.attributes);
+  const validAttributes = modelAttributes.reduce((params, attribute) => {
+    // TODO: use joi-sequelize
+    params[attribute] = Joi.any();
+    return params;
+  }, {});
+  return Joi.object().keys({
+    ...validAttributes,
+    ...sequelizeOperators,
+  });
+};
+
 export const buildPayloadValidation = (model) => {
   const modelAttributes = Object.keys(model.attributes);
   const validAttributes = modelAttributes.reduce((params, attribute) => {
@@ -127,6 +120,13 @@ export const buildPayloadValidation = (model) => {
   }, {});
   return Joi.object().keys({
     ...validAttributes,
+  });
+};
+
+export const buildTokenValidation = () => {
+  const JWTRegEx = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_.+\/=]+$/g;
+  return Joi.object().keys({
+    token: Joi.string().regex(JWTRegEx)
   });
 };
 

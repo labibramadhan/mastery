@@ -2,10 +2,10 @@ import Boom from 'boom';
 
 import queryParsers from './queryParsers';
 
-export default function (model) {
+export default function(model) {
   this.findAll = async (request, reply) => {
     try {
-      const queries = queryParsers(request);
+      const queries = await queryParsers(request, 'findAll');
       const results = await model.findAll(queries);
       return reply(results);
     } catch (e) {
@@ -15,7 +15,7 @@ export default function (model) {
 
   this.count = async (request, reply) => {
     try {
-      const queries = queryParsers(request);
+      const queries = await queryParsers(request, 'count');
       const result = await model.count(queries);
       return reply({ count: result });
     } catch (e) {
@@ -25,7 +25,7 @@ export default function (model) {
 
   this.findOne = async (request, reply) => {
     try {
-      const queries = queryParsers(request);
+      const queries = await queryParsers(request, 'findOne');
       const result = await model.findOne(queries);
       return reply(result);
     } catch (e) {

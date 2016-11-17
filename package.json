@@ -79,6 +79,7 @@
       "test/spec/**/*.spec.js"
     ],
     "concurrency": 10,
+    "verbose": true,
     "require": [
       "babel-register"
     ],
