@@ -3,5 +3,8 @@
   "globals": {
     "rootPath": true,
     "requireF": true
+  },
+  "rules": {
+    "import/prefer-default-export": 0
   }
 }

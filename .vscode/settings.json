@@ -1,0 +1,13 @@
+{
+  "editor.tabSize": 2,
+  "editor.formatOnType": true,
+  "eslint.enable": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    ".idea": true
+  },
+  "javascript.validate.enable": false
+}

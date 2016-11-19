@@ -1,9 +1,10 @@
-import path from 'path';
 import Hapi from 'hapi';
 import Sequelize from 'sequelize';
-import * as HapiSequelize from 'hapi-sequelize';
+import path from 'path';
+
 import * as HapiAuthJWT2 from 'hapi-auth-jwt2';
 import * as HapiBlipp from 'blipp';
+import * as HapiSequelize from 'hapi-sequelize';
 
 import './setup/core/globals';
 
@@ -11,9 +12,9 @@ const { secret, db } = requireF('setup/config');
 const { validateAuth } = requireF('services/core/authentications');
 const { bootServer } = requireF('services/commonServices');
 
+// initialize a HapiJS server
+export const server = new Hapi.Server();
 const run = async () => {
-  // initialize a HapiJS server
-  const server = new Hapi.Server();
   server.connection({ port: 4444, host: 'localhost' });
 
   // initialize a Sequelize instance
@@ -30,7 +31,8 @@ const run = async () => {
         models: [modelsGlob],
         sequelize,
         sync: true,
-        forceSync: false,
+        forceSync: true,
+        debug: true,
       },
     ],
   });

@@ -1,7 +1,9 @@
 import path from 'path';
 import glob from 'glob';
 
-const { getPackage } = requireF('services/commonServices');
+const {
+  getPackage,
+} = requireF('services/commonServices');
 
 exports.register = async (server, options, next) => {
   let availableRoles = {};
@@ -14,7 +16,10 @@ exports.register = async (server, options, next) => {
     const roleObj = require(role);
 
     // merge current role to a single variable contains all roles
-    availableRoles = { ...availableRoles, ...roleObj };
+    availableRoles = {
+      ...availableRoles,
+      ...roleObj,
+    };
   });
 
   const JSONPackage = getPackage();

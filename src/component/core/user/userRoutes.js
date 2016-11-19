@@ -1,24 +1,31 @@
 import path from 'path';
+import Joi from 'joi';
 
-const { prefix } = requireF('setup/config');
-const handlersGenerator = requireF('services/core/handlersGenerator');
+const {
+  prefix,
+} = requireF('setup/config');
+const handlersGenerator = requireF('services/core/handlersGenerator').default;
 const requestValidators = requireF('services/core/requestValidators').default;
 const userControllerLogin = requireF('component/core/user/userControllerLogin');
 
 export default (models) => {
   // define user component endpoint
-  const handler = new handlersGenerator(models.user); // eslint-disable-line new-cap
+  // eslint-disable-next-line new-cap
+  const handlers = new handlersGenerator(models.user, {
+    componentId: 'user',
+    associations: ['roles'],
+  });
   const validators = new requestValidators(models, models.user); // eslint-disable-line new-cap
 
   return [{
     // define GET /users route
     method: 'GET',
     path: path.join(prefix, 'users'),
-    handler: handler.findAll,
+    handler: handlers.findAll,
     config: {
       auth: {
         strategy: 'jwt',
-        scope: 'user:findAll',
+        scope: handlers.findAll.permissions,
       },
       validate: {
         ...validators.findAll,
@@ -28,11 +35,11 @@ export default (models) => {
     // define GET /users/count route
     method: 'GET',
     path: path.join(prefix, 'users', 'count'),
-    handler: handler.count,
+    handler: handlers.count,
     config: {
       auth: {
         strategy: 'jwt',
-        scope: 'user:count',
+        scope: handlers.count.permissions,
       },
       validate: {
         ...validators.count,
@@ -42,11 +49,11 @@ export default (models) => {
     // define GET /user route
     method: 'GET',
     path: path.join(prefix, 'user'),
-    handler: handler.findOne,
+    handler: handlers.findOne,
     config: {
       auth: {
         strategy: 'jwt',
-        scope: 'user:findOne',
+        scope: handlers.findOne.permissions,
       },
       validate: {
         ...validators.findOne,
@@ -56,7 +63,7 @@ export default (models) => {
     // define PUT /users route
     method: 'PUT',
     path: path.join(prefix, 'user'),
-    handler: handler.create,
+    handler: handlers.create,
     config: {
       validate: {
         ...validators.create,
@@ -66,11 +73,11 @@ export default (models) => {
     // define GET /user/{id} route
     method: 'GET',
     path: path.join(prefix, 'user', '{id}'),
-    handler: handler.findById,
+    handler: handlers.findById,
     config: {
       auth: {
         strategy: 'jwt',
-        scope: 'user:findById',
+        scope: handlers.findById.permissions,
       },
       validate: {
         ...validators.findById,
@@ -81,5 +88,19 @@ export default (models) => {
     method: 'POST',
     path: path.join(prefix, 'user', 'login'),
     handler: userControllerLogin,
+  }, {
+    // define GET /user/{id}/roles route
+    method: 'GET',
+    path: path.join(prefix, 'user', '{id}', 'roles'),
+    handler: handlers.rolesFindAll,
+    config: {
+      auth: {
+        strategy: 'jwt',
+        scope: handlers.rolesFindAll.permissions,
+      },
+      validate: {
+        query: Joi.any(),
+      },
+    },
   }];
 };

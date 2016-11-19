@@ -29,6 +29,9 @@ export const applicableMethods = {
   create: [
     'payload',
   ],
+  associationBelongsToMany: [
+    'where',
+  ],
 };
 
 export const sequelizeOperators = {
