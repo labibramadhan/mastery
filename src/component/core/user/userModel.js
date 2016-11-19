@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
-import locale from '../../setup/locales';
+
+const locale = requireF('setup/core/locales');
 
 export default (sequelize, dataTypes) =>
   sequelize.define('user', {

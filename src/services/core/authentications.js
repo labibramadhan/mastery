@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { getPackage } from '../services/commonServices';
+const { getPackage } = requireF('services/commonServices');
 
 /* eslint-disable import/prefer-default-export */
 

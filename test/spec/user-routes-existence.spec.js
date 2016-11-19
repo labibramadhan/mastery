@@ -2,7 +2,8 @@ import test from 'ava';
 import path from 'path';
 
 import mockUsers from '../helpers/mock-users';
-import { prefix } from '../../src/setup/config';
+
+const { prefix } = requireF('setup/config');
 
 mockUsers(test);
 
@@ -13,7 +14,7 @@ const confirmRoute = async (t, { path, method }) => {
   const routes = server.table()[0].table;
 
   t.truthy(routes.find(route =>
-     route.path === path && route.method === method.toLowerCase(),
+    route.path === path && route.method === method.toLowerCase(),
   ));
 };
 

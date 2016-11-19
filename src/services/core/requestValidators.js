@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import _ from 'lodash';
 
-import { concatToJoiObject } from '../services/commonServices';
+const { concatToJoiObject } = requireF('services/commonServices');
 
 // define what parameters allowed each method
 export const applicableMethods = {

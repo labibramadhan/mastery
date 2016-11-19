@@ -2,12 +2,11 @@ import path from 'path';
 import fs from 'fs';
 import Polyglot from 'node-polyglot';
 
-// define where the locales directory is
-const localesPath = path.resolve(path.join(__dirname, '..', 'locales'));
-
 export default async (locale = 'en') => {
   const i18n = new Polyglot({ locale });
-  const JSONPath = path.resolve(path.join(localesPath, 'en.json'));
+
+  // retrieve where the locale files are
+  const JSONPath = path.resolve(path.join(rootPath, 'locales', `${locale}.json`));
 
   if (!fs.existsSync(JSONPath)) {
     // throw an error if requested locale not found

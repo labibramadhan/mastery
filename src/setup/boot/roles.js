@@ -1,4 +1,4 @@
-import { getPackage } from '../../services/commonServices';
+const { getPackage } = requireF('services/commonServices');
 
 export default async (server) => {
   const { models } = server.plugins['hapi-sequelize'].db;

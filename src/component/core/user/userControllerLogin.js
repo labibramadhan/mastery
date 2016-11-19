@@ -1,8 +1,8 @@
 import Boom from 'boom';
 import jwt from 'jsonwebtoken';
 
-import locale from '../../setup/locales';
-import { secret } from '../../setup/config';
+const locale = requireF('setup/core/locales');
+const { secret } = requireF('setup/config');
 
 export default async (request, reply) => {
   const i18n = await locale();

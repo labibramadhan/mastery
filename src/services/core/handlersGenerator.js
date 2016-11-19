@@ -1,6 +1,6 @@
 import Boom from 'boom';
 
-import queryParsers from './queryParsers';
+const queryParsers = requireF('services/core/queryParsers').default;
 
 export default function (model) {
   this.findAll = async (request, reply) => {

@@ -1,7 +1,7 @@
 import url from 'url';
 import qs from 'qs';
 
-import { getPackage } from '../services/commonServices';
+const { getPackage } = requireF('services/commonServices');
 
 exports.register = (server, options, next) => {
   server.ext('onRequest', (request, reply) => {

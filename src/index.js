@@ -5,9 +5,11 @@ import * as HapiSequelize from 'hapi-sequelize';
 import * as HapiAuthJWT2 from 'hapi-auth-jwt2';
 import * as HapiBlipp from 'blipp';
 
-import { secret, db } from './setup/config';
-import { validateAuth } from './services/authentications';
-import { bootServer } from './services/commonServices';
+import './setup/core/globals';
+
+const { secret, db } = requireF('setup/config');
+const { validateAuth } = requireF('services/core/authentications');
+const { bootServer } = requireF('services/commonServices');
 
 const run = async () => {
   // initialize a HapiJS server
@@ -18,12 +20,14 @@ const run = async () => {
   const sequelize = new Sequelize('db', '', '', db);
 
   // register the hapi-sequelize plugin, let it scan /component/**/*Model.js for models
+  const modelsGlob = path.resolve(path.join(rootPath, 'component', '**', '*Model.js'));
+  const dbName = 'db';
   await server.register({
     register: HapiSequelize,
     options: [
       {
-        name: 'db',
-        models: [path.join(__dirname, 'component/**/*Model.js')],
+        name: dbName,
+        models: [modelsGlob],
         sequelize,
         sync: true,
         forceSync: false,

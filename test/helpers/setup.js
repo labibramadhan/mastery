@@ -6,14 +6,14 @@ import Sequelize from 'sequelize';
 import * as HapiSequelize from 'hapi-sequelize';
 import * as HapiAuthJWT2 from 'hapi-auth-jwt2';
 
-import { secret } from '../../src/setup/config';
-import { validateAuth } from '../../src/services/authentications';
-import { bootServer } from '../../src/services/commonServices';
+import '../../src/setup/core/globals';
+
+const { secret } = requireF('setup/config');
+const { validateAuth } = requireF('services/core/authentications');
+const { bootServer } = requireF('services/commonServices');
 
 const getPort = Promise.promisify(portfinder.getPort);
-const srcPath = path.resolve(path.join(__dirname, '..', '..', 'src'));
-const modelsPath = path.resolve(path.join(srcPath, 'component'));
-const modelsGlob = path.resolve(path.join(modelsPath, '**', '*Model.js'));
+const modelsGlob = path.resolve(path.join(rootPath, 'component', '**', '*Model.js'));
 const dbName = 'db';
 
 export default async (test) => {

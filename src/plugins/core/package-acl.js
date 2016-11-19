@@ -1,12 +1,11 @@
 import path from 'path';
 import glob from 'glob';
 
-import { getPackage } from '../services/commonServices';
+const { getPackage } = requireF('services/commonServices');
 
 exports.register = async (server, options, next) => {
   let availableRoles = {};
-  const rolesPath = path.resolve(path.join(__dirname, '..', 'setup', 'roles'));
-  const rolesGlob = path.resolve(path.join(rolesPath, '**', '*.js'));
+  const rolesGlob = path.resolve(path.join(rootPath, 'setup', 'roles', '**', '*.js'));
 
   // retrieve all available roles and its permissions defined inside /setup/roles directory
   const rolesDefinition = glob.sync(rolesGlob);

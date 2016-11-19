@@ -1,9 +1,9 @@
 import path from 'path';
 
-import { prefix } from '../../setup/config';
-import handlersGenerator from '../../services/handlersGenerator';
-import requestValidators from '../../services/requestValidators';
-import userControllerLogin from './userControllerLogin';
+const { prefix } = requireF('setup/config');
+const handlersGenerator = requireF('services/core/handlersGenerator');
+const requestValidators = requireF('services/core/requestValidators').default;
+const userControllerLogin = requireF('component/core/user/userControllerLogin');
 
 export default (models) => {
   // define user component endpoint

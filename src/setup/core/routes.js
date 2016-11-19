@@ -3,8 +3,7 @@ import glob from 'glob';
 import _ from 'lodash';
 
 export default async (models) => {
-  const routesPath = path.resolve(path.join(__dirname, '..', 'component'));
-  const routesGlob = path.resolve(path.join(routesPath, '**', '*Routes.js'));
+  const routesGlob = path.resolve(path.join(rootPath, 'component', '**', '*Routes.js'));
 
   // retrieve all available routes from /component/**/*Routes.js
   const routesComponent = glob.sync(routesGlob);
