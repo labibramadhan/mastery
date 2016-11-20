@@ -15,14 +15,14 @@ export default (test) => {
       email: 'admin1@mailinator.com',
       password: 'Asdqwe123',
     });
-    await admin1.addRoles(adminRole);
+    await admin1.addRoles([authenticatedRole, adminRole]);
 
     const admin2 = await user.create({
       username: 'admin2',
       email: 'admin2@mailinator.com',
       password: 'Asdqwe123',
     });
-    await admin2.addRoles(adminRole);
+    await admin2.addRoles([authenticatedRole, adminRole]);
 
     const authenticated1 = await user.create({
       username: 'authenticated1',

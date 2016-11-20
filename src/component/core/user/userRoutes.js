@@ -102,5 +102,19 @@ export default (models) => {
         query: Joi.any(),
       },
     },
+  }, {
+    // define GET /user/{id}/roles/count route
+    method: 'GET',
+    path: path.join(prefix, 'user', '{id}', 'roles', 'count'),
+    handler: handlers.rolesCount,
+    config: {
+      auth: {
+        strategy: 'jwt',
+        scope: handlers.rolesCount.permissions,
+      },
+      validate: {
+        query: Joi.any(),
+      },
+    },
   }];
 };

@@ -7,6 +7,7 @@ import * as HapiSequelize from 'hapi-sequelize';
 import * as HapiAuthJWT2 from 'hapi-auth-jwt2';
 
 import '../../src/setup/core/globals';
+import './globals';
 
 const { secret } = requireF('setup/config');
 const { validateAuth } = requireF('services/core/authentications');

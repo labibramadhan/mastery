@@ -29,7 +29,10 @@ export const applicableMethods = {
   create: [
     'payload',
   ],
-  associationBelongsToMany: [
+  findAllBelongsToMany: [
+    'where',
+  ],
+  countBelongsToMany: [
     'where',
   ],
 };

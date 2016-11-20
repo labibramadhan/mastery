@@ -2,9 +2,13 @@
   "extends": "airbnb",
   "globals": {
     "rootPath": true,
-    "requireF": true
+    "requireF": true,
+    "rootTest": true,
+    "testRequire": true
   },
   "rules": {
+    "global-require": 0,
+    "import/no-dynamic-require": 0,
     "import/prefer-default-export": 0
   }
 }

@@ -7,5 +7,6 @@ export default {
     'user:findOne',
     'user:findById',
     'user:roles:findAll',
+    'user:roles:count',
   ],
 };
