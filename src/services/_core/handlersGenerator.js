@@ -2,7 +2,7 @@ import _ from 'lodash';
 import Boom from 'boom';
 import Joi from 'joi';
 
-const queryParsers = requireF('services/core/queryParsers').default;
+const queryParsers = requireF('services/_core/queryParsers').default;
 
 export const handlerFindAll = (model, componentId) => {
   const handler = async (request, reply) => {

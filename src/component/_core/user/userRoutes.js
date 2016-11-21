@@ -4,9 +4,9 @@ import Joi from 'joi';
 const {
   prefix,
 } = requireF('setup/config');
-const handlersGenerator = requireF('services/core/handlersGenerator').default;
-const requestValidators = requireF('services/core/requestValidators').default;
-const userControllerLogin = requireF('component/core/user/userControllerLogin');
+const handlersGenerator = requireF('services/_core/handlersGenerator').default;
+const requestValidators = requireF('services/_core/requestValidators').default;
+const userControllerLogin = requireF('component/_core/user/userControllerLogin');
 
 export default (models) => {
   // define user component endpoint

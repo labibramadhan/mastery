@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import Promise from 'bluebird';
 
-const { applicableMethods } = requireF('services/core/requestValidators');
+const { applicableMethods } = requireF('services/_core/requestValidators');
 
 // define all available query parameter except 'where'
 const sequelizeKeys = ['include', 'order', 'limit', 'offset'];

@@ -1,7 +1,7 @@
 import Boom from 'boom';
 import jwt from 'jsonwebtoken';
 
-const locale = requireF('setup/core/locales');
+const locale = requireF('setup/_core/locales');
 const {
   secret,
 } = requireF('setup/config');

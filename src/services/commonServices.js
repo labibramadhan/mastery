@@ -20,7 +20,7 @@ const bootPlugins = async (server) => {
 };
 
 const bootRoutes = async (server) => {
-  const routesSetup = requireF('setup/core/routes.js');
+  const routesSetup = requireF('setup/_core/routes.js');
   // retrieve all available routes, pass the models from sequelize as a single parameter
   const allRoutes = await routesSetup(server.plugins['hapi-sequelize'].db.getModels());
   server.route(allRoutes);

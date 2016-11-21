@@ -6,10 +6,10 @@ import * as HapiAuthJWT2 from 'hapi-auth-jwt2';
 import * as HapiBlipp from 'blipp';
 import * as HapiSequelize from 'hapi-sequelize';
 
-import './setup/core/globals';
+import './setup/_core/globals';
 
 const { secret, db } = requireF('setup/config');
-const { validateAuth } = requireF('services/core/authentications');
+const { validateAuth } = requireF('services/_core/authentications');
 const { bootServer } = requireF('services/commonServices');
 
 // initialize a HapiJS server

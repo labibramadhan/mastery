@@ -6,11 +6,11 @@ import Sequelize from 'sequelize';
 import * as HapiSequelize from 'hapi-sequelize';
 import * as HapiAuthJWT2 from 'hapi-auth-jwt2';
 
-import '../../src/setup/core/globals';
+import '../../src/setup/_core/globals';
 import './globals';
 
 const { secret } = requireF('setup/config');
-const { validateAuth } = requireF('services/core/authentications');
+const { validateAuth } = requireF('services/_core/authentications');
 const { bootServer } = requireF('services/commonServices');
 
 const getPort = Promise.promisify(portfinder.getPort);
