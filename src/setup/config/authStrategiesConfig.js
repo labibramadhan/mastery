@@ -21,8 +21,8 @@ export default {
     config: {
       provider: 'facebook',
       password: secret,
-      clientId: '792735237441141',
-      clientSecret: '8bbbb1fa1b6596a5cfc7c4fab56c1016',
+      clientId: '203247580127542',
+      clientSecret: '08fbd9d63fc911634226c7ab97f7c344',
       isSecure: false,
     },
   },
