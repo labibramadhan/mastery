@@ -3,7 +3,7 @@ import glob from 'glob';
 
 const {
   getPackage,
-} = requireF('services/commonServices');
+} = requireF('services/_core/commonServices');
 
 exports.register = async (server, options, next) => {
   let availableRoles = {};

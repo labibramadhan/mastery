@@ -3,7 +3,7 @@ import path from 'path';
 
 import setup from '../../../../../helpers/setup';
 
-const { prefix } = requireF('setup/config');
+const { prefix } = requireF('setup/config/commonConfigs');
 
 setup(test);
 

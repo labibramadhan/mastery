@@ -55,6 +55,7 @@
   },
   "dependencies": {
     "bcrypt": "^0.8.7",
+    "bell": "^8.3.0",
     "blipp": "^2.3.0",
     "bluebird": "^3.4.6",
     "boom": "^4.2.0",

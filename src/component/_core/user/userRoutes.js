@@ -3,10 +3,11 @@ import Joi from 'joi';
 
 const {
   prefix,
-} = requireF('setup/config');
+} = requireF('setup/config/commonConfigs');
 const handlersGenerator = requireF('services/_core/handlersGenerator').default;
 const requestValidators = requireF('services/_core/requestValidators').default;
 const userControllerLogin = requireF('component/_core/user/userControllerLogin');
+const authStrategiesConfig = requireF('setup/config/authStrategiesConfig');
 
 export default (models) => {
   // define user component endpoint
@@ -24,7 +25,7 @@ export default (models) => {
     handler: handlers.findAll,
     config: {
       auth: {
-        strategy: 'jwt',
+        strategies: Object.keys(authStrategiesConfig),
         scope: handlers.findAll.permissions,
       },
       validate: {
@@ -38,7 +39,7 @@ export default (models) => {
     handler: handlers.count,
     config: {
       auth: {
-        strategy: 'jwt',
+        strategies: Object.keys(authStrategiesConfig),
         scope: handlers.count.permissions,
       },
       validate: {
@@ -52,7 +53,7 @@ export default (models) => {
     handler: handlers.findOne,
     config: {
       auth: {
-        strategy: 'jwt',
+        strategies: Object.keys(authStrategiesConfig),
         scope: handlers.findOne.permissions,
       },
       validate: {
@@ -76,7 +77,7 @@ export default (models) => {
     handler: handlers.findById,
     config: {
       auth: {
-        strategy: 'jwt',
+        strategies: Object.keys(authStrategiesConfig),
         scope: handlers.findById.permissions,
       },
       validate: {
@@ -95,7 +96,7 @@ export default (models) => {
     handler: handlers.rolesFindAll,
     config: {
       auth: {
-        strategy: 'jwt',
+        strategies: Object.keys(authStrategiesConfig),
         scope: handlers.rolesFindAll.permissions,
       },
       validate: {
@@ -109,7 +110,7 @@ export default (models) => {
     handler: handlers.rolesCount,
     config: {
       auth: {
-        strategy: 'jwt',
+        strategies: Object.keys(authStrategiesConfig),
         scope: handlers.rolesCount.permissions,
       },
       validate: {

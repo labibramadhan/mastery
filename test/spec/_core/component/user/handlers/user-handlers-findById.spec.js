@@ -4,7 +4,7 @@ import HttpStatus from 'http-status-codes';
 
 import mockUsers from '../../../../../helpers/mock-users';
 
-const { prefix } = requireF('setup/config');
+const { prefix } = requireF('setup/config/commonConfigs');
 
 mockUsers(test);
 

@@ -3,18 +3,20 @@ import Sequelize from 'sequelize';
 import path from 'path';
 
 import * as HapiAuthJWT2 from 'hapi-auth-jwt2';
+import * as HapiBell from 'bell';
 import * as HapiBlipp from 'blipp';
 import * as HapiSequelize from 'hapi-sequelize';
 
 import './setup/_core/globals';
 
-const { secret, db } = requireF('setup/config');
-const { validateAuth } = requireF('services/_core/authentications');
-const { bootServer } = requireF('services/commonServices');
+const { db } = requireF('setup/config/commonConfigs');
+const { bootServer } = requireF('services/_core/commonServices');
 
-// initialize a HapiJS server
-export const server = new Hapi.Server();
 const run = async () => {
+  // initialize a HapiJS server
+  const server = new Hapi.Server();
+  global.server = server;
+
   server.connection({ port: 4444, host: 'localhost' });
 
   // initialize a Sequelize instance
@@ -38,14 +40,7 @@ const run = async () => {
   });
 
   // register the hapi-auth-jwt2 plugin
-  await server.register(HapiAuthJWT2);
-
-  // register the 'jwt' auth schema
-  server.auth.strategy('jwt', 'jwt', {
-    key: secret,
-    validateFunc: validateAuth,
-    verifyOptions: { algorithms: ['HS256'] },
-  });
+  await server.register([HapiAuthJWT2, HapiBell]);
 
   // boot all available routes and execute boot scripts from /setup/boot directory
   await bootServer(server);

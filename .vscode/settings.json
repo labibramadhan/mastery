@@ -2,6 +2,7 @@
   "editor.tabSize": 2,
   "editor.formatOnType": true,
   "eslint.enable": true,
+  "eslint.autoFixOnSave": true,
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,

@@ -16,7 +16,7 @@
       "--expose_debug_as=v8debug"
     ]
   }, {
-    "type": "node",
+    "type": "node2",
     "request": "attach",
     "name": "Attach to Process",
     "port": 5858

@@ -1,17 +1,20 @@
 export default (sequelize, dataTypes) =>
 sequelize.define('session', {
-  name: {
+  token: {
     type: dataTypes.STRING,
     unique: true,
+    allowNull: false,
+  },
+  profile: dataTypes.TEXT,
+  expire: {
+    type: dataTypes.INTEGER,
+    allowNull: false,
   },
 }, {
   freezeTableName: true,
   classMethods: {
     associate: (models) => {
-      models.session.belongsToMany(models.user, {
-        through: 'userSession',
-        foreignKey: 'sessionId',
-      });
+      models.session.belongsTo(models.user);
     },
   },
 });

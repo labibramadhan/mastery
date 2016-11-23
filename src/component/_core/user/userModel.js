@@ -69,10 +69,7 @@ sequelize.define('user', {
         through: 'userRole',
         foreignKey: 'userId',
       });
-      models.user.belongsToMany(models.session, {
-        through: 'userSession',
-        foreignKey: 'userId',
-      });
+      models.user.hasMany(models.session);
     },
   },
   instanceMethods: {

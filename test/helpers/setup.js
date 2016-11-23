@@ -3,15 +3,14 @@ import portfinder from 'portfinder';
 import Promise from 'bluebird';
 import Hapi from 'hapi';
 import Sequelize from 'sequelize';
-import * as HapiSequelize from 'hapi-sequelize';
 import * as HapiAuthJWT2 from 'hapi-auth-jwt2';
+import * as HapiBell from 'bell';
+import * as HapiSequelize from 'hapi-sequelize';
 
 import '../../src/setup/_core/globals';
 import './globals';
 
-const { secret } = requireF('setup/config');
-const { validateAuth } = requireF('services/_core/authentications');
-const { bootServer } = requireF('services/commonServices');
+const { bootServer } = requireF('services/_core/commonServices');
 
 const getPort = Promise.promisify(portfinder.getPort);
 const modelsGlob = path.resolve(path.join(rootPath, 'component', '**', '*Model.js'));
@@ -32,6 +31,8 @@ export default async (test) => {
 
     // eslint-disable-next-line no-param-reassign
     const server = t.context.server = new Hapi.Server();
+    global.server = server;
+
     server.connection({
       host: '0.0.0.0',
       port: t.context.port,
@@ -48,13 +49,7 @@ export default async (test) => {
       },
     });
 
-    await server.register(HapiAuthJWT2);
-
-    server.auth.strategy('jwt', 'jwt', {
-      key: secret,
-      validateFunc: validateAuth,
-      verifyOptions: { algorithms: ['HS256'] },
-    });
+    await server.register([HapiAuthJWT2, HapiBell]);
 
     await bootServer(server);
   });

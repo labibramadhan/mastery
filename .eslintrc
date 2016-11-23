@@ -4,7 +4,8 @@
     "rootPath": true,
     "requireF": true,
     "rootTest": true,
-    "testRequire": true
+    "testRequire": true,
+    "server": true
   },
   "rules": {
     "global-require": 0,

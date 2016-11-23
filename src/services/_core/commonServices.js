@@ -3,7 +3,7 @@ import path from 'path';
 
 export const requireF = (file) => {
   // eslint-disable-next-line global-require
-  const { rootPath } = require('../setup/config');
+  const { rootPath } = require('../../setup/config/commonConfigs');
 
   // eslint-disable-next-line global-require,import/no-dynamic-require
   return require(path.join(rootPath, file));
@@ -26,8 +26,8 @@ const bootRoutes = async (server) => {
   server.route(allRoutes);
 };
 
-const bootScripts = async (server) => {
-  const bootGlob = path.resolve(path.join(rootPath, 'setup', 'boot', '**', '*.js'));
+const bootScripts = async (server, hook) => {
+  const bootGlob = path.resolve(path.join(rootPath, 'setup', 'boot', '**', `*${hook}.js`));
 
   // retrieve all available boot scripts
   const bootFiles = glob.sync(bootGlob);
@@ -41,15 +41,18 @@ export const bootServer = async (server) => {
   // boot local plugins from /plugins/**/*.js
   await bootPlugins(server);
 
+  // boot all boot script from /setup/boot/**/*Before.js
+  await bootScripts(server, 'Before');
+
   // boot all routes from /component/**/*Routes.js
   await bootRoutes(server);
 
-  // boot all boot scripts from /setup/boot/**/*.js
-  await bootScripts(server);
+  // boot all boot scripts from /setup/boot/**/*After.js
+  await bootScripts(server, 'After');
 };
 
 export const getPackage = () => {
-  const rootPath = path.resolve(path.join(__dirname, '..', '..'));
+  const rootPath = path.resolve(path.join(__dirname, '..', '..', '..'));
 
   // return the contents of /package.json
   return require(path.join(rootPath, 'package.json')); // eslint-disable-line global-require,import/no-dynamic-require
