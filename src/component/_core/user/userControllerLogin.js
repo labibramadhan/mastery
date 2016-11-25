@@ -1,4 +1,7 @@
-const { loginJWT, parseCredentials } = requireF('services/_core/authJWTServices');
+const {
+  loginJWT,
+  parseCredentials,
+} = requireF('services/_core/authentications/authJWTServices');
 
 export default async (request, reply) => {
   const credentials = parseCredentials(request.payload);

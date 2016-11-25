@@ -1,0 +1,34 @@
+{
+  "prefix": "/api/v1/",
+  "secret": "VfEwXo5TMrvgQXOe3scs3KvyQRkXXseg",
+  "maxSessions": 10,
+  "databases": {
+    "main": {
+      "dialect": "postgresql",
+      "host": "localhost",
+      "port": 5432,
+      "db": "hapiapistarter",
+      "username": "postgres",
+      "password": "sukses123",
+      "sync": true,
+      "forceSync": true,
+      "debug": true
+    }
+  },
+  "models": {
+    "role": {
+      "database": "main"
+    },
+    "session": {
+      "database": "main",
+      "public": true
+    },
+    "user": {
+      "database": "main",
+      "public": true
+    },
+    "userRole": {
+      "database": "main"
+    }
+  }
+}

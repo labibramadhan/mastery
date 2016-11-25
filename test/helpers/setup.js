@@ -4,7 +4,6 @@ import Promise from 'bluebird';
 import Hapi from 'hapi';
 import Sequelize from 'sequelize';
 import * as HapiAuthJWT2 from 'hapi-auth-jwt2';
-import * as HapiBell from 'bell';
 import * as HapiSequelize from 'hapi-sequelize';
 
 import '../../src/setup/_core/globals';
@@ -49,7 +48,7 @@ export default async (test) => {
       },
     });
 
-    await server.register([HapiAuthJWT2, HapiBell]);
+    await server.register(HapiAuthJWT2);
 
     await bootServer(server);
   });

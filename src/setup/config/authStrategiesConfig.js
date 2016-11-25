@@ -1,9 +1,7 @@
-const {
-  secret,
-} = requireF('setup/config/commonConfigs');
+const secret = conf.get('secret');
 const {
   validateJWT,
-} = requireF('services/_core/authJWTServices');
+} = requireF('services/_core/authentications/authJWTServices');
 
 export default {
   jwt: {
@@ -14,16 +12,6 @@ export default {
       verifyOptions: {
         algorithms: ['HS256'],
       },
-    },
-  },
-  facebook: {
-    type: 'bell',
-    config: {
-      provider: 'facebook',
-      password: secret,
-      clientId: '203247580127542',
-      clientSecret: '08fbd9d63fc911634226c7ab97f7c344',
-      isSecure: false,
     },
   },
 };

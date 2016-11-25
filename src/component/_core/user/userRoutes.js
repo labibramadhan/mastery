@@ -1,9 +1,7 @@
 import path from 'path';
 import Joi from 'joi';
 
-const {
-  prefix,
-} = requireF('setup/config/commonConfigs');
+const prefix = conf.get('prefix');
 const handlersGenerator = requireF('services/_core/handlersGenerator').default;
 const requestValidators = requireF('services/_core/requestValidators').default;
 const userControllerLogin = requireF('component/_core/user/userControllerLogin');

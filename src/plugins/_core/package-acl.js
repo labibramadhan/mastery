@@ -12,7 +12,6 @@ exports.register = async (server, options, next) => {
   // retrieve all available roles and its permissions defined inside /setup/roles directory
   const rolesDefinition = glob.sync(rolesGlob);
   rolesDefinition.forEach((role) => {
-    // eslint-disable-next-line global-require,import/no-dynamic-require
     const roleObj = require(role);
 
     // merge current role to a single variable contains all roles

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-export default (server) => {
+export default () => {
   const strategies = requireF('setup/config/authStrategiesConfig');
 
   _.each(strategies, (strategy, name) => {

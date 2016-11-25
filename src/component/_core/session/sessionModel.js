@@ -11,6 +11,7 @@ sequelize.define('session', {
     allowNull: false,
   },
 }, {
+  schema: 'core',
   freezeTableName: true,
   classMethods: {
     associate: (models) => {

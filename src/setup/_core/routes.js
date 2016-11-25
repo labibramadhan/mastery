@@ -11,7 +11,7 @@ export default async (models) => {
   // merge all routes in an array
   const allRoutes = [];
   _.each(routesComponent, (filePath) => {
-    const routes = require(filePath)(models); // eslint-disable-line
+    const routes = require(filePath)(models);
     allRoutes.push(...routes);
   });
 

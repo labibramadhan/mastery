@@ -5,11 +5,13 @@ import jwt from 'jsonwebtoken';
 const locale = requireF('setup/_core/locales');
 const {
   getPackage,
+  getModel,
+  getModels,
 } = requireF('services/_core/commonServices');
 const {
   maxSessions,
   secret,
-} = requireF('setup/config/commonConfigs');
+} = conf.get();
 
 export const parseCredentials = (payload) => {
   const {
@@ -38,9 +40,7 @@ export const parseCredentials = (payload) => {
 };
 
 export const postLoginJWT = async (user, token) => {
-  const {
-    session,
-  } = server.plugins['hapi-sequelize'].db.models;
+  const session = getModel('session');
   await session.create({ userId: user.id, token, expire: 604800 });
 };
 
@@ -49,7 +49,7 @@ export const loginJWT = async (credentials) => {
   const {
     user,
     session,
-  } = server.plugins['hapi-sequelize'].db.models;
+  } = getModels(['user', 'session']);
 
   const {
     password,
@@ -95,8 +95,8 @@ export const validateJWT = async (decoded, request, callback) => {
   const {
     user,
     role,
-  } = request.server.plugins['hapi-sequelize'].db.models;
-  const availableRoles = request.server.plugins[`${getPackage().name}-acl`];
+  } = getModels(['user', 'role']);
+  const availableRoles = server.plugins[`${getPackage().name}-acl`];
 
   // store only id, username, and email inside decoded JWT token
   const credentials = _.pick(decoded, ['id', 'username', 'email']);

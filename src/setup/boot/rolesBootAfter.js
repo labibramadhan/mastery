@@ -1,7 +1,10 @@
-const { getPackage } = requireF('services/_core/commonServices');
+const {
+  getPackage,
+  getModel,
+} = requireF('services/_core/commonServices');
 
-export default async (server) => {
-  const { models } = server.plugins['hapi-sequelize'].db;
+export default async () => {
+  const role = getModel('role');
 
   // retrieve all available roles
   const availableRoles = server.plugins[`${getPackage().name}-acl`];
@@ -10,10 +13,16 @@ export default async (server) => {
   // loop each roles name
   for (const roleName of availableRolesNames) { // eslint-disable-line no-restricted-syntax
     // check if this role name already persists in database
-    const roleExists = await models.role.findOne({ where: { name: roleName } });
+    const roleExists = await role.findOne({
+      where: {
+        name: roleName,
+      },
+    });
     if (!roleExists) {
       // if not, insert a new one
-      await models.role.create({ name: roleName });
+      await role.create({
+        name: roleName,
+      });
     }
   }
 };

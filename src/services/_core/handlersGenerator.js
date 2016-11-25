@@ -15,7 +15,10 @@ export const handlerFindAll = (model, componentId) => {
     }
   };
   const permissions = [`${componentId}:findAll`];
-  return { handler, permissions };
+  return {
+    handler,
+    permissions,
+  };
 };
 
 export const handlerCount = (model, componentId) => {
@@ -23,13 +26,18 @@ export const handlerCount = (model, componentId) => {
     try {
       const queries = await queryParsers(request, 'count');
       const result = await model.count(queries);
-      return reply({ count: result });
+      return reply({
+        count: result,
+      });
     } catch (e) {
       return reply(Boom.badRequest(e));
     }
   };
   const permissions = [`${componentId}:count`];
-  return { handler, permissions };
+  return {
+    handler,
+    permissions,
+  };
 };
 
 export const handlerFindOne = (model, componentId) => {
@@ -43,7 +51,10 @@ export const handlerFindOne = (model, componentId) => {
     }
   };
   const permissions = [`${componentId}:findOne`];
-  return { handler, permissions };
+  return {
+    handler,
+    permissions,
+  };
 };
 
 export const handlerFindById = (model, componentId) => {
@@ -56,7 +67,10 @@ export const handlerFindById = (model, componentId) => {
     }
   };
   const permissions = [`${componentId}:findById`];
-  return { handler, permissions };
+  return {
+    handler,
+    permissions,
+  };
 };
 
 export const handlerCreate = (model, componentId) => {
@@ -69,7 +83,10 @@ export const handlerCreate = (model, componentId) => {
     }
   };
   const permissions = [`${componentId}:create`];
-  return { handler, permissions };
+  return {
+    handler,
+    permissions,
+  };
 };
 
 export const handlerAssociationFindAll = (model, componentId, association) => {
@@ -86,7 +103,10 @@ export const handlerAssociationFindAll = (model, componentId, association) => {
     }
   };
   const permissions = [`${componentId}:${association.as}:findAll`];
-  return { handler, permissions };
+  return {
+    handler,
+    permissions,
+  };
 };
 
 export const handlerAssociationCount = (model, componentId, association) => {
@@ -97,13 +117,18 @@ export const handlerAssociationCount = (model, componentId, association) => {
       const queries = await queryParsers(request, methodName);
       const expectedMethodName = `count${_.upperFirst(_.camelCase(association.as))}`;
       const results = await modelInstance[expectedMethodName](queries);
-      return reply({ count: results });
+      return reply({
+        count: results,
+      });
     } catch (e) {
       return reply(Boom.badRequest(e));
     }
   };
   const permissions = [`${componentId}:${association.as}:count`];
-  return { handler, permissions };
+  return {
+    handler,
+    permissions,
+  };
 };
 
 export const handlerAssociationFindOne = (model, componentId, association) => {
@@ -118,30 +143,51 @@ export const handlerAssociationFindOne = (model, componentId, association) => {
     }
   };
   const permissions = [`${componentId}:${association.as}:findOne`];
-  return { handler, permissions };
+  return {
+    handler,
+    permissions,
+  };
 };
 
-export default function (model, { componentId, associations }) {
+export default function (model, {
+  componentId,
+  associations,
+}) {
   let handler;
   let permissions;
 
-  ({ handler, permissions } = handlerFindAll(model, componentId));
+  ({
+    handler,
+    permissions,
+  } = handlerFindAll(model, componentId));
   this.findAll = handler;
   this.findAll.permissions = permissions;
 
-  ({ handler, permissions } = handlerCount(model, componentId));
+  ({
+    handler,
+    permissions,
+  } = handlerCount(model, componentId));
   this.count = handler;
   this.count.permissions = permissions;
 
-  ({ handler, permissions } = handlerFindOne(model, componentId));
+  ({
+    handler,
+    permissions,
+  } = handlerFindOne(model, componentId));
   this.findOne = handler;
   this.findOne.permissions = permissions;
 
-  ({ handler, permissions } = handlerFindById(model, componentId));
+  ({
+    handler,
+    permissions,
+  } = handlerFindById(model, componentId));
   this.findById = handler;
   this.findById.permissions = permissions;
 
-  ({ handler, permissions } = handlerCreate(model, componentId));
+  ({
+    handler,
+    permissions,
+  } = handlerCreate(model, componentId));
   this.create = handler;
   this.create.permissions = permissions;
 
@@ -162,16 +208,25 @@ export default function (model, { componentId, associations }) {
       switch (association.associationType) {
         case 'BelongsToMany':
         case 'HasMany':
-          ({ handler, permissions } = handlerAssociationFindAll(model, componentId, association));
+          ({
+            handler,
+            permissions,
+          } = handlerAssociationFindAll(model, componentId, association));
           this[`${association.as}FindAll`] = handler;
           this[`${association.as}FindAll`].permissions = permissions;
 
-          ({ handler, permissions } = handlerAssociationCount(model, componentId, association));
+          ({
+            handler,
+            permissions,
+          } = handlerAssociationCount(model, componentId, association));
           this[`${association.as}Count`] = handler;
           this[`${association.as}Count`].permissions = permissions;
           break;
         default:
-          ({ handler, permissions } = handlerAssociationFindOne(model, componentId, association));
+          ({
+            handler,
+            permissions,
+          } = handlerAssociationFindOne(model, componentId, association));
           this[`${association.as}FindOne`] = handler;
           this[`${association.as}FindOne`].permissions = permissions;
           break;

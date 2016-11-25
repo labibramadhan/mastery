@@ -58,6 +58,7 @@ sequelize.define('user', {
     },
   },
 }, {
+  schema: 'core',
   freezeTableName: true,
   indexes: [{
     unique: true,

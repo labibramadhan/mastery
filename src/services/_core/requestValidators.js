@@ -1,7 +1,9 @@
 import Joi from 'joi';
 import _ from 'lodash';
 
-const { concatToJoiObject } = requireF('services/_core/commonServices');
+const {
+  concatToJoiObject,
+} = requireF('services/_core/commonServices');
 
 // define what parameters allowed each method
 export const applicableMethods = {
@@ -83,9 +85,9 @@ export const buildIncludeValidation = (models) => {
   _.each(models, (m) => {
     const associatedModelNames = Object.keys(m.associations);
     const modelHasAssociations = associatedModelNames && associatedModelNames.length;
-    const thisValidIncludeString = modelHasAssociations
-      ? Joi.string().valid(...associatedModelNames)
-      : Joi.valid(null);
+    const thisValidIncludeString = modelHasAssociations ?
+      Joi.string().valid(...associatedModelNames) :
+      Joi.valid(null);
     validIncludeString = [...validIncludeString, thisValidIncludeString];
     validIncludeModel = [...validIncludeModel, thisValidIncludeString];
 

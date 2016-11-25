@@ -5,6 +5,7 @@ sequelize.define('role', {
     unique: true,
   },
 }, {
+  schema: 'core',
   freezeTableName: true,
   classMethods: {
     associate: (models) => {

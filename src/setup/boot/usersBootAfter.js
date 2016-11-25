@@ -1,13 +1,28 @@
-export default async (server) => {
-  const { models } = server.plugins['hapi-sequelize'].db;
+const {
+  getModels,
+} = requireF('services/_core/commonServices');
+
+export default async () => {
+  const {
+    role,
+    user,
+  } = getModels(['role', 'user']);
 
   // add a default admin account
-  const adminRole = await models.role.find({ where: { name: 'admin' } });
+  const adminRole = await role.find({
+    where: {
+      name: 'admin',
+    },
+  });
   if (adminRole) {
     let defaultAdmin;
-    defaultAdmin = await models.user.find({ where: { username: 'admin' } });
+    defaultAdmin = await user.find({
+      where: {
+        username: 'admin',
+      },
+    });
     if (!defaultAdmin) {
-      defaultAdmin = await models.user.create({
+      defaultAdmin = await user.create({
         username: 'admin',
         email: 'admin101@mailinator.com',
         password: 'adminpassword',

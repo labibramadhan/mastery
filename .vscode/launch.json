@@ -10,11 +10,7 @@
     "program": "${workspaceRoot}/src/index.js",
     "sourceMaps": true,
     "cwd": "${workspaceRoot}",
-    "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/babel-node",
-    "runtimeArgs": [
-      "--nolazy",
-      "--expose_debug_as=v8debug"
-    ]
+    "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/babel-node"
   }, {
     "type": "node2",
     "request": "attach",

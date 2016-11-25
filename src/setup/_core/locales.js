@@ -3,7 +3,9 @@ import fs from 'fs';
 import Polyglot from 'node-polyglot';
 
 export default async (locale = 'en') => {
-  const i18n = new Polyglot({ locale });
+  const i18n = new Polyglot({
+    locale,
+  });
 
   // retrieve where the locale files are
   const JSONPath = path.resolve(path.join(rootPath, 'locales', `${locale}.json`));

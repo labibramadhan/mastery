@@ -1,7 +1,9 @@
 import _ from 'lodash';
 import Promise from 'bluebird';
 
-const { applicableMethods } = requireF('services/_core/requestValidators');
+const {
+  applicableMethods,
+} = requireF('services/_core/requestValidators');
 
 // define all available query parameter except 'where'
 const sequelizeKeys = ['include', 'order', 'limit', 'offset'];
@@ -12,7 +14,10 @@ const getIncludeModelInstance = (includeItem, models) =>
     if (include) {
       if (typeof include !== 'object') {
         const singluarOrPluralMatch = Object.keys(models).find((modelName) => {
-          const { _singular, _plural } = models[modelName];
+          const {
+            _singular,
+            _plural,
+          } = models[modelName];
           return _singular === include || _plural === include;
         });
 
@@ -43,9 +48,8 @@ const getIncludeModelInstance = (includeItem, models) =>
 export const parseInclude = async (query, models) => {
   if (typeof query.include === 'undefined') return [];
 
-  const include = Array.isArray(query.include)
-    ? query.include
-    : [query.include];
+  const include = Array.isArray(query.include) ?
+    query.include : [query.include];
 
   const includes = include.map(async b =>
     getIncludeModelInstance(b, models),
@@ -62,7 +66,9 @@ export const parseWhere = query =>
   _.omit(_.omit(query, sequelizeKeys), 'token');
 
 export const parseLimit = (query) => {
-  const { limit } = query;
+  const {
+    limit,
+  } = query;
   if (!_.isUndefined(limit)) {
     // convert limit parameter value to number
     return _.toNumber(limit);
@@ -71,7 +77,9 @@ export const parseLimit = (query) => {
 };
 
 export const parseOffset = (query) => {
-  const { offset } = query;
+  const {
+    offset,
+  } = query;
   if (!_.isUndefined(offset)) {
     // convert offset parameter value to number
     return _.toNumber(offset);
@@ -98,7 +106,9 @@ const parseOrderArray = (orderColumns, models) =>
   });
 
 export const parseOrder = (request) => {
-  const { order } = request.query;
+  const {
+    order,
+  } = request.query;
 
   if (!order) return null;
 
@@ -112,13 +122,18 @@ export const parseOrder = (request) => {
 
 const queryParsers = async (request, methodName) => {
   let queries = {};
-  const { models } = request.server.plugins['hapi-sequelize'].db;
+  const {
+    models,
+  } = server.plugins['hapi-sequelize'].db;
 
   // try to parse include parameters if exists
   if (applicableMethods[methodName].includes('include')) {
     const include = await parseInclude(request.query, models);
     if (include) {
-      queries = { ...queries, include };
+      queries = {
+        ...queries,
+        include,
+      };
     }
   }
 
@@ -126,23 +141,36 @@ const queryParsers = async (request, methodName) => {
   if (applicableMethods[methodName].includes('where')) {
     const where = parseWhere(request.query);
     if (where) {
-      queries = { ...queries, where };
+      queries = {
+        ...queries,
+        where,
+      };
     }
   }
 
   // try to parse limit parameter if exists
   if (applicableMethods[methodName].includes('limit')) {
-    const { limit } = parseLimit(request.query);
+    const {
+      limit,
+    } = parseLimit(request.query);
     if (limit) {
-      queries = { ...queries, limit };
+      queries = {
+        ...queries,
+        limit,
+      };
     }
   }
 
   // try to parse offset parameter if exists
   if (applicableMethods[methodName].includes('offset')) {
-    const { offset } = parseOffset(request.query);
+    const {
+      offset,
+    } = parseOffset(request.query);
     if (offset) {
-      queries = { ...queries, offset };
+      queries = {
+        ...queries,
+        offset,
+      };
     }
   }
   return queries;

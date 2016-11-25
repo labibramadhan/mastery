@@ -1,7 +1,9 @@
 import url from 'url';
 import qs from 'qs';
 
-const { getPackage } = requireF('services/_core/commonServices');
+const {
+  getPackage,
+} = requireF('services/_core/commonServices');
 
 exports.register = (server, options, next) => {
   server.ext('onRequest', (request, reply) => {
