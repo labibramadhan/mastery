@@ -1,15 +1,15 @@
 {
-  "name": "hapi-api-starter",
+  "name": "mastery",
   "version": "1.0.0",
   "main": "build/index.js",
   "license": "Apache-2.0",
   "author": "Muhammad Labib Ramadhan",
   "email": "mlabib.ramadhan@gmail.com",
-  "url": "https://hithub.com/labibramadhan/hapi-api-starter",
+  "url": "https://hithub.com/labibramadhan/mastery",
   "keywords": [
     "hapi",
     "api",
-    "starter",
+    "rest",
     "sequelize",
     "generator"
   ],
