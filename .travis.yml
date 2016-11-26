@@ -1,6 +1,12 @@
 language: node_js
 node_js:
   - "6"
+  - "5"
+  - "4"
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database hapiapistarter; use database hapiapistarter; create schema core authorization postgres;' -U postgres
 addons:
   apt:
     sources:
