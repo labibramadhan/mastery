@@ -8,5 +8,6 @@ const { requireF } = require(path.resolve(path.join(rootPath, 'services/_core/co
 
 global.requireF = requireF;
 
-nconf.file(path.resolve(path.join(rootPath, 'config/development.json')));
+const { bootConfigs } = requireF('services/_core/commonServices');
+bootConfigs(nconf);
 global.conf = nconf;

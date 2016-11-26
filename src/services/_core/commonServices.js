@@ -74,6 +74,15 @@ export const associateModel = (models, modelName) => {
   });
 };
 
+export const bootConfigs = (nconf) => {
+  const env = process.env.NODE_ENV || 'development';
+  const configGlob = path.resolve(path.join(rootPath, 'config', '**', `${env}*.json`));
+  const configs = glob.sync(configGlob);
+  configs.forEach((config, idx) => {
+    nconf.file(idx, config);
+  });
+};
+
 const bootDatabases = async () => {
   const databases = conf.get('databases');
   const options = _.map(databases, (database, name) => {
