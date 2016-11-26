@@ -4,7 +4,7 @@ import nconf from 'nconf';
 // define rootPath first, needed for requireF
 global.rootPath = path.resolve(path.join(__dirname, '..', '..'));
 
-const { requireF } = require('../../services/_core/commonServices');
+const { requireF } = require(path.resolve(path.join(rootPath, 'services/_core/commonServices')));
 
 global.requireF = requireF;
 

@@ -9,13 +9,15 @@ import mockUsers from '../../../../../helpers/mock-users';
 
 const prefix = conf.get('prefix');
 
-describe(`GET findById ${prefix}user/{id}`, () => {
+describe(`GET findAllBelongsToMany ${URI(`${prefix}user/{id}/roles`).addQuery({
+  name: 'admin',
+})}`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
 
     const {
-      admin1,
+      admin2,
     } = this.users;
 
     const {
@@ -25,7 +27,7 @@ describe(`GET findById ${prefix}user/{id}`, () => {
       url: `${prefix}user/login`,
       method: 'POST',
       payload: {
-        username: admin1.username,
+        username: admin2.username,
         password: 'Asdqwe123',
       },
     });
@@ -37,9 +39,13 @@ describe(`GET findById ${prefix}user/{id}`, () => {
   });
 
   it('works', async function it() {
-    const { authenticated2 } = this.users;
+    const { admin2 } = this.users;
+    const { adminRole } = this.roles;
 
-    const thisTestUrl = URI(`${prefix}user/${authenticated2.id}`).addQuery({ token: this.token }).toString();
+    const thisTestUrl = URI(`${prefix}user/${admin2.id}/roles`).addQuery({
+      name: 'admin',
+      token: this.token,
+    }).toString();
 
     const {
       result,
@@ -50,6 +56,7 @@ describe(`GET findById ${prefix}user/{id}`, () => {
     });
 
     assert.equal(statusCode, HttpStatus.OK);
-    assert.equal(result.id, authenticated2.id);
+    assert.equal(result.length, 1);
+    assert.equal(result[0].id, adminRole.id);
   });
 });

@@ -51,9 +51,27 @@ export const getAllModels = () => {
   _.each(databaseIndentifiers, (databaseIndentifier) => {
     const modelNames = _.keys(getModelConfsByIdentifier(databaseIndentifier));
     const models = getModels(modelNames);
-    allModels = { ...allModels, ...models };
+    allModels = {
+      ...allModels,
+      ...models,
+    };
   });
   return allModels;
+};
+
+export const associateModel = (models, modelName) => {
+  const associations = conf.get(`models:${modelName}:relationships`);
+  _.each(associations, (association) => {
+    const {
+      type,
+      model,
+    } = association;
+    const associationConfig = _.omit(association, ['type', 'model']);
+    if (_.has(associationConfig, 'through')) {
+      associationConfig.through = models[associationConfig.through];
+    }
+    models[modelName][type](models[model], associationConfig);
+  });
 };
 
 const bootDatabases = async () => {

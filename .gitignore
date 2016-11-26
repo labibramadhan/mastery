@@ -1,4 +1,5 @@
 .idea
+.history
 build
 node_modules
 *.lock

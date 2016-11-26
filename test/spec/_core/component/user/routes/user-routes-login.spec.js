@@ -1,21 +1,24 @@
-import test from 'ava';
 import path from 'path';
-
+import {
+  assert,
+} from 'chai';
 import setup from '../../../../../helpers/setup';
 
-const { prefix } = requireF('setup/config/commonConfigs');
+const prefix = conf.get('prefix');
 
-setup(test);
+describe(`existence POST login ${prefix}user/login`, () => {
+  before(async () => {
+    await setup();
+  });
 
-test(`existence POST login ${prefix}user/login`, (t) => {
-  const { server } = t.context;
+  it('exists', () => {
+    const thisPath = path.join(prefix, 'user', 'login');
+    const thisMethod = 'POST';
 
-  const thisPath = path.join(prefix, 'user', 'login');
-  const thisMethod = 'POST';
+    const routes = server.table()[0].table;
 
-  const routes = server.table()[0].table;
-
-  t.truthy(routes.find(route =>
-    route.path === thisPath && route.method === thisMethod.toLowerCase(),
-  ));
+    assert.isObject(routes.find(route =>
+      route.path === thisPath && route.method === thisMethod.toLowerCase(),
+    ));
+  });
 });

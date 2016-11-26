@@ -1,3 +1,7 @@
+const {
+  associateModel,
+} = requireF('services/_core/commonServices');
+
 export default (sequelize, dataTypes) =>
 sequelize.define('session', {
   token: {
@@ -15,7 +19,7 @@ sequelize.define('session', {
   freezeTableName: true,
   classMethods: {
     associate: (models) => {
-      models.session.belongsTo(models.user);
+      associateModel(models, 'session');
     },
   },
 });

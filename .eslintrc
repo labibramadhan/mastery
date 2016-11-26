@@ -2,6 +2,12 @@
   "extends": "airbnb",
   "globals": {
     "conf": true,
+    "describe": true,
+    "it": true,
+    "before": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "after": true,
     "requireF": true,
     "rootPath": true,
     "rootTest": true,

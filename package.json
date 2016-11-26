@@ -24,13 +24,12 @@
     "nodemon:src": "nodemon --watch src .",
     "dev:prod": "npm-run-all --parallel watch nodemon:build",
     "dev": "babel-node src/index.js",
-    "test": "ava"
+    "test": "mocha --compilers js:babel-register --recursive test/spec/**/*.js"
   },
   "pre-commit": [
     "lint"
   ],
   "devDependencies": {
-    "ava": "^0.16.0",
     "babel": "^6.5.2",
     "babel-cli": "^6.18.0",
     "babel-plugin-add-module-exports": "^0.2.1",
@@ -59,6 +58,7 @@
     "blipp": "^2.3.0",
     "bluebird": "^3.4.6",
     "boom": "^4.2.0",
+    "chai": "^3.5.0",
     "cookie": "^0.3.1",
     "del-cli": "^0.2.0",
     "glob": "^7.1.1",
@@ -69,6 +69,7 @@
     "joi": "^9.2.0",
     "jsonwebtoken": "^7.1.9",
     "lodash": "^4.16.6",
+    "mocha": "^3.2.0",
     "nconf": "^0.8.4",
     "node-polyglot": "^2.1.0",
     "pg": "^6.1.0",
@@ -76,17 +77,5 @@
     "sequelize": "^3.25.0",
     "sqlite3": "^3.1.8",
     "urijs": "^1.18.2"
-  },
-  "ava": {
-    "files": [
-      "test/spec/**/*.spec.js"
-    ],
-    "concurrency": 10,
-    "verbose": true,
-    "failFast": true,
-    "require": [
-      "babel-register"
-    ],
-    "babel": "inherit"
   }
 }

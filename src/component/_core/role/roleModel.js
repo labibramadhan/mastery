@@ -1,3 +1,7 @@
+const {
+  associateModel,
+} = requireF('services/_core/commonServices');
+
 export default (sequelize, dataTypes) =>
 sequelize.define('role', {
   name: {
@@ -9,10 +13,7 @@ sequelize.define('role', {
   freezeTableName: true,
   classMethods: {
     associate: (models) => {
-      models.role.belongsToMany(models.user, {
-        through: 'userRole',
-        foreignKey: 'roleId',
-      });
+      associateModel(models, 'role');
     },
   },
 });

@@ -1,21 +1,24 @@
-import test from 'ava';
 import path from 'path';
-
+import {
+  assert,
+} from 'chai';
 import setup from '../../../../../helpers/setup';
 
-const { prefix } = requireF('setup/config/commonConfigs');
+const prefix = conf.get('prefix');
 
-setup(test);
+describe(`existence GET count ${prefix}users`, () => {
+  before(async () => {
+    await setup();
+  });
 
-test(`existence GET count ${prefix}users`, (t) => {
-  const { server } = t.context;
+  it('exists', () => {
+    const thisPath = path.join(prefix, 'users', 'count');
+    const thisMethod = 'GET';
 
-  const thisPath = path.join(prefix, 'users', 'count');
-  const thisMethod = 'GET';
+    const routes = server.table()[0].table;
 
-  const routes = server.table()[0].table;
-
-  t.truthy(routes.find(route =>
-    route.path === thisPath && route.method === thisMethod.toLowerCase(),
-  ));
+    assert.isObject(routes.find(route =>
+      route.path === thisPath && route.method === thisMethod.toLowerCase(),
+    ));
+  });
 });

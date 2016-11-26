@@ -1,5 +1,8 @@
 import bcrypt from 'bcrypt';
 
+const {
+  associateModel,
+} = requireF('services/_core/commonServices');
 const locale = requireF('setup/_core/locales');
 
 export default (sequelize, dataTypes) =>
@@ -66,11 +69,7 @@ sequelize.define('user', {
   }],
   classMethods: {
     associate: (models) => {
-      models.user.belongsToMany(models.role, {
-        through: 'userRole',
-        foreignKey: 'userId',
-      });
-      models.user.hasMany(models.session);
+      associateModel(models, 'user');
     },
   },
   instanceMethods: {

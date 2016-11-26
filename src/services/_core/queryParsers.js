@@ -4,6 +4,9 @@ import Promise from 'bluebird';
 const {
   applicableMethods,
 } = requireF('services/_core/requestValidators');
+const {
+  getAllModels,
+} = requireF('services/_core/commonServices');
 
 // define all available query parameter except 'where'
 const sequelizeKeys = ['include', 'order', 'limit', 'offset'];
@@ -45,8 +48,10 @@ const getIncludeModelInstance = (includeItem, models) =>
     return resolve(include);
   });
 
-export const parseInclude = async (query, models) => {
+export const parseInclude = async (query) => {
   if (typeof query.include === 'undefined') return [];
+
+  const models = getAllModels();
 
   const include = Array.isArray(query.include) ?
     query.include : [query.include];
@@ -122,13 +127,10 @@ export const parseOrder = (request) => {
 
 const queryParsers = async (request, methodName) => {
   let queries = {};
-  const {
-    models,
-  } = server.plugins['hapi-sequelize'].db;
 
   // try to parse include parameters if exists
   if (applicableMethods[methodName].includes('include')) {
-    const include = await parseInclude(request.query, models);
+    const include = await parseInclude(request.query);
     if (include) {
       queries = {
         ...queries,
