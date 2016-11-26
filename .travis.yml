@@ -6,7 +6,8 @@ node_js:
 services:
   - postgresql
 before_script:
-  - psql -c 'create database hapiapistarter; \c hapiapistarter; create schema core authorization postgres;' -U postgres
+  - psql -c 'create database hapiapistarter;' -U postgres
+  - psql -d hapiapistarter -c 'create schema core authorization postgres' -U postgres
 addons:
   apt:
     sources:
