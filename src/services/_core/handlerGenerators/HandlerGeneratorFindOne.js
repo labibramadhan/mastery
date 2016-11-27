@@ -1,6 +1,6 @@
 import Boom from 'boom';
 
-const queryParsers = requireF('services/_core/queryParsers').default;
+const QueryParsers = requireF('services/_core/queryParsers/QueryParsers');
 
 /**
  * Generate the findOne handler of a single model
@@ -21,6 +21,8 @@ export default class HandlerGeneratorFindOne {
     this.model = model;
     this.componentId = componentId;
     this.permissions = [`${componentId}:findOne`];
+
+    this.queryParsers = new QueryParsers();
   }
 
   /**
@@ -29,9 +31,12 @@ export default class HandlerGeneratorFindOne {
    * @memberOf HandlerGeneratorFindOne
    */
   handler = async (request, reply) => {
-    const { model } = this;
+    const {
+      model,
+      queryParsers,
+    } = this;
     try {
-      const queries = await queryParsers(request, 'findOne');
+      const queries = await queryParsers.parse(request, 'findOne');
       const result = await model.findOne(queries) || Boom.notFound();
       return reply(result);
     } catch (e) {

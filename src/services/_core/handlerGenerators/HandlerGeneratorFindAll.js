@@ -1,6 +1,6 @@
 import Boom from 'boom';
 
-const queryParsers = requireF('services/_core/queryParsers').default;
+const QueryParsers = requireF('services/_core/queryParsers/QueryParsers');
 
 /**
  * Generate the findAll handler of a single model
@@ -21,6 +21,8 @@ export default class HandlerGeneratorFindAll {
     this.model = model;
     this.componentId = componentId;
     this.permissions = [`${componentId}:findAll`];
+
+    this.queryParsers = new QueryParsers();
   }
 
   /**
@@ -29,9 +31,12 @@ export default class HandlerGeneratorFindAll {
    * @memberOf HandlerGeneratorFindAll
    */
   handler = async (request, reply) => {
-    const { model } = this;
+    const {
+      model,
+      queryParsers,
+    } = this;
     try {
-      const queries = await queryParsers(request, 'findAll');
+      const queries = await queryParsers.parse(request, 'findAll');
       const results = await model.findAll(queries);
       return reply(results);
     } catch (e) {

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import Boom from 'boom';
 
-const queryParsers = requireF('services/_core/queryParsers').default;
+const QueryParsers = requireF('services/_core/queryParsers/QueryParsers');
 
 /**
  * Generate the count handler of an association of belongsToMany/hasMany
@@ -24,6 +24,8 @@ export default class HandlerGeneratorAssociationCount {
     this.componentId = componentId;
     this.association = association;
     this.permissions = [`${componentId}:${association.as}:count`];
+
+    this.queryParsers = new QueryParsers();
   }
 
   /**
@@ -35,6 +37,7 @@ export default class HandlerGeneratorAssociationCount {
     const {
       association,
       model,
+      queryParsers,
     } = this;
     try {
       const modelInstance = await model.findById(request.params.id);
@@ -42,7 +45,7 @@ export default class HandlerGeneratorAssociationCount {
         return reply(Boom.notFound());
       }
       const methodName = `count${association.associationType}`;
-      const queries = await queryParsers(request, methodName);
+      const queries = await queryParsers.parse(request, methodName);
       const expectedMethodName = `count${_.upperFirst(_.camelCase(association.as))}`;
       const result = await modelInstance[expectedMethodName](queries);
       return reply({ count: result });

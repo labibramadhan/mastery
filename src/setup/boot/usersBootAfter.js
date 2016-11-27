@@ -24,10 +24,32 @@ export default async () => {
     if (!defaultAdmin) {
       defaultAdmin = await user.create({
         username: 'admin',
-        email: 'admin101@mailinator.com',
+        email: 'admin@mailinator.com',
         password: 'adminpassword',
       });
       await defaultAdmin.addRoles(adminRole);
+    }
+  }
+
+  // add a default authenticated account
+  const authenticatedRole = await role.find({
+    where: {
+      name: 'authenticated',
+    },
+  });
+  if (authenticatedRole) {
+    let defaultAuthenticated;
+    defaultAuthenticated = await user.find({
+      where: {
+        username: 'authenticated',
+      },
+    });
+    if (!defaultAuthenticated) {
+      defaultAuthenticated = await user.create({
+        username: 'authenticated',
+        email: 'authenticated@mailinator.com',
+        password: 'authenticatedpassword',
+      });
     }
   }
 };

@@ -11,12 +11,16 @@ const HandlerGeneratorFindById = requireF('services/_core/handlerGenerators/Hand
 const HandlerGeneratorAssociations = requireF('services/_core/handlerGenerators/HandlerGeneratorAssociations');
 const UserHandlerLogin = requireF('component/_core/user/UserHandlerLogin');
 
-const requestValidators = requireF('services/_core/requestValidators').default;
+const RequestValidators = requireF('services/_core/requestValidators/RequestValidators');
+
 const authStrategiesConfig = requireF('setup/config/authStrategiesConfig');
 
 export default (models) => {
   // define user component endpoint
-  const validators = new requestValidators(models, models.user); // eslint-disable-line new-cap
+  // const validators = new requestValidators(models, models.user); // eslint-disable-line new-cap
+
+  const requestValidators = new RequestValidators(models.user);
+  requestValidators.build();
 
   const handlerFindAll = new HandlerGeneratorFindAll(models.user, 'user');
   const handlerCount = new HandlerGeneratorCount(models.user, 'user');
@@ -38,7 +42,7 @@ export default (models) => {
         scope: handlerFindAll.permissions,
       },
       validate: {
-        ...validators.findAll,
+        ...requestValidators.findAll,
       },
     },
   }, {
@@ -52,7 +56,7 @@ export default (models) => {
         scope: handlerCount.permissions,
       },
       validate: {
-        ...validators.count,
+        ...requestValidators.count,
       },
     },
   }, {
@@ -66,7 +70,7 @@ export default (models) => {
         scope: handlerFindOne.permissions,
       },
       validate: {
-        ...validators.findOne,
+        ...requestValidators.findOne,
       },
     },
   }, {
@@ -80,7 +84,7 @@ export default (models) => {
         scope: handlerCreate.permissions,
       },
       validate: {
-        ...validators.create,
+        ...requestValidators.create,
       },
     },
   }, {
@@ -94,7 +98,7 @@ export default (models) => {
         scope: handlerFindById.permissions,
       },
       validate: {
-        ...validators.findById,
+        ...requestValidators.findById,
       },
     },
   }, {
