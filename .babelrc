@@ -5,7 +5,7 @@
   "plugins": [
     "add-module-exports",
     "transform-runtime",
-    "transform-decorators-legacy",
+    "transform-class-properties",
     "transform-es2015-modules-commonjs"
   ],
   "sourceMaps": "inline"

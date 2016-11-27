@@ -2,29 +2,38 @@ import path from 'path';
 import Joi from 'joi';
 
 const prefix = conf.get('prefix');
-const handlersGenerator = requireF('services/_core/handlersGenerator').default;
+const HandlerGeneratorFindAll = requireF('services/_core/HandlerGeneratorFindAll');
+const HandlerGeneratorCount = requireF('services/_core/HandlerGeneratorCount');
+const HandlerGeneratorCreate = requireF('services/_core/HandlerGeneratorCreate');
+const HandlerGeneratorFindOne = requireF('services/_core/HandlerGeneratorFindOne');
+const HandlerGeneratorFindById = requireF('services/_core/HandlerGeneratorFindById');
+const HandlerGeneratorAssociations = requireF('services/_core/HandlerGeneratorAssociations');
+const UserHandlerLogin = requireF('component/_core/user/UserHandlerLogin');
 const requestValidators = requireF('services/_core/requestValidators').default;
-const userControllerLogin = requireF('component/_core/user/userControllerLogin');
 const authStrategiesConfig = requireF('setup/config/authStrategiesConfig');
 
 export default (models) => {
   // define user component endpoint
-  // eslint-disable-next-line new-cap
-  const handlers = new handlersGenerator(models.user, {
-    componentId: 'user',
-    associations: ['roles'],
-  });
   const validators = new requestValidators(models, models.user); // eslint-disable-line new-cap
+
+  const handlerFindAll = new HandlerGeneratorFindAll(models.user, 'user');
+  const handlerCount = new HandlerGeneratorCount(models.user, 'user');
+  const handlerCreate = new HandlerGeneratorCreate(models.user, 'user');
+  const handlerFindOne = new HandlerGeneratorFindOne(models.user, 'user');
+  const handlerFindById = new HandlerGeneratorFindById(models.user, 'user');
+  const handlerLogin = new UserHandlerLogin();
+  const handlerAssociations = new HandlerGeneratorAssociations(models.user, 'user', ['roles']);
+  handlerAssociations.generate();
 
   return [{
     // define GET /users route
     method: 'GET',
     path: path.join(prefix, 'users'),
-    handler: handlers.findAll,
+    handler: handlerFindAll.handler,
     config: {
       auth: {
         strategies: Object.keys(authStrategiesConfig),
-        scope: handlers.findAll.permissions,
+        scope: handlerFindAll.permissions,
       },
       validate: {
         ...validators.findAll,
@@ -34,11 +43,11 @@ export default (models) => {
     // define GET /users/count route
     method: 'GET',
     path: path.join(prefix, 'users', 'count'),
-    handler: handlers.count,
+    handler: handlerCount.handler,
     config: {
       auth: {
         strategies: Object.keys(authStrategiesConfig),
-        scope: handlers.count.permissions,
+        scope: handlerCount.permissions,
       },
       validate: {
         ...validators.count,
@@ -48,11 +57,11 @@ export default (models) => {
     // define GET /user route
     method: 'GET',
     path: path.join(prefix, 'user'),
-    handler: handlers.findOne,
+    handler: handlerFindOne.handler,
     config: {
       auth: {
         strategies: Object.keys(authStrategiesConfig),
-        scope: handlers.findOne.permissions,
+        scope: handlerFindOne.permissions,
       },
       validate: {
         ...validators.findOne,
@@ -62,8 +71,12 @@ export default (models) => {
     // define PUT /users route
     method: 'PUT',
     path: path.join(prefix, 'user'),
-    handler: handlers.create,
+    handler: handlerCreate.handler,
     config: {
+      auth: {
+        strategies: Object.keys(authStrategiesConfig),
+        scope: handlerCreate.permissions,
+      },
       validate: {
         ...validators.create,
       },
@@ -72,11 +85,11 @@ export default (models) => {
     // define GET /user/{id} route
     method: 'GET',
     path: path.join(prefix, 'user', '{id}'),
-    handler: handlers.findById,
+    handler: handlerFindById.handler,
     config: {
       auth: {
         strategies: Object.keys(authStrategiesConfig),
-        scope: handlers.findById.permissions,
+        scope: handlerFindById.permissions,
       },
       validate: {
         ...validators.findById,
@@ -86,16 +99,16 @@ export default (models) => {
     // define /user/login route
     method: 'POST',
     path: path.join(prefix, 'user', 'login'),
-    handler: userControllerLogin,
+    handler: handlerLogin.handler,
   }, {
     // define GET /user/{id}/roles route
     method: 'GET',
     path: path.join(prefix, 'user', '{id}', 'roles'),
-    handler: handlers.rolesFindAll,
+    handler: handlerAssociations.rolesFindAll.handler,
     config: {
       auth: {
         strategies: Object.keys(authStrategiesConfig),
-        scope: handlers.rolesFindAll.permissions,
+        scope: handlerAssociations.rolesFindAll.permissions,
       },
       validate: {
         query: Joi.any(),
@@ -105,11 +118,11 @@ export default (models) => {
     // define GET /user/{id}/roles/count route
     method: 'GET',
     path: path.join(prefix, 'user', '{id}', 'roles', 'count'),
-    handler: handlers.rolesCount,
+    handler: handlerAssociations.rolesCount.handler,
     config: {
       auth: {
         strategies: Object.keys(authStrategiesConfig),
-        scope: handlers.rolesCount.permissions,
+        scope: handlerAssociations.rolesCount.permissions,
       },
       validate: {
         query: Joi.any(),
