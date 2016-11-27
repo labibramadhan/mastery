@@ -2,13 +2,32 @@ import Boom from 'boom';
 
 const queryParsers = requireF('services/_core/queryParsers').default;
 
+/**
+ * Generate the count handler of a single model
+ *
+ * @export
+ * @class HandlerGeneratorCount
+ */
 export default class HandlerGeneratorCount {
+  /**
+   * Creates an instance of HandlerGeneratorCount.
+   *
+   * @param {Sequelize.Model} model
+   * @param {string} componentId
+   *
+   * @memberOf HandlerGeneratorCount
+   */
   constructor(model, componentId) {
     this.model = model;
     this.componentId = componentId;
     this.permissions = [`${componentId}:count`];
   }
 
+  /**
+   * HapiJS route handler
+   *
+   * @memberOf HandlerGeneratorCount
+   */
   handler = async (request, reply) => {
     const { model } = this;
     try {

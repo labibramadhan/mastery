@@ -2,13 +2,15 @@ import path from 'path';
 import Joi from 'joi';
 
 const prefix = conf.get('prefix');
-const HandlerGeneratorFindAll = requireF('services/_core/HandlerGeneratorFindAll');
-const HandlerGeneratorCount = requireF('services/_core/HandlerGeneratorCount');
-const HandlerGeneratorCreate = requireF('services/_core/HandlerGeneratorCreate');
-const HandlerGeneratorFindOne = requireF('services/_core/HandlerGeneratorFindOne');
-const HandlerGeneratorFindById = requireF('services/_core/HandlerGeneratorFindById');
-const HandlerGeneratorAssociations = requireF('services/_core/HandlerGeneratorAssociations');
+
+const HandlerGeneratorFindAll = requireF('services/_core/handlerGenerators/HandlerGeneratorFindAll');
+const HandlerGeneratorCount = requireF('services/_core/handlerGenerators/HandlerGeneratorCount');
+const HandlerGeneratorCreate = requireF('services/_core/handlerGenerators/HandlerGeneratorCreate');
+const HandlerGeneratorFindOne = requireF('services/_core/handlerGenerators/HandlerGeneratorFindOne');
+const HandlerGeneratorFindById = requireF('services/_core/handlerGenerators/HandlerGeneratorFindById');
+const HandlerGeneratorAssociations = requireF('services/_core/handlerGenerators/HandlerGeneratorAssociations');
 const UserHandlerLogin = requireF('component/_core/user/UserHandlerLogin');
+
 const requestValidators = requireF('services/_core/requestValidators').default;
 const authStrategiesConfig = requireF('setup/config/authStrategiesConfig');
 

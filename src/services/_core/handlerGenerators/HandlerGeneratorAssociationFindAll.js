@@ -3,7 +3,22 @@ import Boom from 'boom';
 
 const queryParsers = requireF('services/_core/queryParsers').default;
 
+/**
+ * Generate the findAll handler of an association of belongsToMany/hasMany
+ *
+ * @export
+ * @class HandlerGeneratorAssociationFindAll
+ */
 export default class HandlerGeneratorAssociationFindAll {
+  /**
+   * Creates an instance of HandlerGeneratorAssociationFindAll.
+   *
+   * @param {Sequelize.Model} model
+   * @param {string} componentId
+   * @param {Sequelize.Model.Association} association
+   *
+   * @memberOf HandlerGeneratorAssociationFindAll
+   */
   constructor(model, componentId, association) {
     this.model = model;
     this.componentId = componentId;
@@ -11,6 +26,11 @@ export default class HandlerGeneratorAssociationFindAll {
     this.permissions = [`${componentId}:${association.as}:findAll`];
   }
 
+  /**
+   * HapiJS route handler
+   *
+   * @memberOf HandlerGeneratorAssociationFindAll
+   */
   handler = async (request, reply) => {
     const {
       association,
