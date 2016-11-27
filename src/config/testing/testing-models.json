@@ -1,0 +1,44 @@
+{
+  "models": {
+    "role": {
+      "database": "main",
+      "relationships": [{
+        "type": "belongsToMany",
+        "model": "user",
+        "through": "userRole",
+        "foreignKey": "roleId"
+      }]
+    },
+    "session": {
+      "database": "main",
+      "public": true,
+      "relationships": [{
+        "type": "belongsTo",
+        "model": "user"
+      }]
+    },
+    "user": {
+      "database": "main",
+      "public": true,
+      "relationships": [{
+        "type": "hasMany",
+        "model": "session"
+      }, {
+        "type": "belongsToMany",
+        "model": "role",
+        "through": "userRole",
+        "foreignKey": "userId"
+      }]
+    },
+    "userRole": {
+      "database": "main",
+      "relationships": [{
+        "type": "belongsTo",
+        "model": "user"
+      }, {
+        "type": "belongsTo",
+        "model": "role"
+      }]
+    }
+  }
+}

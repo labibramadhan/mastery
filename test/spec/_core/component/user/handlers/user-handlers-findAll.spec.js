@@ -1,4 +1,5 @@
 import URI from 'urijs';
+import qs from 'qs';
 import HttpStatus from 'http-status-codes';
 import {
   assert,
@@ -37,14 +38,34 @@ describe(`GET findAll ${prefix}users`, () => {
   });
 
   it('works', async function it() {
-    const { authenticated1 } = this.users;
-    const { authenticatedRole } = this.roles;
+    const { admin2 } = this.users;
+    const { adminRole } = this.roles;
 
-    const thisTestUrl = URI(`${prefix}users`).addQuery({
-      username: 'authenticated1',
-      include: 'role',
+    const thisTestUrl = URI(`${prefix}users`).query(qs.stringify({
+      username: { $not: 'admin1' },
+      include: {
+        model: 'role',
+        where: {
+          $or: [{
+            name: 'admin',
+          }, {
+            name: 'authenticated',
+          }],
+        },
+        include: {
+          model: 'user',
+        },
+      },
+      order: [
+        'username asc',
+        {
+          model: 'role',
+          field: 'name',
+          sort: 'asc',
+        },
+      ],
       token: this.token,
-    }).toString();
+    })).toString();
 
     const {
       result,
@@ -55,8 +76,10 @@ describe(`GET findAll ${prefix}users`, () => {
     });
 
     assert.equal(statusCode, HttpStatus.OK);
-    assert.equal(result.length, 1);
-    assert.equal(result[0].id, authenticated1.id);
-    assert.equal(result[0].roles[0].id, authenticatedRole.id);
+    assert.equal(result.length, 3);
+    assert.equal(result[0].id, admin2.id);
+    assert.equal(result[0].roles.length, 2);
+    assert.equal(result[0].roles[0].id, adminRole.id);
+    assert.equal(result[0].roles[0].users.length, 2);
   });
 });

@@ -27,9 +27,8 @@ export default class HandlerGeneratorFindById {
    * @memberOf HandlerGeneratorFindById
    */
   handler = async (request, reply) => {
-    const { model } = this;
     try {
-      const result = await model.findById(request.params.id) || Boom.notFound();
+      const result = await this.model.findById(request.params.id) || Boom.notFound();
       return reply(result);
     } catch (e) {
       return reply(Boom.badRequest(e));

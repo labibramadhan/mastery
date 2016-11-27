@@ -34,19 +34,14 @@ export default class HandlerGeneratorAssociationFindAll {
    * @memberOf HandlerGeneratorAssociationFindAll
    */
   handler = async (request, reply) => {
-    const {
-      association,
-      model,
-      queryParsers,
-    } = this;
     try {
-      const modelInstance = await model.findById(request.params.id);
+      const modelInstance = await this.model.findById(request.params.id);
       if (!modelInstance) {
         return reply(Boom.notFound());
       }
-      const methodName = `findAll${association.associationType}`;
-      const queries = await queryParsers.parse(request, methodName);
-      const expectedMethodName = `get${_.upperFirst(_.camelCase(association.as))}`;
+      const methodName = `findAll${this.association.associationType}`;
+      const queries = await this.queryParsers.parse(request, methodName);
+      const expectedMethodName = `get${_.upperFirst(_.camelCase(this.association.as))}`;
       const results = await modelInstance[expectedMethodName](queries);
       return reply(results);
     } catch (e) {

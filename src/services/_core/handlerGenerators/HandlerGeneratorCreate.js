@@ -27,9 +27,8 @@ export default class HandlerGeneratorCreate {
    * @memberOf HandlerGeneratorCreate
    */
   handler = async (request, reply) => {
-    const { model } = this;
     try {
-      const result = await model.create(request.payload);
+      const result = await this.model.create(request.payload);
       return reply(result);
     } catch (e) {
       return reply(Boom.badRequest(e));

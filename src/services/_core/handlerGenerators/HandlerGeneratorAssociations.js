@@ -34,21 +34,16 @@ export default class HandlerGeneratorAssociations {
    */
   generate = function generate() {
     const self = this;
-    const {
-      associations,
-      componentId,
-      model,
-    } = self;
-    const validAssociations = Joi.validate(associations, [Joi.string().valid('*'), Joi.array().items(Joi.string())]);
+    const validAssociations = Joi.validate(this.associations, [Joi.string().valid('*'), Joi.array().items(Joi.string())]);
     if (!validAssociations || validAssociations.error) {
       throw validAssociations.error;
     }
 
     let associationsRequested;
     if (validAssociations === '*') {
-      associationsRequested = model.associations;
+      associationsRequested = this.model.associations;
     } else {
-      associationsRequested = _.pick(model.associations, associations);
+      associationsRequested = _.pick(this.model.associations, this.associations);
     }
 
     _.each(associationsRequested, (association) => {
@@ -56,8 +51,8 @@ export default class HandlerGeneratorAssociations {
         case 'BelongsToMany':
         case 'HasMany': {
           const handlerAssociationFindAll = new HandlerGeneratorAssociationFindAll(
-            model,
-            componentId,
+            this.model,
+            this.componentId,
             association,
           );
           self[`${association.as}FindAll`] = {
@@ -66,8 +61,8 @@ export default class HandlerGeneratorAssociations {
           };
 
           const handlerAssociationCount = new HandlerGeneratorAssociationCount(
-            model,
-            componentId,
+            this.model,
+            this.componentId,
             association,
           );
           self[`${association.as}Count`] = {
@@ -78,8 +73,8 @@ export default class HandlerGeneratorAssociations {
         }
         default: {
           const handlerAssociationFindOne = new HandlerGeneratorAssociationFindOne(
-            model,
-            componentId,
+            this.model,
+            this.componentId,
             association,
           );
           self[`${association.as}FindOne`] = {

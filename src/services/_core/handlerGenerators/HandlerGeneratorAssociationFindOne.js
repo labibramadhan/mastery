@@ -30,16 +30,12 @@ export default class HandlerGeneratorAssociationFindOne {
    * @memberOf HandlerGeneratorAssociationFindOne
    */
   handler = async (request, reply) => {
-    const {
-      association,
-      model,
-    } = this;
     try {
-      const modelInstance = await model.findById(request.params.id);
+      const modelInstance = await this.model.findById(request.params.id);
       if (!modelInstance) {
         return reply(Boom.notFound());
       }
-      const expectedMethodName = `get${_.upperFirst(_.camelCase(association.as))}`;
+      const expectedMethodName = `get${_.upperFirst(_.camelCase(this.association.as))}`;
       const result = await modelInstance[expectedMethodName]();
       return reply(result);
     } catch (e) {

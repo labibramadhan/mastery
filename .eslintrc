@@ -14,9 +14,8 @@
     "after": true,
     "requireF": true,
     "rootPath": true,
-    "rootTest": true,
-    "testRequire": true,
-    "server": true
+    "server": true,
+    "testing": true
   },
   "rules": {
     "global-require": 0,

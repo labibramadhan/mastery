@@ -1,10 +1,15 @@
+import _ from 'lodash';
 import Joi from 'joi';
 
 const RequestValidatorConstants = requireF('services/_core/requestValidators/RequestValidatorConstants.js');
 
 export default class RequestValidatorWhere {
-  build = (model) => {
-    const modelAttributes = Object.keys(model.attributes);
+  constructor(model) {
+    this.model = model;
+  }
+
+  build() {
+    const modelAttributes = _.keys(this.model.attributes);
     const validAttributes = modelAttributes.reduce((params, attribute) => {
       // TODO: use joi-sequelize
       params[attribute] = Joi.any(); // eslint-disable-line no-param-reassign

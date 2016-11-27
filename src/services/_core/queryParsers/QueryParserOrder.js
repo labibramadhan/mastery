@@ -5,7 +5,7 @@ export default class QueryParserOrder {
     this.models = models;
   }
 
-  parse = (query) => {
+  parse(query) {
     const {
       models,
     } = this;

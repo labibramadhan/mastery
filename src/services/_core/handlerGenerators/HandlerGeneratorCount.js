@@ -31,13 +31,9 @@ export default class HandlerGeneratorCount {
    * @memberOf HandlerGeneratorCount
    */
   handler = async (request, reply) => {
-    const {
-      model,
-      queryParsers,
-    } = this;
     try {
-      const queries = await queryParsers.parse(request, 'count');
-      const result = await model.count(queries);
+      const queries = await this.queryParsers.parse(request, 'count');
+      const result = await this.model.count(queries);
       return reply({
         count: result,
       });

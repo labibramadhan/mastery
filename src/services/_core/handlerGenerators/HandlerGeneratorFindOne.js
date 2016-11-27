@@ -31,13 +31,9 @@ export default class HandlerGeneratorFindOne {
    * @memberOf HandlerGeneratorFindOne
    */
   handler = async (request, reply) => {
-    const {
-      model,
-      queryParsers,
-    } = this;
     try {
-      const queries = await queryParsers.parse(request, 'findOne');
-      const result = await model.findOne(queries) || Boom.notFound();
+      const queries = await this.queryParsers.parse(request, 'findOne');
+      const result = await this.model.findOne(queries) || Boom.notFound();
       return reply(result);
     } catch (e) {
       return reply(Boom.badRequest(e));

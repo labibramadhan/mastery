@@ -3,6 +3,7 @@ const {
 } = requireF('services/_core/commonServices');
 
 export default async () => {
+  if (process.env.NODE_ENV === 'testing') return;
   const {
     role,
     user,

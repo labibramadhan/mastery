@@ -8,17 +8,12 @@ export default class RequestValidatorInclude {
     this.models = models;
     this.requestValidatorWhere = new RequestValidatorWhere();
   }
-  build = () => {
-    const {
-      models,
-      requestValidatorWhere,
-    } = this;
-
+  build() {
     let validIncludeString = [];
     let validIncludeModel = [];
     let validIncludeWhere = [];
     let validIncludeAs = [];
-    _.each(models, (m) => {
+    _.each(this.models, (m) => {
       const associatedModelNames = Object.keys(m.associations);
       const modelHasAssociations = associatedModelNames && associatedModelNames.length;
       const thisValidIncludeString = modelHasAssociations ?
@@ -27,7 +22,8 @@ export default class RequestValidatorInclude {
       validIncludeString = [...validIncludeString, thisValidIncludeString];
       validIncludeModel = [...validIncludeModel, thisValidIncludeString];
 
-      const whereValidation = requestValidatorWhere.build(m);
+      this.requestValidatorWhere.model = m;
+      const whereValidation = this.requestValidatorWhere.build();
       validIncludeWhere = [...validIncludeWhere, Joi.alternatives().when('model', {
         is: m.name,
         then: whereValidation,
@@ -57,5 +53,5 @@ export default class RequestValidatorInclude {
       include: validInclude,
       'include[]': validInclude,
     });
-  };
+  }
 }

@@ -5,7 +5,7 @@ export default class QueryParserInclude {
     this.models = models;
   }
 
-  parse = async function parse(query) {
+  parse = async (query) => {
     const {
       getIncludeModelInstances,
       models,

@@ -17,7 +17,6 @@ const authStrategiesConfig = requireF('setup/config/authStrategiesConfig');
 
 export default (models) => {
   // define user component endpoint
-  // const validators = new requestValidators(models, models.user); // eslint-disable-line new-cap
 
   const requestValidators = new RequestValidators(models.user);
   requestValidators.build();

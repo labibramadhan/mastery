@@ -16,29 +16,17 @@ const RequestValidatorToken = requireF('services/_core/requestValidators/Request
 
 export default class RequestValidators {
   constructor(model) {
-    this.models = getAllModels();
-    this.model = model;
-    this.requestValidatorWhere = new RequestValidatorWhere();
-    this.requestValidatorInclude = new RequestValidatorInclude(this.models);
-    this.requestValidatorOrder = new RequestValidatorOrder(this.models, this.model);
-    this.requestValidatorPayload = new RequestValidatorPayload();
+    const models = getAllModels();
+    this.requestValidatorWhere = new RequestValidatorWhere(model);
+    this.requestValidatorInclude = new RequestValidatorInclude(models);
+    this.requestValidatorOrder = new RequestValidatorOrder(models, model);
+    this.requestValidatorPayload = new RequestValidatorPayload(model);
     this.requestValidatorLimit = new RequestValidatorLimit();
     this.requestValidatorOffset = new RequestValidatorOffset();
     this.requestValidatorToken = new RequestValidatorToken();
   }
   build() {
     const self = this;
-    const {
-      model,
-      models,
-      requestValidatorWhere,
-      requestValidatorInclude,
-      requestValidatorOrder,
-      requestValidatorPayload,
-      requestValidatorLimit,
-      requestValidatorOffset,
-      requestValidatorToken,
-    } = self;
     const {
       APPLICABLE_METHODS,
     } = RequestValidatorConstants;
@@ -55,7 +43,7 @@ export default class RequestValidators {
 
       if (hasWhere) {
         const whereValidation = concatToJoiObject(
-          requestValidatorWhere.build(model),
+          self.requestValidatorWhere.build(),
           _.get(validators, 'query'),
         );
         validators = _.set(validators, 'query', whereValidation);
@@ -63,7 +51,7 @@ export default class RequestValidators {
 
       if (hasInclude) {
         const includeValidation = concatToJoiObject(
-          requestValidatorInclude.build(models),
+          self.requestValidatorInclude.build(),
           _.get(validators, 'query'),
         );
         validators = _.set(validators, 'query', includeValidation);
@@ -71,7 +59,7 @@ export default class RequestValidators {
 
       if (hasOrder) {
         const orderValidation = concatToJoiObject(
-          requestValidatorOrder.build(),
+          self.requestValidatorOrder.build(),
           _.get(validators, 'query'),
         );
         validators = _.set(validators, 'query', orderValidation);
@@ -79,7 +67,7 @@ export default class RequestValidators {
 
       if (hasPayload) {
         const payloadValidation = concatToJoiObject(
-          requestValidatorPayload.build(model),
+          self.requestValidatorPayload.build(),
           _.get(validators, 'payload'),
         );
         validators = _.set(validators, 'payload', payloadValidation);
@@ -87,7 +75,7 @@ export default class RequestValidators {
 
       if (hasLimit) {
         const limitValidation = concatToJoiObject(
-          requestValidatorLimit.build(),
+          self.requestValidatorLimit.build(),
           _.get(validators, 'query'),
         );
         validators = _.set(validators, 'query', limitValidation);
@@ -95,14 +83,14 @@ export default class RequestValidators {
 
       if (hasOffset) {
         const offsetValidation = concatToJoiObject(
-          requestValidatorOffset.build(),
+          self.requestValidatorOffset.build(),
           _.get(validators, 'query'),
         );
         validators = _.set(validators, 'query', offsetValidation);
       }
 
       const tokenValidation = concatToJoiObject(
-        requestValidatorToken.build(),
+        self.requestValidatorToken.build(),
         _.get(validators, 'query'),
       );
       validators = _.set(validators, 'query', tokenValidation);

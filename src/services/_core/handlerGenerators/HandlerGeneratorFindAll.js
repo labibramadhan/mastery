@@ -31,13 +31,9 @@ export default class HandlerGeneratorFindAll {
    * @memberOf HandlerGeneratorFindAll
    */
   handler = async (request, reply) => {
-    const {
-      model,
-      queryParsers,
-    } = this;
     try {
-      const queries = await queryParsers.parse(request, 'findAll');
-      const results = await model.findAll(queries);
+      const queries = await this.queryParsers.parse(request, 'findAll');
+      const results = await this.model.findAll(queries);
       return reply(results);
     } catch (e) {
       return reply(Boom.badRequest(e));
