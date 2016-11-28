@@ -1,10 +1,12 @@
 const {
   getPackage,
-  getModel,
 } = requireF('services/_core/commonServices');
 
+const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
+
 export default async () => {
-  const role = getModel('role');
+  const resolverModels = new ResolverModels();
+  const role = resolverModels.getModel('role');
 
   // retrieve all available roles
   const availableRoles = server.plugins[`${getPackage().name}-acl`];

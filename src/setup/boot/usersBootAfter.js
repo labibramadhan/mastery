@@ -1,13 +1,13 @@
-const {
-  getModels,
-} = requireF('services/_core/commonServices');
+const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
 
 export default async () => {
   if (isTest) return;
+
+  const resolverModels = new ResolverModels();
   const {
     role,
     user,
-  } = getModels(['role', 'user']);
+  } = resolverModels.getModels(['role', 'user']);
 
   // add a default admin account
   const adminRole = await role.find({

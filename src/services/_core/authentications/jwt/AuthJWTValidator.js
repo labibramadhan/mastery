@@ -1,16 +1,20 @@
 import _ from 'lodash';
 
+const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
+
 const {
   getPackage,
-  getModels,
 } = requireF('services/_core/commonServices');
 
 export default class AuthJWTValidator {
+  constructor() {
+    this.resolverModels = new ResolverModels();
+  }
   validate = async (decoded, request, callback) => {
     const {
       user,
       role,
-    } = getModels(['user', 'role']);
+    } = this.resolverModels.getModels(['user', 'role']);
     const availableRoles = server.plugins[`${getPackage().name}-acl`];
 
     // store only id, username, and email inside decoded JWT token

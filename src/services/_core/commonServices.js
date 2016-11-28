@@ -16,31 +16,6 @@ export const concatToJoiObject = (joiObject, candidate) => {
   return joiObject.keys(candidate);
 };
 
-export const getModelConfsByIdentifier = identifier => _.pickBy(conf.get('models'), {
-  database: identifier,
-});
-
-export const getModel = (modelName) => {
-  const databases = server.plugins['hapi-sequelize'];
-  const database = conf.get(`models:${modelName}:database`);
-  return databases[database].models[modelName];
-};
-
-export const getModels = (modelNames) => {
-  const databases = server.plugins['hapi-sequelize'];
-  const modelNamesArray = _.castArray(modelNames);
-  let modelsFound = {};
-  _.each(modelNamesArray, (modelName) => {
-    const database = conf.get(`models:${modelName}:database`);
-    const modelInstance = databases[database].models[modelName];
-    modelsFound = {
-      [modelName]: modelInstance,
-      ...modelsFound,
-    };
-  });
-  return modelsFound;
-};
-
 export const associateModel = (models, modelName) => {
   const associations = conf.get(`models:${modelName}:relationships`);
   _.each(associations, (association) => {

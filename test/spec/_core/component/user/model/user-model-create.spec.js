@@ -1,17 +1,16 @@
 import { assert } from 'chai';
 import setup from '../../../../../helpers/setup';
 
-const {
-  getModel,
-} = requireF('services/_core/commonServices');
+const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
 
 describe('create a user', () => {
-  before(async () => {
+  before(async function before() {
     await setup();
+    this.resolverModels = new ResolverModels();
   });
 
-  it('created', async () => {
-    const user = getModel('user');
+  it('created', async function it() {
+    const user = this.resolverModels.getModel('user');
 
     const userObj = {
       username: 'user',
