@@ -8,6 +8,7 @@ export default class BootI18n {
   constructor() {
     this.polyglot = new Polyglot();
   }
+
   boot = () => {
     const localesIndexed = {};
     const localesGlob = path.resolve(path.join(rootPath, 'locales', '*'));
