@@ -8,9 +8,7 @@ const HapiAuthJWT2 = require('hapi-auth-jwt2');
 
 const getPort = Promise.promisify(portfinder.getPort);
 
-const {
-  bootServer,
-} = requireF('services/_core/commonServices');
+const BootServer = requireF('services/_core/boot/BootServer');
 
 export default async () => {
   const server = new Hapi.Server();
@@ -23,5 +21,7 @@ export default async () => {
   });
 
   await server.register(HapiAuthJWT2);
-  await bootServer(server);
+
+  const bootServer = new BootServer();
+  await bootServer.boot();
 };

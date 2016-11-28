@@ -2,7 +2,6 @@ import _ from 'lodash';
 
 const {
   concatToJoiObject,
-  getAllModels,
 } = requireF('services/_core/commonServices');
 
 const RequestValidatorConstants = requireF('services/_core/requestValidators/RequestValidatorConstants');
@@ -14,12 +13,15 @@ const RequestValidatorLimit = requireF('services/_core/requestValidators/Request
 const RequestValidatorOffset = requireF('services/_core/requestValidators/RequestValidatorOffset');
 const RequestValidatorToken = requireF('services/_core/requestValidators/RequestValidatorToken');
 
+const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
+
 export default class RequestValidators {
   constructor(model) {
-    const models = getAllModels();
+    this.resolverModels = new ResolverModels();
+    this.models = this.resolverModels.getAllModels();
     this.requestValidatorWhere = new RequestValidatorWhere(model);
-    this.requestValidatorInclude = new RequestValidatorInclude(models);
-    this.requestValidatorOrder = new RequestValidatorOrder(models, model);
+    this.requestValidatorInclude = new RequestValidatorInclude(this.models);
+    this.requestValidatorOrder = new RequestValidatorOrder(this.models, model);
     this.requestValidatorPayload = new RequestValidatorPayload(model);
     this.requestValidatorLimit = new RequestValidatorLimit();
     this.requestValidatorOffset = new RequestValidatorOffset();

@@ -6,13 +6,12 @@ const QueryParserOrder = requireF('services/_core/queryParsers/QueryParserOrder'
 const QueryParserLimit = requireF('services/_core/queryParsers/QueryParserLimit');
 const QueryParserOffset = requireF('services/_core/queryParsers/QueryParserOffset');
 
-const {
-  getAllModels,
-} = requireF('services/_core/commonServices');
+const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
 
 export default class QueryParsers {
   constructor() {
-    this.models = getAllModels();
+    this.resolverModels = new ResolverModels();
+    this.models = this.resolverModels.getAllModels();
     this.queryParserWhere = new QueryParserWhere();
     this.queryParserInclude = new QueryParserInclude(this.models);
     this.queryParserOrder = new QueryParserOrder(this.models);

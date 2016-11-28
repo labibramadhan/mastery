@@ -1,12 +1,13 @@
-const {
-  loginJWT,
-  parseCredentials,
-} = requireF('services/_core/authentications/authJWTServices');
+const AuthJWTLogin = requireF('services/_core/authentications/jwt/AuthJWTLogin');
 
 export default class UserHandlerLogin {
+  constructor() {
+    this.authJWTLogin = new AuthJWTLogin();
+  }
+
   handler = async (request, reply) => {
-    const credentials = parseCredentials(request.payload);
-    const login = await loginJWT(credentials);
+    this.authJWTLogin.payload = request.payload;
+    const login = await this.authJWTLogin.login();
 
     return reply(login);
   }

@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt';
 const {
   associateModel,
 } = requireF('services/_core/commonServices');
-const locale = requireF('setup/_core/locales');
 
 export default (sequelize, dataTypes) =>
 sequelize.define('user', {
@@ -14,8 +13,6 @@ sequelize.define('user', {
     validate: {
       len: [4, 15],
       usernamePattern: async (val, next) => {
-        const i18n = await locale();
-
         /**
          * username should have at least a lowercase char,
          * an uppercase char, a single number, cannot have space and symbols
@@ -47,8 +44,6 @@ sequelize.define('user', {
     validate: {
       notEmpty: true,
       passwordPattern: async (val, next) => {
-        const i18n = await locale();
-
         // password should have at least an uppercase char, a lowercase char, and a single number
         const valid = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{1,}$/.test(val);
         return valid ? next() : next(i18n.t('user.password.invalid'));

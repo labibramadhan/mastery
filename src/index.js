@@ -5,9 +5,7 @@ import * as HapiBlipp from 'blipp';
 
 import './setup/_core/globals';
 
-const {
-  bootServer,
-} = requireF('services/_core/commonServices');
+const BootServer = requireF('services/_core/boot/BootServer');
 
 const run = async () => {
   // initialize a HapiJS server
@@ -22,8 +20,9 @@ const run = async () => {
   // register the hapi-auth-jwt2 plugin
   await server.register(HapiAuthJWT2);
 
-  // boot all available routes and execute boot scripts from /setup/boot directory
-  await bootServer(server);
+  // boot the server
+  const bootServer = new BootServer();
+  await bootServer.boot();
 
   // register Blipp for showing all available routes
   await server.register({
