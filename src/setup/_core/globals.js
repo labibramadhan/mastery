@@ -11,4 +11,4 @@ const { bootConfigs } = requireF('services/_core/commonServices');
 bootConfigs(nconf);
 global.conf = nconf;
 
-global.isTest = /testing/g.test(process.env.NODE_ENV);
+global.isTest = /test/g.test(process.env.NODE_ENV);
