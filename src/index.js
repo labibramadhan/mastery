@@ -5,6 +5,8 @@ import * as HapiBlipp from 'blipp';
 
 import './setup/_core/globals';
 
+process.setMaxListeners(0);
+
 const BootServer = requireF('services/_core/boot/BootServer');
 
 const run = async () => {

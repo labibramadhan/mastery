@@ -4,6 +4,8 @@ export default {
     // user model permissions
     'user:findAll',
     'user:count',
+    'user:create',
+    'user:update',
     'user:findOne',
     'user:findById',
     'user:roles:findAll',

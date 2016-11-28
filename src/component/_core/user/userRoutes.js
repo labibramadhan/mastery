@@ -6,6 +6,7 @@ const prefix = conf.get('prefix');
 const HandlerGeneratorFindAll = requireF('services/_core/handlerGenerators/HandlerGeneratorFindAll');
 const HandlerGeneratorCount = requireF('services/_core/handlerGenerators/HandlerGeneratorCount');
 const HandlerGeneratorCreate = requireF('services/_core/handlerGenerators/HandlerGeneratorCreate');
+const HandlerGeneratorUpdate = requireF('services/_core/handlerGenerators/HandlerGeneratorUpdate');
 const HandlerGeneratorFindOne = requireF('services/_core/handlerGenerators/HandlerGeneratorFindOne');
 const HandlerGeneratorFindById = requireF('services/_core/handlerGenerators/HandlerGeneratorFindById');
 const HandlerGeneratorAssociations = requireF('services/_core/handlerGenerators/HandlerGeneratorAssociations');
@@ -24,6 +25,7 @@ export default (models) => {
   const handlerFindAll = new HandlerGeneratorFindAll(models.user, 'user');
   const handlerCount = new HandlerGeneratorCount(models.user, 'user');
   const handlerCreate = new HandlerGeneratorCreate(models.user, 'user');
+  const handlerUpdate = new HandlerGeneratorUpdate(models.user, 'user');
   const handlerFindOne = new HandlerGeneratorFindOne(models.user, 'user');
   const handlerFindById = new HandlerGeneratorFindById(models.user, 'user');
   const handlerLogin = new UserHandlerLogin();
@@ -98,6 +100,20 @@ export default (models) => {
       },
       validate: {
         ...requestValidators.findById,
+      },
+    },
+  }, {
+    // define POST /user/{id} route
+    method: 'POST',
+    path: path.join(prefix, 'user', '{id}'),
+    handler: handlerUpdate.handler,
+    config: {
+      auth: {
+        strategies: Object.keys(authStrategiesConfig),
+        scope: handlerUpdate.permissions,
+      },
+      validate: {
+        ...requestValidators.update,
       },
     },
   }, {

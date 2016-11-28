@@ -37,7 +37,7 @@ export default class HandlerGeneratorAssociationFindOne {
       }
       const expectedMethodName = `get${_.upperFirst(_.camelCase(this.association.as))}`;
       const result = await modelInstance[expectedMethodName]();
-      return reply(result);
+      return reply(result.toJSON());
     } catch (e) {
       return reply(Boom.badRequest(e));
     }

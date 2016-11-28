@@ -26,6 +26,7 @@ export default class RequestValidatorConstants {
     create: [
       'payload',
     ],
+    update: [],
     findAllBelongsToMany: [
       'where',
     ],

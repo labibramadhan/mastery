@@ -24,8 +24,8 @@
     "nodemon:src": "nodemon --watch src .",
     "dev:prod": "npm-run-all --parallel watch nodemon:build",
     "dev": "babel-node src/index.js",
-    "test": "NODE_ENV=test mocha --timeout 10000 --compilers js:babel-register --recursive test/spec/**/*.js",
-    "test-ci": "NODE_ENV=test-ci mocha --timeout 10000 --compilers js:babel-register --recursive test/spec/**/*.js"
+    "test": "NODE_ENV=test mocha --timeout 3000 --compilers js:babel-register --recursive test/spec/**/*.js",
+    "test-ci": "NODE_ENV=test-ci mocha --timeout 3000 --compilers js:babel-register --recursive test/spec/**/*.js"
   },
   "pre-commit": [
     "lint"

@@ -29,7 +29,7 @@ export default class HandlerGeneratorCreate {
   handler = async (request, reply) => {
     try {
       const result = await this.model.create(request.payload);
-      return reply(result);
+      return reply(result.toJSON());
     } catch (e) {
       return reply(Boom.badRequest(e));
     }

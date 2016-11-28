@@ -1,6 +1,8 @@
 require('babel-register');
 require('../../src/setup/_core/globals');
 
+process.setMaxListeners(0);
+
 const Hapi = require('hapi');
 const Promise = require('bluebird');
 const portfinder = require('portfinder');
