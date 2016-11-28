@@ -3,11 +3,7 @@ import Hapi from 'hapi';
 import * as HapiAuthJWT2 from 'hapi-auth-jwt2';
 import * as HapiBlipp from 'blipp';
 
-import './setup/_core/globals';
-
 process.setMaxListeners(0);
-
-const BootServer = requireF('services/_core/boot/BootServer');
 
 const run = async () => {
   // initialize a HapiJS server
@@ -19,10 +15,12 @@ const run = async () => {
     host: 'localhost',
   });
 
-  // register the hapi-auth-jwt2 plugin
   await server.register(HapiAuthJWT2);
 
+  require('./setup/_core/globals');
+
   // boot the server
+  const BootServer = requireF('services/_core/boot/BootServer');
   const bootServer = new BootServer();
   await bootServer.boot();
 

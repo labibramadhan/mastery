@@ -9,19 +9,19 @@
   "tasks": [
     {
       "taskName": "clean",
-      "args": ["clean"]
+      "args": ["run", "clean"]
     },
     {
       "taskName": "build",
-      "args": ["build"]
+      "args": ["run", "build"]
     },
     {
-      "taskName": "dev",
-      "args": ["dev"]
+      "taskName": "lint",
+      "args": ["run", "lint"]
     },
     {
       "taskName": "test",
-      "args": ["run", "test"]
+      "args": ["test"]
     }
   ]
 }

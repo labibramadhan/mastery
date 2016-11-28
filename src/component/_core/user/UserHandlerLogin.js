@@ -6,7 +6,7 @@ export default class UserHandlerLogin {
   }
 
   handler = async (request, reply) => {
-    this.authJWTLogin.payload = request.payload;
+    this.authJWTLogin.request = request;
     const login = await this.authJWTLogin.login();
 
     return reply(login);

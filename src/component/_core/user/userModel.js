@@ -20,7 +20,7 @@ sequelize.define('user', {
         const valid = (val) ? /^[a-zA-Z0-9.\-_$@*!]+$/.test(val) : true;
 
         // if username is not valid, return the user.username.invalid translated message
-        return valid ? next() : next(i18n.t('user.username.invalid'));
+        return valid ? next() : next('error.user.username.invalid');
       },
     },
   },
@@ -46,7 +46,7 @@ sequelize.define('user', {
       passwordPattern: async (val, next) => {
         // password should have at least an uppercase char, a lowercase char, and a single number
         const valid = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{1,}$/.test(val);
-        return valid ? next() : next(i18n.t('user.password.invalid'));
+        return valid ? next() : next('error.user.password.invalid');
       },
     },
     set(val) {

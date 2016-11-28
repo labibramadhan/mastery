@@ -3,6 +3,7 @@ import Boom from 'boom';
 import jwt from 'jsonwebtoken';
 
 const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
+const I18nExtended = requireF('services/_core/I18nExtended');
 
 const {
   maxSessions,
@@ -10,8 +11,8 @@ const {
 } = conf.get();
 
 export default class AuthJWTLogin {
-  constructor(payload) {
-    this.payload = payload;
+  constructor(request) {
+    this.request = request;
     this.resolverModels = new ResolverModels();
   }
 
@@ -20,7 +21,7 @@ export default class AuthJWTLogin {
       username,
       email,
       password,
-    } = this.payload;
+    } = this.request.payload;
 
     let credentials = { password };
 
@@ -42,6 +43,7 @@ export default class AuthJWTLogin {
   }
 
   login = async () => {
+    const i18nExtended = new I18nExtended(this.request);
     const credentials = this.parseCredentials();
     const {
       user,
@@ -68,7 +70,7 @@ export default class AuthJWTLogin {
         },
       });
       if (existingTokenCount >= maxSessions) {
-        return Boom.unauthorized(i18n.t('user.login.tooManySessions'));
+        return Boom.unauthorized(i18nExtended.t('error.user.login.tooManySessions'));
       }
 
       // if valid, generate a new JWT token
@@ -85,7 +87,7 @@ export default class AuthJWTLogin {
     }
 
     // if not valid, return the user.login.failed translated message
-    return Boom.unauthorized(i18n.t('user.login.failed'));
+    return Boom.unauthorized(i18nExtended.t('error.user.login.failed'));
   }
 
   postLogin = async (user, token) => {

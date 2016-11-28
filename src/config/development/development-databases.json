@@ -9,7 +9,7 @@
       "password": "sukses123",
       "sync": true,
       "forceSync": true,
-      "debug": false,
+      "debug": true,
       "logging": false
     }
   }

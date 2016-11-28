@@ -1,0 +1,7 @@
+{
+  "user.username.invalid": "Username tidak boleh ada spasi, simbol, dan harus diantara 5 - 15 karakter.",
+  "user.password.invalid": "Password harus memiliki setidaknya satu huruf besar, huruf kecil, dan angka.",
+
+  "user.login.failed": "Akun tidak valid.",
+  "user.login.tooManySessions": "Maaf, anda telah melebihi batas maksimum login pada semua device."
+}
