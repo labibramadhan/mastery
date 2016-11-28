@@ -6,6 +6,7 @@ services:
 before_script:
   - psql -c 'create database hapiapistarter;' -U postgres
   - psql -d hapiapistarter -c 'create schema core authorization postgres' -U postgres
+script: npm run test-ci
 addons:
   apt:
     sources:
