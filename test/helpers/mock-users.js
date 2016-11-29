@@ -1,6 +1,5 @@
-const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
-
 export default async function mockUsers() {
+  const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
   const resolverModels = new ResolverModels();
   const { user, role } = resolverModels.getModels(['user', 'role']);
 

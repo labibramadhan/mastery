@@ -2,9 +2,12 @@ import _ from 'lodash';
 import glob from 'glob';
 import path from 'path';
 
+const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
+
 export default class BootRoutes {
-  constructor(models) {
-    this.models = models;
+  constructor() {
+    const resolverModels = new ResolverModels();
+    this.models = resolverModels.getAllModels();
   }
 
   boot = async () => {

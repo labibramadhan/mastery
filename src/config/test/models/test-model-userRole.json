@@ -1,0 +1,12 @@
+{
+  "userRole": {
+    "database": "main",
+    "relationships": [{
+      "type": "belongsTo",
+      "model": "user"
+    }, {
+      "type": "belongsTo",
+      "model": "role"
+    }]
+  }
+}

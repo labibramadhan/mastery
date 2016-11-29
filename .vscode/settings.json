@@ -10,5 +10,6 @@
     "**/.DS_Store": true,
     ".idea": true
   },
-  "javascript.validate.enable": false
+  "javascript.validate.enable": false,
+  "workbench.editor.enablePreview": false
 }

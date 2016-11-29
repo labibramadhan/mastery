@@ -10,9 +10,9 @@ export default class RouteGeneratorFindAll {
   constructor(model) {
     this.model = model;
     this.requestValidators = new RequestValidators(model);
-    this.modelConf = conf.get(`${model.name}:methods:findAll`);
+    this.modelConf = conf.get(`models:${model.name}:methods:findAll`);
     this.authenticate = _.has(this.modelConf, 'authenticate') && this.modelConf.authenticate;
-    this.plural = conf.get(`${model.name}:plural`) || `${model.name}s`;
+    this.plural = conf.get(`models:${model.name}:plural`) || `${model.name}s`;
     this.prefix = conf.get('prefix');
     this.method = 'GET';
     this.path = path.join(this.prefix, this.plural);

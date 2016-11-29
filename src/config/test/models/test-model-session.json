@@ -1,0 +1,36 @@
+{
+  "session": {
+    "database": "main",
+    "public": true,
+    "singular": "session",
+    "plural": "sessions",
+    "ownerFields": ["session.userId"],
+    "methods": {
+      "findAll": {
+        "authenticate": true
+      },
+      "count": {
+        "authenticate": true
+      },
+      "create": {
+        "authenticate": true
+      },
+      "update": {
+        "authenticate": true
+      },
+      "findOne": {
+        "authenticate": true
+      },
+      "findById": {
+        "authenticate": true
+      },
+      "userFindOne": {
+        "authenticate": true
+      }
+    },
+    "relationships": [{
+      "type": "belongsTo",
+      "model": "user"
+    }]
+  }
+}

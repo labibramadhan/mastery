@@ -10,9 +10,9 @@ export default class RouteGeneratorFindById {
   constructor(model) {
     this.model = model;
     this.requestValidators = new RequestValidators(model);
-    this.modelConf = conf.get(`${model.name}:methods:findById`);
+    this.modelConf = conf.get(`models:${model.name}:methods:findById`);
     this.authenticate = _.has(this.modelConf, 'authenticate') && this.modelConf.authenticate;
-    this.singular = conf.get(`${model.name}:singular`) || model.name;
+    this.singular = conf.get(`models:${model.name}:singular`) || model.name;
     this.prefix = conf.get('prefix');
     this.method = 'GET';
     this.path = path.join(this.prefix, this.singular, '{id}');

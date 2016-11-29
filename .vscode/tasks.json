@@ -6,22 +6,20 @@
   "isShellCommand": true,
   "showOutput": "always",
   "suppressTaskName": true,
-  "tasks": [
-    {
-      "taskName": "clean",
-      "args": ["run", "clean"]
-    },
-    {
-      "taskName": "build",
-      "args": ["run", "build"]
-    },
-    {
-      "taskName": "lint",
-      "args": ["run", "lint"]
-    },
-    {
-      "taskName": "test",
-      "args": ["test"]
-    }
-  ]
+  "tasks": [{
+    "taskName": "clean",
+    "args": ["run", "clean"]
+  }, {
+    "taskName": "build",
+    "args": ["run", "build"]
+  }, {
+    "taskName": "lint",
+    "args": ["run", "lint"]
+  }, {
+    "taskName": "test",
+    "args": ["test"]
+  }, {
+    "taskName": "test-debug",
+    "args": ["run", "test-debug"]
+  }]
 }

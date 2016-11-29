@@ -10,9 +10,9 @@ export default class RouteGeneratorCreate {
   constructor(model) {
     this.model = model;
     this.requestValidators = new RequestValidators(model);
-    this.modelConf = conf.get(`${model.name}:methods:create`);
+    this.modelConf = conf.get(`models:${model.name}:methods:create`);
     this.authenticate = _.has(this.modelConf, 'authenticate') && this.modelConf.authenticate;
-    this.singular = conf.get(`${model.name}:singular`) || model.name;
+    this.singular = conf.get(`models:${model.name}:singular`) || model.name;
     this.prefix = conf.get('prefix');
     this.method = 'PUT';
     this.path = path.join(this.prefix, this.singular);

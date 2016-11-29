@@ -10,6 +10,7 @@ export default class AuthJWTValidator {
   constructor() {
     this.resolverModels = new ResolverModels();
   }
+
   validate = async (decoded, request, callback) => {
     const {
       user,

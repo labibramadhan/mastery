@@ -1,0 +1,14 @@
+{
+  "main": {
+    "dialect": "postgresql",
+    "host": "localhost",
+    "port": 5432,
+    "db": "hapiapistarter",
+    "username": "postgres",
+    "password": "sukses123",
+    "sync": true,
+    "forceSync": true,
+    "debug": true,
+    "logging": false
+  }
+}

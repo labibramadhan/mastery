@@ -5,6 +5,8 @@ import * as HapiBlipp from 'blipp';
 
 process.setMaxListeners(0);
 
+require('./setup/_core/globals');
+
 const run = async () => {
   // initialize a HapiJS server
   const server = new Hapi.Server();
@@ -16,8 +18,6 @@ const run = async () => {
   });
 
   await server.register(HapiAuthJWT2);
-
-  require('./setup/_core/globals');
 
   // boot the server
   const BootServer = requireF('services/_core/boot/BootServer');
