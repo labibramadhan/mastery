@@ -12,7 +12,7 @@ export default class BootAutoRoutes {
     _.forEach(enabledModels, (enabledModel) => {
       if (_.has(enabledModel, 'methods')) {
         if (_.has(enabledModel.methods.findAll) && enabledModel.methods.findAll) {
-
+          //
         }
       }
     });
