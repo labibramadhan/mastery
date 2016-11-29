@@ -14,16 +14,14 @@ export default class HandlerGeneratorAssociationCount {
    * Creates an instance of HandlerGeneratorAssociationCount.
    *
    * @param {Sequelize.Model} model
-   * @param {string} componentId
    * @param {Sequelize.Model.Association} association
    *
    * @memberOf HandlerGeneratorAssociationCount
    */
-  constructor(model, componentId, association) {
+  constructor(model, association) {
     this.model = model;
-    this.componentId = componentId;
     this.association = association;
-    this.permissions = [`${componentId}:${association.as}:count`];
+    this.permissions = [`${model.name}:${association.as}:count`];
 
     this.queryParsers = new QueryParsers();
   }

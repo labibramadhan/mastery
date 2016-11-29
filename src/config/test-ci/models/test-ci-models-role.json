@@ -1,0 +1,13 @@
+{
+  "models": {
+    "role": {
+      "database": "main",
+      "relationships": [{
+        "type": "belongsToMany",
+        "model": "user",
+        "through": "userRole",
+        "foreignKey": "roleId"
+      }]
+    }
+  }
+}

@@ -13,14 +13,12 @@ export default class HandlerGeneratorFindAll {
    * Creates an instance of HandlerGeneratorFindAll.
    *
    * @param {Sequelize.Model} model
-   * @param {string} componentId
    *
    * @memberOf HandlerGeneratorFindAll
    */
-  constructor(model, componentId) {
+  constructor(model) {
     this.model = model;
-    this.componentId = componentId;
-    this.permissions = [`${componentId}:findAll`];
+    this.permissions = [`${model.name}:findAll`];
 
     this.queryParsers = new QueryParsers();
   }

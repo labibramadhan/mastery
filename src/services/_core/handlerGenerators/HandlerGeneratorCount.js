@@ -13,14 +13,12 @@ export default class HandlerGeneratorCount {
    * Creates an instance of HandlerGeneratorCount.
    *
    * @param {Sequelize.Model} model
-   * @param {string} componentId
    *
    * @memberOf HandlerGeneratorCount
    */
-  constructor(model, componentId) {
+  constructor(model) {
     this.model = model;
-    this.componentId = componentId;
-    this.permissions = [`${componentId}:count`];
+    this.permissions = [`${model.name}:count`];
 
     this.queryParsers = new QueryParsers();
   }

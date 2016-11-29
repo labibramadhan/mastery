@@ -14,16 +14,14 @@ export default class HandlerGeneratorAssociationFindAll {
    * Creates an instance of HandlerGeneratorAssociationFindAll.
    *
    * @param {Sequelize.Model} model
-   * @param {string} componentId
    * @param {Sequelize.Model.Association} association
    *
    * @memberOf HandlerGeneratorAssociationFindAll
    */
-  constructor(model, componentId, association) {
+  constructor(model, association) {
     this.model = model;
-    this.componentId = componentId;
     this.association = association;
-    this.permissions = [`${componentId}:${association.as}:findAll`];
+    this.permissions = [`${model.name}:${association.as}:findAll`];
 
     this.queryParsers = new QueryParsers();
   }

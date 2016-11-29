@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import Joi from 'joi';
 
-const HandlerGeneratorAssociationFindAll = requireF('services/_core/handlerGenerators/HandlerGeneratorAssociationFindAll');
-const HandlerGeneratorAssociationCount = requireF('services/_core/handlerGenerators/HandlerGeneratorAssociationCount');
-const HandlerGeneratorAssociationFindOne = requireF('services/_core/handlerGenerators/HandlerGeneratorAssociationFindOne');
+const HandlerGeneratorAssociationFindAll = requireF('services/_core/handlerGenerators/associations/HandlerGeneratorAssociationFindAll');
+const HandlerGeneratorAssociationCount = requireF('services/_core/handlerGenerators/associations/HandlerGeneratorAssociationCount');
+const HandlerGeneratorAssociationFindOne = requireF('services/_core/handlerGenerators/associations/HandlerGeneratorAssociationFindOne');
 
 /**
  * Class to generate handlers of all selected associations
@@ -16,14 +16,12 @@ export default class HandlerGeneratorAssociations {
    * Creates an instance of HandlerGeneratorAssociations.
    *
    * @param {Sequelize.Model} model
-   * @param {string} componentId
    * @param {array|string} associations
    *
    * @memberOf HandlerGeneratorAssociations
    */
-  constructor(model, componentId, associations) {
+  constructor(model, associations) {
     this.model = model;
-    this.componentId = componentId;
     this.associations = associations;
   }
 
@@ -52,7 +50,6 @@ export default class HandlerGeneratorAssociations {
         case 'HasMany': {
           const handlerAssociationFindAll = new HandlerGeneratorAssociationFindAll(
             this.model,
-            this.componentId,
             association,
           );
           self[`${association.as}FindAll`] = {
@@ -62,7 +59,6 @@ export default class HandlerGeneratorAssociations {
 
           const handlerAssociationCount = new HandlerGeneratorAssociationCount(
             this.model,
-            this.componentId,
             association,
           );
           self[`${association.as}Count`] = {
@@ -74,7 +70,6 @@ export default class HandlerGeneratorAssociations {
         default: {
           const handlerAssociationFindOne = new HandlerGeneratorAssociationFindOne(
             this.model,
-            this.componentId,
             association,
           );
           self[`${association.as}FindOne`] = {

@@ -1,10 +1,9 @@
 import Boom from 'boom';
 
 export default class HandlerGeneratorUpdate {
-  constructor(model, componentId) {
+  constructor(model) {
     this.model = model;
-    this.componentId = componentId;
-    this.permissions = [`${componentId}:update`];
+    this.permissions = [`${model.name}:update`];
   }
 
   handler = async (request, reply) => {

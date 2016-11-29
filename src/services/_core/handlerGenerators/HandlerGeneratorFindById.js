@@ -11,14 +11,12 @@ export default class HandlerGeneratorFindById {
    * Creates an instance of HandlerGeneratorFindById.
    *
    * @param {Sequelize.Model} model
-   * @param {string} componentId
    *
    * @memberOf HandlerGeneratorFindById
    */
-  constructor(model, componentId) {
+  constructor(model) {
     this.model = model;
-    this.componentId = componentId;
-    this.permissions = [`${componentId}:findById`];
+    this.permissions = [`${model.name}:findById`];
   }
 
   /**

@@ -34,7 +34,7 @@ export default class BootDatabases {
       ]);
 
       const sequelize = new Sequelize(db, username || '', password || '', dbConfig);
-      const models = self.resolverModels.getModelConfsByIdentifier(name);
+      const models = self.resolverModels.getModelConfs({ database: name });
       const resolvedModels = _.map(models, (modelConf, modelName) => {
         let modelPath;
         if (_.has(modelConf, 'location')) {

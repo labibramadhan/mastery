@@ -13,14 +13,12 @@ export default class HandlerGeneratorCreate {
    * Creates an instance of HandlerGeneratorCreate.
    *
    * @param {Sequelize.Model} model
-   * @param {string} componentId
    *
    * @memberOf HandlerGeneratorCreate
    */
-  constructor(model, componentId) {
+  constructor(model) {
     this.model = model;
-    this.componentId = componentId;
-    this.permissions = [`${componentId}:create`];
+    this.permissions = [`${model.name}:create`];
   }
 
   /**

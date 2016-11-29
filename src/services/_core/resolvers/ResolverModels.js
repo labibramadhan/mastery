@@ -5,9 +5,7 @@ export default class ResolverModels {
     this.databases = server.plugins['hapi-sequelize'];
   }
 
-  getModelConfsByIdentifier = identifier => _.pickBy(conf.get('models'), {
-    database: identifier,
-  })
+  getModelConfs = qualifier => _.pickBy(conf.get('models'), qualifier)
 
   getModel = (modelName) => {
     const database = conf.get(`models:${modelName}:database`);
@@ -34,7 +32,7 @@ export default class ResolverModels {
     const databaseIndentifiers = _.keys(conf.get('databases'));
     let allModels = {};
     _.each(databaseIndentifiers, (databaseIndentifier) => {
-      const modelNames = _.keys(self.getModelConfsByIdentifier(databaseIndentifier));
+      const modelNames = _.keys(self.getModelConfs({ database: databaseIndentifier }));
       const models = self.getModels(modelNames);
       allModels = {
         ...allModels,
