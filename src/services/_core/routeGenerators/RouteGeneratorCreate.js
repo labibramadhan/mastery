@@ -17,6 +17,7 @@ export default class RouteGeneratorCreate {
     this.method = 'PUT';
     this.path = path.join(this.prefix, this.singular);
     this.tags = ['api', 'generator', model.name, 'create'];
+    this.permissions = [`${model.name}:create`];
   }
 
   generate() {
@@ -33,7 +34,7 @@ export default class RouteGeneratorCreate {
 
     if (this.authenticate) {
       _.set(options, 'config.auth.strategies', Object.keys(authStrategiesConfig));
-      _.set(options, 'config.auth.scope', handlerCreate.permissions);
+      _.set(options, 'config.auth.scope', this.permissions);
     }
 
     return options;

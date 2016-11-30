@@ -8,6 +8,9 @@ const RouteGeneratorFindById = requireF('services/_core/routeGenerators/RouteGen
 const RouteGeneratorCount = requireF('services/_core/routeGenerators/RouteGeneratorCount');
 const RouteGeneratorCreate = requireF('services/_core/routeGenerators/RouteGeneratorCreate');
 const RouteGeneratorUpdate = requireF('services/_core/routeGenerators/RouteGeneratorUpdate');
+const RouteGeneratorAssociationFindAll = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationFindAll');
+const RouteGeneratorAssociationCount = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationCount');
+const RouteGeneratorAssociationFindOne = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationFindOne');
 
 export default class BootAutoRoutes {
   constructor() {
@@ -17,7 +20,9 @@ export default class BootAutoRoutes {
   boot() {
     const self = this;
     const routes = [];
-    const enabledModels = this.resolverModels.getModelConfs({ public: true });
+    const enabledModels = this.resolverModels.getModelConfs({
+      public: true,
+    });
     _.forEach(enabledModels, (enabledModel, modelName) => {
       if (_.has(enabledModel, 'methods')) {
         const model = self.resolverModels.getModel(modelName);
@@ -50,6 +55,36 @@ export default class BootAutoRoutes {
         if (_.has(enabledModel, 'methods.update') && enabledModel.methods.update) {
           const routeGeneratorUpdate = new RouteGeneratorUpdate(model);
           routes.push(routeGeneratorUpdate.generate());
+        }
+
+        if (_.has(enabledModel, 'methods.associations')) {
+          _.forEach(enabledModel.methods.associations, (associationMethods, associationAs) => {
+            if (_.has(model, `associations.${associationAs}`)) {
+              if (_.has(associationMethods, 'findAll')) {
+                const routeGeneratorAssociationFindAll = new RouteGeneratorAssociationFindAll(
+                  model,
+                  model.associations[associationAs],
+                );
+                routes.push(routeGeneratorAssociationFindAll.generate());
+              }
+
+              if (_.has(associationMethods, 'count')) {
+                const routeGeneratorAssociationCount = new RouteGeneratorAssociationCount(
+                  model,
+                  model.associations[associationAs],
+                );
+                routes.push(routeGeneratorAssociationCount.generate());
+              }
+
+              if (_.has(associationMethods, 'findOne')) {
+                const routeGeneratorAssociationFindOne = new RouteGeneratorAssociationFindOne(
+                  model,
+                  model.associations[associationAs],
+                );
+                routes.push(routeGeneratorAssociationFindOne.generate());
+              }
+            }
+          });
         }
       }
     });

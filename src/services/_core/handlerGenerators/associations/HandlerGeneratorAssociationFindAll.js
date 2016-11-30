@@ -19,7 +19,6 @@ export default class HandlerGeneratorAssociationFindAll {
   constructor(model, association) {
     this.model = model;
     this.association = association;
-    this.permissions = [`${model.name}:${association.as}:findAll`];
   }
 
   /**

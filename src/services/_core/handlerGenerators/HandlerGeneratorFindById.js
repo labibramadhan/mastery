@@ -16,7 +16,6 @@ export default class HandlerGeneratorFindById {
    */
   constructor(model) {
     this.model = model;
-    this.permissions = [`${model.name}:findById`, `${model.name}:findById:own`];
   }
 
   /**

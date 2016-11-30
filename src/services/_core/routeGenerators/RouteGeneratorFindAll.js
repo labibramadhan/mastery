@@ -17,6 +17,7 @@ export default class RouteGeneratorFindAll {
     this.method = 'GET';
     this.path = path.join(this.prefix, this.plural);
     this.tags = ['api', 'generator', model.name, 'findAll'];
+    this.permissions = [`${model.name}:findAll`, `${model.name}:findAll:own`];
   }
 
   generate() {
@@ -33,7 +34,7 @@ export default class RouteGeneratorFindAll {
 
     if (this.authenticate) {
       _.set(options, 'config.auth.strategies', Object.keys(authStrategiesConfig));
-      _.set(options, 'config.auth.scope', handlerFindAll.permissions);
+      _.set(options, 'config.auth.scope', this.permissions);
     }
 
     return options;

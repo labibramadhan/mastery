@@ -18,7 +18,6 @@ export default class HandlerGeneratorCreate {
    */
   constructor(model) {
     this.model = model;
-    this.permissions = [`${model.name}:create`];
   }
 
   /**

@@ -17,6 +17,7 @@ export default class RouteGeneratorCount {
     this.method = 'GET';
     this.path = path.join(this.prefix, this.plural, 'count');
     this.tags = ['api', 'generator', model.name, 'count'];
+    this.permissions = [`${model.name}:count`, `${model.name}:count:own`];
   }
 
   generate() {
@@ -33,7 +34,7 @@ export default class RouteGeneratorCount {
 
     if (this.authenticate) {
       _.set(options, 'config.auth.strategies', Object.keys(authStrategiesConfig));
-      _.set(options, 'config.auth.scope', handlerCount.permissions);
+      _.set(options, 'config.auth.scope', this.permissions);
     }
 
     return options;

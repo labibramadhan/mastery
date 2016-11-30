@@ -3,22 +3,11 @@ import Joi from 'joi';
 
 const prefix = conf.get('prefix');
 
-const HandlerGeneratorAssociations = requireF('services/_core/handlerGenerators/associations/HandlerGeneratorAssociations');
 const UserHandlerLogin = requireF('component/_core/user/UserHandlerLogin');
 
-const RequestValidators = requireF('services/_core/requestValidators/RequestValidators');
-
-const authStrategiesConfig = requireF('setup/config/authStrategiesConfig');
-
-export default (models) => {
-  // define user component endpoint
-
-  const requestValidators = new RequestValidators(models.user);
-  requestValidators.build();
-
+// define user component endpoint
+export default () => {
   const handlerLogin = new UserHandlerLogin();
-  const handlerAssociations = new HandlerGeneratorAssociations(models.user, ['roles']);
-  handlerAssociations.generate();
 
   return [
     {
@@ -34,36 +23,6 @@ export default (models) => {
             email: Joi.string(),
             password: Joi.string().required(),
           },
-        },
-      },
-    }, {
-      // define GET /user/{id}/roles route
-      method: 'GET',
-      path: path.join(prefix, 'user', '{id}', 'roles'),
-      handler: handlerAssociations.rolesFindAll.handler,
-      config: {
-        tags: ['api', 'generator', 'user', 'findAllBelongsToMany'],
-        auth: {
-          strategies: Object.keys(authStrategiesConfig),
-          scope: handlerAssociations.rolesFindAll.permissions,
-        },
-        validate: {
-          query: Joi.any(),
-        },
-      },
-    }, {
-      // define GET /user/{id}/roles/count route
-      method: 'GET',
-      path: path.join(prefix, 'user', '{id}', 'roles', 'count'),
-      handler: handlerAssociations.rolesCount.handler,
-      config: {
-        tags: ['api', 'generator', 'user', 'countBelongsToMany'],
-        auth: {
-          strategies: Object.keys(authStrategiesConfig),
-          scope: handlerAssociations.rolesCount.permissions,
-        },
-        validate: {
-          query: Joi.any(),
         },
       },
     },

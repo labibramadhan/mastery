@@ -16,7 +16,6 @@ export default class HandlerGeneratorFindAll {
    */
   constructor(model) {
     this.model = model;
-    this.permissions = [`${model.name}:findAll`, `${model.name}:findAll:own`];
   }
 
   /**

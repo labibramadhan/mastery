@@ -28,17 +28,23 @@
       "findById": {
         "authenticate": true
       },
-      "roleFindAll": {
-        "authenticate": true
-      },
-      "roleCount": {
-        "authenticate": true
-      },
-      "sessionFindAll": {
-        "authenticate": true
-      },
-      "sessionCount": {
-        "authenticate": true
+      "associations": {
+        "roles": {
+          "findAll": {
+            "authenticate": true
+          },
+          "count": {
+            "authenticate": true
+          }
+        },
+        "sessions": {
+          "findAll": {
+            "authenticate": true
+          },
+          "count": {
+            "authenticate": true
+          }
+        }
       }
     },
     "relationships": [{

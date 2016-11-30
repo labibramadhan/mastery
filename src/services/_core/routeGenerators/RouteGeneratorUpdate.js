@@ -17,6 +17,7 @@ export default class RouteGeneratorUpdate {
     this.method = 'POST';
     this.path = path.join(this.prefix, this.singular, '{id}');
     this.tags = ['api', 'generator', model.name, 'update'];
+    this.permissions = [`${model.name}:update`, `${model.name}:update:own`];
   }
 
   generate() {
@@ -33,7 +34,7 @@ export default class RouteGeneratorUpdate {
 
     if (this.authenticate) {
       _.set(options, 'config.auth.strategies', Object.keys(authStrategiesConfig));
-      _.set(options, 'config.auth.scope', handlerUpdate.permissions);
+      _.set(options, 'config.auth.scope', this.permissions);
     }
 
     return options;

@@ -11,10 +11,6 @@ export default class RequestValidatorConstants {
     ],
     count: [
       'where',
-      'include',
-      'order',
-      'limit',
-      'offset',
     ],
     findOne: [
       'where',
@@ -27,12 +23,17 @@ export default class RequestValidatorConstants {
       'payload',
     ],
     update: [],
-    findAllBelongsToMany: [
+    findAllOneToMany: [
+      'where',
+      'include',
+      'order',
+      'limit',
+      'offset',
+    ],
+    countOneToMany: [
       'where',
     ],
-    countBelongsToMany: [
-      'where',
-    ],
+    findOneOneToOne: [],
   };
 
   static SEQUELIZE_OPERATORS = {

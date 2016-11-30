@@ -16,7 +16,6 @@ export default class HandlerGeneratorCount {
    */
   constructor(model) {
     this.model = model;
-    this.permissions = [`${model.name}:count`, `${model.name}:count:own`];
   }
 
   /**

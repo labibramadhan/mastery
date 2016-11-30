@@ -9,7 +9,9 @@ import mockUsers from '../../../../../helpers/mock-users';
 
 const prefix = conf.get('prefix');
 
-describe(`GET countBelongsToMnay ${prefix}user/{id}/roles/count`, () => {
+describe(`GET findAllOneToMany ${URI(`${prefix}user/{id}/roles`).addQuery({
+  name: 'admin',
+})}`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
@@ -38,8 +40,10 @@ describe(`GET countBelongsToMnay ${prefix}user/{id}/roles/count`, () => {
 
   it('works', async function it() {
     const { admin2 } = this.users;
+    const { adminRole } = this.roles;
 
-    const thisTestUrl = URI(`${prefix}user/${admin2.id}/roles/count`).addQuery({
+    const thisTestUrl = URI(`${prefix}user/${admin2.id}/roles`).addQuery({
+      name: 'admin',
       token: this.token,
     }).toString();
 
@@ -52,6 +56,7 @@ describe(`GET countBelongsToMnay ${prefix}user/{id}/roles/count`, () => {
     });
 
     assert.equal(statusCode, HttpStatus.OK);
-    assert.equal(result.count, 2);
+    assert.equal(result.length, 1);
+    assert.equal(result[0].id, adminRole.id);
   });
 });
