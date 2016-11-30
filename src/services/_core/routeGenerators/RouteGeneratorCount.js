@@ -16,6 +16,7 @@ export default class RouteGeneratorCount {
     this.prefix = conf.get('prefix');
     this.method = 'GET';
     this.path = path.join(this.prefix, this.plural, 'count');
+    this.tags = ['api', 'generator', model.name, 'count'];
   }
 
   generate() {
@@ -24,6 +25,7 @@ export default class RouteGeneratorCount {
 
     _.set(options, 'method', this.method);
     _.set(options, 'path', this.path);
+    _.set(options, 'config.tags', this.tags);
     _.set(options, 'handler', handlerCount.handler);
 
     this.requestValidators.build();

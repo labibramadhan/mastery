@@ -18,7 +18,7 @@ export default class HandlerGeneratorFindOne {
    */
   constructor(model) {
     this.model = model;
-    this.permissions = [`${model.name}:findOne`];
+    this.permissions = [`${model.name}:findOne`, `${model.name}:findOne:own`];
 
     this.queryParsers = new QueryParsers();
   }

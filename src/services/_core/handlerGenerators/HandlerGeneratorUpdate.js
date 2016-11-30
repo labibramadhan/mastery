@@ -3,7 +3,7 @@ import Boom from 'boom';
 export default class HandlerGeneratorUpdate {
   constructor(model) {
     this.model = model;
-    this.permissions = [`${model.name}:update`];
+    this.permissions = [`${model.name}:update`, `${model.name}:update:own`];
   }
 
   handler = async (request, reply) => {

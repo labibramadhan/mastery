@@ -16,6 +16,7 @@ export default class RouteGeneratorFindAll {
     this.prefix = conf.get('prefix');
     this.method = 'GET';
     this.path = path.join(this.prefix, this.plural);
+    this.tags = ['api', 'generator', model.name, 'findAll'];
   }
 
   generate() {
@@ -24,6 +25,7 @@ export default class RouteGeneratorFindAll {
 
     _.set(options, 'method', this.method);
     _.set(options, 'path', this.path);
+    _.set(options, 'config.tags', this.tags);
     _.set(options, 'handler', handlerFindAll.handler);
 
     this.requestValidators.build();

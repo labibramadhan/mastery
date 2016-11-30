@@ -19,11 +19,7 @@ export default class I18nExtended {
     _.forEach(locales, (localePath) => {
       if (fs.lstatSync(localePath).isDirectory()) {
         const localeName = path.basename(localePath);
-        const localeFilesGlob = path.resolve(path.join(localePath, '*.json'));
-        const localeFiles = glob.sync(localeFilesGlob);
-        if (localeFiles.length) {
-          availableLanguages.push(localeName);
-        }
+        availableLanguages.push(localeName);
       }
     });
     return availableLanguages;

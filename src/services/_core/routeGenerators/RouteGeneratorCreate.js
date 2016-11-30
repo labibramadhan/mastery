@@ -16,6 +16,7 @@ export default class RouteGeneratorCreate {
     this.prefix = conf.get('prefix');
     this.method = 'PUT';
     this.path = path.join(this.prefix, this.singular);
+    this.tags = ['api', 'generator', model.name, 'create'];
   }
 
   generate() {
@@ -24,6 +25,7 @@ export default class RouteGeneratorCreate {
 
     _.set(options, 'method', this.method);
     _.set(options, 'path', this.path);
+    _.set(options, 'config.tags', this.tags);
     _.set(options, 'handler', handlerCreate.handler);
 
     this.requestValidators.build();

@@ -4,7 +4,8 @@
     "public": true,
     "singular": "session",
     "plural": "sessions",
-    "ownerFields": ["session.userId"],
+    "pk": "id",
+    "ownerFields": ["userId"],
     "methods": {
       "findAll": {
         "authenticate": true

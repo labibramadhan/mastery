@@ -16,6 +16,7 @@ export default class RouteGeneratorFindById {
     this.prefix = conf.get('prefix');
     this.method = 'GET';
     this.path = path.join(this.prefix, this.singular, '{id}');
+    this.tags = ['api', 'generator', model.name, 'findById'];
   }
 
   generate() {
@@ -24,6 +25,7 @@ export default class RouteGeneratorFindById {
 
     _.set(options, 'method', this.method);
     _.set(options, 'path', this.path);
+    _.set(options, 'config.tags', this.tags);
     _.set(options, 'handler', handlerFindById.handler);
 
     this.requestValidators.build();

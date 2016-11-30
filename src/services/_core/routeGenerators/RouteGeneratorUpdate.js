@@ -16,6 +16,7 @@ export default class RouteGeneratorUpdate {
     this.prefix = conf.get('prefix');
     this.method = 'POST';
     this.path = path.join(this.prefix, this.singular, '{id}');
+    this.tags = ['api', 'generator', model.name, 'update'];
   }
 
   generate() {
@@ -24,6 +25,7 @@ export default class RouteGeneratorUpdate {
 
     _.set(options, 'method', this.method);
     _.set(options, 'path', this.path);
+    _.set(options, 'config.tags', this.tags);
     _.set(options, 'handler', handlerUpdate.handler);
 
     this.requestValidators.build();
