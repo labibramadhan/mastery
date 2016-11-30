@@ -1,3 +1,7 @@
+const {
+  getPackage,
+} = requireF('services/_core/commonServices');
+
 const RequestValidatorConstants = requireF('services/_core/requestValidators/RequestValidatorConstants');
 
 const QueryParserWhere = requireF('services/_core/queryParsers/QueryParserWhere');
@@ -8,29 +12,24 @@ const QueryParserOffset = requireF('services/_core/queryParsers/QueryParserOffse
 
 const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
 
-export default class QueryParsers {
-  constructor() {
-    this.resolverModels = new ResolverModels();
-    this.models = this.resolverModels.getAllModels();
-    this.queryParserWhere = new QueryParserWhere();
-    this.queryParserInclude = new QueryParserInclude(this.models);
-    this.queryParserOrder = new QueryParserOrder(this.models);
-    this.queryParserLimit = new QueryParserLimit();
-    this.queryParserOffset = new QueryParserOffset();
-  }
-  parse = async function parse(request, methodName) {
-    const {
-      queryParserWhere,
-      queryParserInclude,
-      queryParserOrder,
-      queryParserLimit,
-      queryParserOffset,
-    } = this;
-    const {
-      APPLICABLE_METHODS,
-    } = RequestValidatorConstants;
+const resolverModels = new ResolverModels();
+const models = resolverModels.getAllModels();
+const queryParserWhere = new QueryParserWhere();
+const queryParserInclude = new QueryParserInclude(models);
+const queryParserOrder = new QueryParserOrder(models);
+const queryParserLimit = new QueryParserLimit();
+const queryParserOffset = new QueryParserOffset();
 
+const {
+  APPLICABLE_METHODS,
+} = RequestValidatorConstants;
+
+const preHandlerQueryParser = async function preHandlerQueryParser(request, reply) {
+  const tags = request.route.settings.tags;
+
+  if (tags && tags.includes('generator')) {
     let queries = {};
+    const methodName = tags[3];
 
     if (APPLICABLE_METHODS[methodName].includes('where')) {
       const where = queryParserWhere.parse(request.query);
@@ -81,6 +80,19 @@ export default class QueryParsers {
         };
       }
     }
-    return queries;
+
+    // eslint-disable-next-line no-param-reassign
+    request.queryAPI = queries;
   }
-}
+  return reply.continue();
+};
+
+exports.register = async (server, options, next) => {
+  server.ext('onPreHandler', preHandlerQueryParser);
+  return next();
+};
+
+exports.register.attributes = {
+  name: `${getPackage().name}-pre-handler-query-parser`,
+  version: '1.0.0',
+};

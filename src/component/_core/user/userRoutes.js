@@ -42,7 +42,7 @@ export default (models) => {
       path: path.join(prefix, 'user', '{id}', 'roles'),
       handler: handlerAssociations.rolesFindAll.handler,
       config: {
-        tags: ['api'],
+        tags: ['api', 'generator', 'user', 'findAllBelongsToMany'],
         auth: {
           strategies: Object.keys(authStrategiesConfig),
           scope: handlerAssociations.rolesFindAll.permissions,
@@ -57,7 +57,7 @@ export default (models) => {
       path: path.join(prefix, 'user', '{id}', 'roles', 'count'),
       handler: handlerAssociations.rolesCount.handler,
       config: {
-        tags: ['api'],
+        tags: ['api', 'generator', 'user', 'countBelongsToMany'],
         auth: {
           strategies: Object.keys(authStrategiesConfig),
           scope: handlerAssociations.rolesCount.permissions,

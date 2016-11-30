@@ -1,7 +1,5 @@
 import Boom from 'boom';
 
-const QueryParsers = requireF('services/_core/queryParsers/QueryParsers');
-
 /**
  * Generate the findAll handler of a single model
  *
@@ -19,8 +17,6 @@ export default class HandlerGeneratorFindAll {
   constructor(model) {
     this.model = model;
     this.permissions = [`${model.name}:findAll`, `${model.name}:findAll:own`];
-
-    this.queryParsers = new QueryParsers();
   }
 
   /**
@@ -30,8 +26,7 @@ export default class HandlerGeneratorFindAll {
    */
   handler = async (request, reply) => {
     try {
-      const queries = await this.queryParsers.parse(request, 'findAll');
-      const results = await this.model.findAll(queries);
+      const results = await this.model.findAll(request.queryAPI);
       return reply(results);
     } catch (e) {
       return reply(Boom.badRequest(e));

@@ -1,7 +1,5 @@
 import Boom from 'boom';
 
-const QueryParsers = requireF('services/_core/queryParsers/QueryParsers');
-
 /**
  * Generate the count handler of a single model
  *
@@ -19,8 +17,6 @@ export default class HandlerGeneratorCount {
   constructor(model) {
     this.model = model;
     this.permissions = [`${model.name}:count`, `${model.name}:count:own`];
-
-    this.queryParsers = new QueryParsers();
   }
 
   /**
@@ -30,8 +26,7 @@ export default class HandlerGeneratorCount {
    */
   handler = async (request, reply) => {
     try {
-      const queries = await this.queryParsers.parse(request, 'count');
-      const result = await this.model.count(queries);
+      const result = await this.model.count(request.queryAPI);
       return reply({
         count: result,
       });
