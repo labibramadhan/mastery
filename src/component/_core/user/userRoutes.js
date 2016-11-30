@@ -26,12 +26,23 @@ export default (models) => {
       method: 'POST',
       path: path.join(prefix, 'user', 'login'),
       handler: handlerLogin.handler,
+      config: {
+        tags: ['api'],
+        validate: {
+          payload: {
+            username: Joi.string(),
+            email: Joi.string(),
+            password: Joi.string().required(),
+          },
+        },
+      },
     }, {
       // define GET /user/{id}/roles route
       method: 'GET',
       path: path.join(prefix, 'user', '{id}', 'roles'),
       handler: handlerAssociations.rolesFindAll.handler,
       config: {
+        tags: ['api'],
         auth: {
           strategies: Object.keys(authStrategiesConfig),
           scope: handlerAssociations.rolesFindAll.permissions,
@@ -46,6 +57,7 @@ export default (models) => {
       path: path.join(prefix, 'user', '{id}', 'roles', 'count'),
       handler: handlerAssociations.rolesCount.handler,
       config: {
+        tags: ['api'],
         auth: {
           strategies: Object.keys(authStrategiesConfig),
           scope: handlerAssociations.rolesCount.permissions,

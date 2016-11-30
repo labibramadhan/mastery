@@ -51,7 +51,6 @@ export default class RequestValidatorInclude {
 
     return Joi.object().keys({
       include: validInclude,
-      'include[]': validInclude,
     });
   }
 }

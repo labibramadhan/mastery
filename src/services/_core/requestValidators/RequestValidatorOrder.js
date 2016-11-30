@@ -33,8 +33,8 @@ export default class RequestValidatorOrder {
     const self = this;
     const validFields = [
       Joi.alternatives().when('model', {
-        is: Joi.any().empty(),
-        then: Joi.valid(_.keys(self.model.attributes)),
+        is: Joi.string().empty(''),
+        then: Joi.string().valid(_.keys(self.model.attributes)),
       }),
     ];
     const associations = _.map(self.model.associations, association => association.target.name);
@@ -47,7 +47,7 @@ export default class RequestValidatorOrder {
     });
     return Joi.object().keys({
       model: Joi.string().valid(associations).optional(),
-      field: Joi.alternatives().try(validFields).required(),
+      field: Joi.alternatives().try(validFields),
       sort: Joi.string().valid('DESC', 'desc', 'ASC', 'asc').required(),
     });
   }

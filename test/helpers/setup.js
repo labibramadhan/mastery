@@ -1,9 +1,10 @@
+import Hapi from 'hapi';
+
 process.setMaxListeners(0);
 
-const Hapi = require('hapi');
-const Promise = require('bluebird');
-const portfinder = require('portfinder');
 const HapiAuthJWT2 = require('hapi-auth-jwt2');
+const portfinder = require('portfinder');
+const Promise = require('bluebird');
 
 const getPort = Promise.promisify(portfinder.getPort);
 

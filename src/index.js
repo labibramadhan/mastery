@@ -1,7 +1,10 @@
 import Hapi from 'hapi';
 
-import * as HapiAuthJWT2 from 'hapi-auth-jwt2';
-import * as HapiBlipp from 'blipp';
+const HapiAuthJWT2 = require('hapi-auth-jwt2');
+const HapiBlipp = require('blipp');
+const HapiSwagger = require('hapi-swagger');
+const Inert = require('inert');
+const Vision = require('vision');
 
 process.setMaxListeners(0);
 
@@ -13,8 +16,8 @@ const run = async () => {
   global.server = server;
 
   server.connection({
-    port: 4444,
-    host: 'localhost',
+    port: conf.get('port'),
+    host: conf.get('host'),
   });
 
   await server.register(HapiAuthJWT2);
@@ -24,10 +27,25 @@ const run = async () => {
   const bootServer = new BootServer();
   await bootServer.boot();
 
-  // register Blipp for showing all available routes
-  await server.register({
-    register: HapiBlipp,
-  });
+  const {
+    getPackage,
+  } = requireF('services/_core/commonServices');
+  const pkg = getPackage();
+  server.register([
+    Inert,
+    Vision, {
+      tags: ['api'],
+      register: HapiSwagger,
+      options: {
+        basePath: conf.get('prefix'),
+        info: {
+          title: conf.get('title'),
+          version: pkg.version,
+        },
+      },
+    },
+    HapiBlipp,
+  ]);
 
   // start the server
   server.start(() => {
