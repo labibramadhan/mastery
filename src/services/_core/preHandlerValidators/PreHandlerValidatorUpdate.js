@@ -40,11 +40,10 @@ export default class PreHandlerValidatorUpdate {
       },
     });
     if (!count) {
-      const i18nExtended = new I18nExtended(this.request);
       let message = null;
       const messageKey = `error.${this.model.name}.own.update.forbidden`;
-      if (i18nExtended.has(messageKey)) {
-        message = i18nExtended.t(messageKey);
+      if (this.i18nExtended.has(messageKey)) {
+        message = this.i18nExtended.t(messageKey);
       }
       return Boom.forbidden(message);
     }
@@ -53,6 +52,7 @@ export default class PreHandlerValidatorUpdate {
 
   validate = async (request) => {
     this.request = request;
+    this.i18nExtended = new I18nExtended(this.request);
     return await this.notExist() || await this.invalidOwn();
   }
 }

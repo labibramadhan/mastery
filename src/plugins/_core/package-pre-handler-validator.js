@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const {
   getPackage,
 } = requireF('services/_core/commonServices');
@@ -11,6 +13,7 @@ const PreHandlerValidatorCount = requireF('services/_core/preHandlerValidators/P
 const PreHandlerValidatorUpdate = requireF('services/_core/preHandlerValidators/PreHandlerValidatorUpdate');
 const PreHandlerValidatorAssociationFindAll = requireF('services/_core/preHandlerValidators/associations/PreHandlerValidatorAssociationFindAll');
 const PreHandlerValidatorAssociationFindOne = requireF('services/_core/preHandlerValidators/associations/PreHandlerValidatorAssociationFindOne');
+const PreHandlerValidatorAssociationCount = requireF('services/_core/preHandlerValidators/associations/PreHandlerValidatorAssociationCount');
 
 const preHandlerValidator = async function preHandlerValidator(request, reply) {
   const tags = request.route.settings.tags;
@@ -19,41 +22,55 @@ const preHandlerValidator = async function preHandlerValidator(request, reply) {
     const resolverModels = new ResolverModels();
     const modelName = tags[2];
     const model = resolverModels.getModel(modelName);
+    const config = request.route.settings.plugins.package;
+    const inherit = _.castArray(config.inherit);
 
     let invalid;
-    if (tags.includes('findAll')) {
+
+    if (!invalid && config.method === 'findAll') {
       const preHandlerValidatorFindAll = new PreHandlerValidatorFindAll(model);
       invalid = await preHandlerValidatorFindAll.validate(request);
-    } else if (tags.includes('findOne')) {
+    }
+
+    if (!invalid && config.method === 'findOne') {
       const preHandlerValidatorFindOne = new PreHandlerValidatorFindOne(model);
       invalid = await preHandlerValidatorFindOne.validate(request);
-    } else if (tags.includes('findById')) {
+    }
+
+    if (!invalid && (config.method === 'findById' || inherit.includes('findById'))) {
       const preHandlerValidatorFindById = new PreHandlerValidatorFindById(model);
       invalid = await preHandlerValidatorFindById.validate(request);
-    } else if (tags.includes('count')) {
+    }
+
+    if (!invalid && config.method === 'count') {
       const preHandlerValidatorCount = new PreHandlerValidatorCount(model);
       invalid = await preHandlerValidatorCount.validate(request);
-    } else if (tags.includes('update')) {
+    }
+
+    if (!invalid && config.method === 'update') {
       const preHandlerValidatorUpdate = new PreHandlerValidatorUpdate(model);
       invalid = await preHandlerValidatorUpdate.validate(request);
-    } else if (tags.includes('findAllOneToMany')) {
-      const associationAs = tags[4];
-      const association = model.associations[associationAs];
-      const preHandlerValidatorAssociationFindAll =
-        new PreHandlerValidatorAssociationFindAll(model, association);
-      invalid = await preHandlerValidatorAssociationFindAll.validate(request);
-    } else if (tags.includes('countOneToMany')) {
-      // const associationAs = tags[4];
-      // const association = model.associations[associationAs];
-      // const preHandlerValidatorAssociationCount =
-      //   new PreHandlerValidatorAssociationCount(model, association);
-      // invalid = await preHandlerValidatorAssociationCount.validate(request);
-    } else if (tags.includes('findOneOneToOne')) {
-      const associationAs = tags[4];
-      const association = model.associations[associationAs];
-      const preHandlerValidatorAssociationFindOne =
-        new PreHandlerValidatorAssociationFindOne(model, association);
-      invalid = await preHandlerValidatorAssociationFindOne.validate(request);
+    }
+
+    if (config.association) {
+      const association = model.associations[config.association];
+      if (!invalid && config.method === 'findAllOneToMany') {
+        const preHandlerValidatorAssociationFindAll =
+          new PreHandlerValidatorAssociationFindAll(model, association);
+        invalid = await preHandlerValidatorAssociationFindAll.validate(request);
+      }
+
+      if (!invalid && config.method === 'countOneToMany') {
+        const preHandlerValidatorAssociationCount =
+          new PreHandlerValidatorAssociationCount(model, association);
+        invalid = await preHandlerValidatorAssociationCount.validate(request);
+      }
+
+      if (!invalid && config.method === 'findOneOneToOne') {
+        const preHandlerValidatorAssociationFindOne =
+          new PreHandlerValidatorAssociationFindOne(model, association);
+        invalid = await preHandlerValidatorAssociationFindOne.validate(request);
+      }
     }
 
     if (invalid && invalid.isBoom) {

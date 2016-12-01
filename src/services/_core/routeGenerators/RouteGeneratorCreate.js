@@ -1,42 +1,20 @@
-import _ from 'lodash';
-import path from 'path';
-
+const RouteGeneratorBaseGeneral = requireF('services/_core/routeGenerators/base/RouteGeneratorBaseGeneral');
 const HandlerGeneratorCreate = requireF('services/_core/handlerGenerators/HandlerGeneratorCreate');
-const RequestValidators = requireF('services/_core/requestValidators/RequestValidators');
 
-const authStrategiesConfig = requireF('setup/config/authStrategiesConfig');
-
-export default class RouteGeneratorCreate {
+export default class RouteGeneratorCreate extends RouteGeneratorBaseGeneral {
   constructor(model) {
-    this.model = model;
-    this.requestValidators = new RequestValidators(model);
-    this.modelConf = conf.get(`models:${model.name}:methods:create`);
-    this.authenticate = _.has(this.modelConf, 'authenticate') && this.modelConf.authenticate;
-    this.singular = conf.get(`models:${model.name}:singular`) || model.name;
-    this.prefix = conf.get('prefix');
+    const methodName = 'create';
+    const handlerGenerator = new HandlerGeneratorCreate(model);
+
+    super({
+      handler: handlerGenerator.handler,
+      methodName,
+      model,
+    });
+
+    const singular = conf.get(`models:${model.name}:singular`) || model.name;
+
     this.method = 'PUT';
-    this.path = path.join(this.prefix, this.singular);
-    this.tags = ['api', 'generator', model.name, 'create'];
-    this.permissions = [`${model.name}:create`];
-  }
-
-  generate() {
-    const options = {};
-    const handlerCreate = new HandlerGeneratorCreate(this.model);
-
-    _.set(options, 'method', this.method);
-    _.set(options, 'path', this.path);
-    _.set(options, 'config.tags', this.tags);
-    _.set(options, 'handler', handlerCreate.handler);
-
-    this.requestValidators.build();
-    _.set(options, 'config.validate', this.requestValidators.create);
-
-    if (this.authenticate) {
-      _.set(options, 'config.auth.strategies', Object.keys(authStrategiesConfig));
-      _.set(options, 'config.auth.scope', this.permissions);
-    }
-
-    return options;
+    this.path = singular;
   }
 }

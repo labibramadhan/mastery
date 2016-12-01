@@ -11,50 +11,6 @@ export default class PreHandlerValidatorAssociationFindAll {
     this.pk = conf.get(`models:${this.model.name}:pk`);
   }
 
-  notExist = async () => {
-    const count = await this.model.count({
-      where: {
-        [this.pk]: this.request.params.id,
-      },
-    });
-    if (!count) {
-      return Boom.notFound();
-    }
-    return false;
-  }
-
-  invalidOwnParent = async () => {
-    if (!this.ownerFields ||
-      !_.has(this.request, 'auth.credentials.scope') ||
-      this.request.auth.credentials.scope.includes(`${this.model.name}:${this.association.as}:findOne`) ||
-      this.request.auth.credentials.scope.includes(`${this.model.name}:${this.association.as}:own:findOne`)
-    ) {
-      return false;
-    }
-    const whereOr = [];
-    const ownerFields = _.castArray(this.ownerFields);
-    _.forEach(ownerFields, (ownerField) => {
-      whereOr.push({
-        [ownerField]: this.request.auth.credentials.id,
-      });
-    });
-    const count = await this.model.count({
-      where: {
-        [this.pk]: this.request.params.id,
-        $or: whereOr,
-      },
-    });
-    if (!count) {
-      let message = null;
-      const messageKey = `error.${this.model.name}.own.${this.association.as}.findOne.forbidden`;
-      if (this.i18nExtended.has(messageKey)) {
-        message = this.i18nExtended.t(messageKey);
-      }
-      return Boom.forbidden(message);
-    }
-    return false;
-  }
-
   invalidOwnChild = async () => {
     if (!this.ownerFields ||
       !_.has(this.request, 'auth.credentials.scope') ||
@@ -83,6 +39,6 @@ export default class PreHandlerValidatorAssociationFindAll {
   validate = async (request) => {
     this.request = request;
     this.i18nExtended = new I18nExtended(this.request);
-    return await this.notExist() || await this.invalidOwnParent() || await this.invalidOwnChild();
+    return await await this.invalidOwnChild();
   }
 }

@@ -19,7 +19,6 @@ export default class HandlerGeneratorAssociationCount {
   constructor(model, association) {
     this.model = model;
     this.association = association;
-    this.permissions = [`${model.name}:${association.as}:count`];
   }
 
   /**
@@ -30,9 +29,6 @@ export default class HandlerGeneratorAssociationCount {
   handler = async (request, reply) => {
     try {
       const modelInstance = await this.model.findById(request.params.id);
-      if (!modelInstance) {
-        return reply(Boom.notFound());
-      }
       const expectedMethodName = `count${_.upperFirst(_.camelCase(this.association.as))}`;
       const result = await modelInstance[expectedMethodName](request.queryAPI);
       return reply({ count: result });

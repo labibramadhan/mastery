@@ -1,42 +1,20 @@
-import _ from 'lodash';
-import path from 'path';
-
+const RouteGeneratorBaseGeneral = requireF('services/_core/routeGenerators/base/RouteGeneratorBaseGeneral');
 const HandlerGeneratorFindAll = requireF('services/_core/handlerGenerators/HandlerGeneratorFindAll');
-const RequestValidators = requireF('services/_core/requestValidators/RequestValidators');
 
-const authStrategiesConfig = requireF('setup/config/authStrategiesConfig');
-
-export default class RouteGeneratorFindAll {
+export default class RouteGeneratorFindAll extends RouteGeneratorBaseGeneral {
   constructor(model) {
-    this.model = model;
-    this.requestValidators = new RequestValidators(model);
-    this.modelConf = conf.get(`models:${model.name}:methods:findAll`);
-    this.authenticate = _.has(this.modelConf, 'authenticate') && this.modelConf.authenticate;
-    this.plural = conf.get(`models:${model.name}:plural`) || `${model.name}s`;
-    this.prefix = conf.get('prefix');
+    const methodName = 'findAll';
+    const handlerGenerator = new HandlerGeneratorFindAll(model);
+
+    super({
+      handler: handlerGenerator.handler,
+      methodName,
+      model,
+    });
+
+    const plural = conf.get(`models:${model.name}:plural`) || `${model.name}s`;
+
     this.method = 'GET';
-    this.path = path.join(this.prefix, this.plural);
-    this.tags = ['api', 'generator', model.name, 'findAll'];
-    this.permissions = [`${model.name}:findAll`, `${model.name}:own:findAll`];
-  }
-
-  generate() {
-    const options = {};
-    const handlerFindAll = new HandlerGeneratorFindAll(this.model);
-
-    _.set(options, 'method', this.method);
-    _.set(options, 'path', this.path);
-    _.set(options, 'config.tags', this.tags);
-    _.set(options, 'handler', handlerFindAll.handler);
-
-    this.requestValidators.build();
-    _.set(options, 'config.validate', this.requestValidators.findAll);
-
-    if (this.authenticate) {
-      _.set(options, 'config.auth.strategies', Object.keys(authStrategiesConfig));
-      _.set(options, 'config.auth.scope', this.permissions);
-    }
-
-    return options;
+    this.path = plural;
   }
 }

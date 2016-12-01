@@ -29,9 +29,6 @@ export default class HandlerGeneratorAssociationFindAll {
   handler = async (request, reply) => {
     try {
       const modelInstance = await this.model.findById(request.params.id);
-      if (!modelInstance) {
-        return reply(Boom.notFound());
-      }
       const expectedMethodName = `get${_.upperFirst(_.camelCase(this.association.as))}`;
       const results = await modelInstance[expectedMethodName](request.queryAPI);
       return reply(results);

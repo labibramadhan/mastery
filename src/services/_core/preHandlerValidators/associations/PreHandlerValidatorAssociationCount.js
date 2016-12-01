@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-export default class PreHandlerValidatorAssociationFindAll {
+export default class PreHandlerValidatorAssociationCount {
   constructor(model, association) {
     this.model = model;
     this.association = association;
@@ -11,8 +11,8 @@ export default class PreHandlerValidatorAssociationFindAll {
   invalidOwnChild = async () => {
     if (!this.ownerFields ||
       !_.has(this.request, 'auth.credentials.scope') ||
-      this.request.auth.credentials.scope.includes(`${this.model.name}:${this.association.as}:findAll`) ||
-      this.request.auth.credentials.scope.includes(`${this.model.name}:${this.association.as}:own:findAll`)
+      this.request.auth.credentials.scope.includes(`${this.model.name}:${this.association.as}:count`) ||
+      this.request.auth.credentials.scope.includes(`${this.model.name}:${this.association.as}:own:count`)
     ) {
       return false;
     }

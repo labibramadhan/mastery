@@ -19,7 +19,6 @@ export default class HandlerGeneratorAssociationFindOne {
   constructor(model, association) {
     this.model = model;
     this.association = association;
-    this.permissions = [`${model.name}:${association.as}:findOne`];
   }
 
   /**
@@ -30,9 +29,6 @@ export default class HandlerGeneratorAssociationFindOne {
   handler = async (request, reply) => {
     try {
       const modelInstance = await this.model.findById(request.params.id);
-      if (!modelInstance) {
-        return reply(Boom.notFound());
-      }
       const expectedMethodName = `get${_.upperFirst(_.camelCase(this.association.as))}`;
       const result = await modelInstance[expectedMethodName]();
       return reply(result.toJSON());
