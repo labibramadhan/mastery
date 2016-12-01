@@ -12,14 +12,14 @@ export default class RouteGeneratorAssociationCount {
     this.model = model;
     this.association = association;
     this.requestValidators = new RequestValidators(model);
-    this.modelConf = conf.get(`models:associations:${association.as}:count`);
+    this.modelConf = conf.get(`models:${model.name}:methods:associations:${association.as}:count`);
     this.authenticate = _.has(this.modelConf, 'authenticate') && this.modelConf.authenticate;
     this.singular = conf.get(`models:${model.name}:singular`) || model.name;
     this.prefix = conf.get('prefix');
     this.method = 'GET';
     this.path = path.join(this.prefix, this.singular, '{id}', association.as, 'count');
     this.tags = ['api', 'generator', model.name, 'countOneToMany', association.as];
-    this.permissions = [`${model.name}:${association.as}:count`];
+    this.permissions = [`${model.name}:${association.as}:count`, `${model.name}:own:${association.as}:count`, `${model.name}:own:${association.as}:own:count`];
   }
 
   generate() {

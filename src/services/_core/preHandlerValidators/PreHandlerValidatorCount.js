@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default class PreHandlerValidatorCount {
   constructor(model) {
     this.model = model;
@@ -6,7 +8,7 @@ export default class PreHandlerValidatorCount {
   }
 
   validateOwn = async () => {
-    if (!this.ownerFields || this.request.auth.credentials.scope.includes(`${this.model.name}:count`)) {
+    if (!this.ownerFields || !_.has(this.request, 'auth.credentials.scope') || this.request.auth.credentials.scope.includes(`${this.model.name}:count`)) {
       return true;
     }
     return true;

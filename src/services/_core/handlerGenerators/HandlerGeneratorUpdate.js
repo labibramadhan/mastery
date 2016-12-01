@@ -8,9 +8,6 @@ export default class HandlerGeneratorUpdate {
   handler = async (request, reply) => {
     try {
       const result = await this.model.findById(request.params.id);
-      if (!result) {
-        return reply(Boom.notFound());
-      }
       result.update(request.payload);
       return reply(result.toJSON());
     } catch (e) {

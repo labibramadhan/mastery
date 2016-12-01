@@ -17,7 +17,7 @@ export default class RouteGeneratorFindOne {
     this.method = 'GET';
     this.path = path.join(this.prefix, this.singular);
     this.tags = ['api', 'generator', model.name, 'findOne'];
-    this.permissions = [`${model.name}:findOne`, `${model.name}:findOne:own`];
+    this.permissions = [`${model.name}:findOne`, `${model.name}:own:findOne`];
   }
 
   generate() {

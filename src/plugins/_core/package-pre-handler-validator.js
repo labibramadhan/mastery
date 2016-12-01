@@ -9,6 +9,8 @@ const PreHandlerValidatorFindOne = requireF('services/_core/preHandlerValidators
 const PreHandlerValidatorFindById = requireF('services/_core/preHandlerValidators/PreHandlerValidatorFindById');
 const PreHandlerValidatorCount = requireF('services/_core/preHandlerValidators/PreHandlerValidatorCount');
 const PreHandlerValidatorUpdate = requireF('services/_core/preHandlerValidators/PreHandlerValidatorUpdate');
+const PreHandlerValidatorAssociationFindAll = requireF('services/_core/preHandlerValidators/associations/PreHandlerValidatorAssociationFindAll');
+const PreHandlerValidatorAssociationFindOne = requireF('services/_core/preHandlerValidators/associations/PreHandlerValidatorAssociationFindOne');
 
 const preHandlerValidator = async function preHandlerValidator(request, reply) {
   const tags = request.route.settings.tags;
@@ -18,26 +20,44 @@ const preHandlerValidator = async function preHandlerValidator(request, reply) {
     const modelName = tags[2];
     const model = resolverModels.getModel(modelName);
 
-    let valid;
+    let invalid;
     if (tags.includes('findAll')) {
       const preHandlerValidatorFindAll = new PreHandlerValidatorFindAll(model);
-      valid = await preHandlerValidatorFindAll.validate(request);
+      invalid = await preHandlerValidatorFindAll.validate(request);
     } else if (tags.includes('findOne')) {
       const preHandlerValidatorFindOne = new PreHandlerValidatorFindOne(model);
-      valid = await preHandlerValidatorFindOne.validate(request);
+      invalid = await preHandlerValidatorFindOne.validate(request);
     } else if (tags.includes('findById')) {
       const preHandlerValidatorFindById = new PreHandlerValidatorFindById(model);
-      valid = await preHandlerValidatorFindById.validate(request);
+      invalid = await preHandlerValidatorFindById.validate(request);
     } else if (tags.includes('count')) {
       const preHandlerValidatorCount = new PreHandlerValidatorCount(model);
-      valid = await preHandlerValidatorCount.validate(request);
+      invalid = await preHandlerValidatorCount.validate(request);
     } else if (tags.includes('update')) {
       const preHandlerValidatorUpdate = new PreHandlerValidatorUpdate(model);
-      valid = await preHandlerValidatorUpdate.validate(request);
+      invalid = await preHandlerValidatorUpdate.validate(request);
+    } else if (tags.includes('findAllOneToMany')) {
+      const associationAs = tags[4];
+      const association = model.associations[associationAs];
+      const preHandlerValidatorAssociationFindAll =
+        new PreHandlerValidatorAssociationFindAll(model, association);
+      invalid = await preHandlerValidatorAssociationFindAll.validate(request);
+    } else if (tags.includes('countOneToMany')) {
+      // const associationAs = tags[4];
+      // const association = model.associations[associationAs];
+      // const preHandlerValidatorAssociationCount =
+      //   new PreHandlerValidatorAssociationCount(model, association);
+      // invalid = await preHandlerValidatorAssociationCount.validate(request);
+    } else if (tags.includes('findOneOneToOne')) {
+      const associationAs = tags[4];
+      const association = model.associations[associationAs];
+      const preHandlerValidatorAssociationFindOne =
+        new PreHandlerValidatorAssociationFindOne(model, association);
+      invalid = await preHandlerValidatorAssociationFindOne.validate(request);
     }
 
-    if (valid && valid.isBoom) {
-      return reply(valid);
+    if (invalid && invalid.isBoom) {
+      return reply(invalid);
     }
   }
   return reply.continue();

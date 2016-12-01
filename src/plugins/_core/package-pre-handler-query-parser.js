@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const {
   getPackage,
 } = requireF('services/_core/commonServices');
@@ -33,7 +35,7 @@ const preHandlerQueryParser = async function preHandlerQueryParser(request, repl
 
     if (APPLICABLE_METHODS[methodName].includes('where')) {
       const where = queryParserWhere.parse(request.query);
-      if (where) {
+      if (where && _.size(where) > 0) {
         queries = {
           ...queries,
           where,
@@ -43,7 +45,7 @@ const preHandlerQueryParser = async function preHandlerQueryParser(request, repl
 
     if (APPLICABLE_METHODS[methodName].includes('include')) {
       const include = await queryParserInclude.parse(request.query);
-      if (include) {
+      if (include && _.size(include) > 0) {
         queries = {
           ...queries,
           include,
@@ -53,7 +55,7 @@ const preHandlerQueryParser = async function preHandlerQueryParser(request, repl
 
     if (APPLICABLE_METHODS[methodName].includes('order')) {
       const order = queryParserOrder.parse(request.query);
-      if (order) {
+      if (order && _.size(order) > 0) {
         queries = {
           ...queries,
           order,

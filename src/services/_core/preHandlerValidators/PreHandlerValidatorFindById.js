@@ -10,9 +10,21 @@ export default class PreHandlerValidatorFindById {
     this.pk = conf.get(`models:${this.model.name}:pk`);
   }
 
-  validateOwn = async () => {
-    if (!this.ownerFields || this.request.auth.credentials.scope.includes(`${this.model.name}:findById`)) {
-      return true;
+  notExist = async () => {
+    const count = await this.model.count({
+      where: {
+        [this.pk]: this.request.params.id,
+      },
+    });
+    if (!count) {
+      return Boom.notFound();
+    }
+    return false;
+  }
+
+  invalidOwn = async () => {
+    if (!this.ownerFields || !_.has(this.request, 'auth.credentials.scope') || this.request.auth.credentials.scope.includes(`${this.model.name}:findById`)) {
+      return false;
     }
     const whereOr = [];
     const ownerFields = _.castArray(this.ownerFields);
@@ -30,17 +42,17 @@ export default class PreHandlerValidatorFindById {
     if (!count) {
       const i18nExtended = new I18nExtended(this.request);
       let message = null;
-      const messageKey = `error.${this.model.name}.findById.own.forbidden`;
+      const messageKey = `error.${this.model.name}.own.findById.forbidden`;
       if (i18nExtended.has(messageKey)) {
         message = i18nExtended.t(messageKey);
       }
       return Boom.forbidden(message);
     }
-    return true;
+    return false;
   }
 
   validate = async (request) => {
     this.request = request;
-    return await this.validateOwn();
+    return await this.notExist() || await this.invalidOwn();
   }
 }

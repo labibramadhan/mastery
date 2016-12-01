@@ -10,5 +10,13 @@ export default {
     'user:findById',
     'user:roles:findAll',
     'user:roles:count',
+
+    // sesion model permissions
+    'session:findAll',
+    'session:count',
+    'session:create',
+    'session:findOne',
+    'session:findById',
+    'session:user:findOne',
   ],
 };

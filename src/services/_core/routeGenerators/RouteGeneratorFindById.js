@@ -17,7 +17,7 @@ export default class RouteGeneratorFindById {
     this.method = 'GET';
     this.path = path.join(this.prefix, this.singular, '{id}');
     this.tags = ['api', 'generator', model.name, 'findById'];
-    this.permissions = [`${model.name}:findById`, `${model.name}:findById:own`];
+    this.permissions = [`${model.name}:findById`, `${model.name}:own:findById`];
   }
 
   generate() {

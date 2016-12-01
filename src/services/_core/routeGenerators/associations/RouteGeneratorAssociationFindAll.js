@@ -12,14 +12,14 @@ export default class RouteGeneratorAssociationFindAll {
     this.model = model;
     this.association = association;
     this.requestValidators = new RequestValidators(model);
-    this.modelConf = conf.get(`models:associations:${association.as}:findAll`);
+    this.modelConf = conf.get(`models:${model.name}:methods:associations:${association.as}:findAll`);
     this.authenticate = _.has(this.modelConf, 'authenticate') && this.modelConf.authenticate;
     this.singular = conf.get(`models:${model.name}:singular`) || model.name;
     this.prefix = conf.get('prefix');
     this.method = 'GET';
     this.path = path.join(this.prefix, this.singular, '{id}', association.as);
     this.tags = ['api', 'generator', model.name, 'findAllOneToMany', association.as];
-    this.permissions = [`${model.name}:${association.as}:findAll`];
+    this.permissions = [`${model.name}:${association.as}:findAll`, `${model.name}:own:${association.as}:findAll`, `${model.name}:own:${association.as}:own:findAll`];
   }
 
   generate() {

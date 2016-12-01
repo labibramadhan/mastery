@@ -17,7 +17,7 @@ export default class RouteGeneratorUpdate {
     this.method = 'POST';
     this.path = path.join(this.prefix, this.singular, '{id}');
     this.tags = ['api', 'generator', model.name, 'update'];
-    this.permissions = [`${model.name}:update`, `${model.name}:update:own`];
+    this.permissions = [`${model.name}:update`, `${model.name}:own:update`];
   }
 
   generate() {

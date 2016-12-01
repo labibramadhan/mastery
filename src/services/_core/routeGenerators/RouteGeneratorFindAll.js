@@ -17,7 +17,7 @@ export default class RouteGeneratorFindAll {
     this.method = 'GET';
     this.path = path.join(this.prefix, this.plural);
     this.tags = ['api', 'generator', model.name, 'findAll'];
-    this.permissions = [`${model.name}:findAll`, `${model.name}:findAll:own`];
+    this.permissions = [`${model.name}:findAll`, `${model.name}:own:findAll`];
   }
 
   generate() {
