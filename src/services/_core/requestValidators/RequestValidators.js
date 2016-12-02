@@ -17,8 +17,9 @@ const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
 
 export default class RequestValidators {
   constructor(model) {
-    this.resolverModels = new ResolverModels();
-    this.models = this.resolverModels.getAllModels();
+    const resolverModels = new ResolverModels();
+
+    this.models = resolverModels.getAllModels();
     this.requestValidatorWhere = new RequestValidatorWhere(model);
     this.requestValidatorInclude = new RequestValidatorInclude(this.models);
     this.requestValidatorOrder = new RequestValidatorOrder(this.models, model);
@@ -27,77 +28,75 @@ export default class RequestValidators {
     this.requestValidatorOffset = new RequestValidatorOffset();
     this.requestValidatorToken = new RequestValidatorToken();
   }
-  build() {
-    const self = this;
+
+  build(methodName) {
     const {
       APPLICABLE_METHODS,
     } = RequestValidatorConstants;
 
-    _.each(APPLICABLE_METHODS, (methods, sourceMethod) => {
-      let validators = {};
+    const validators = {};
 
-      const hasWhere = APPLICABLE_METHODS[sourceMethod].includes('where');
-      const hasInclude = APPLICABLE_METHODS[sourceMethod].includes('include');
-      const hasOrder = APPLICABLE_METHODS[sourceMethod].includes('order');
-      const hasPayload = APPLICABLE_METHODS[sourceMethod].includes('payload');
-      const hasLimit = APPLICABLE_METHODS[sourceMethod].includes('limit');
-      const hasOffset = APPLICABLE_METHODS[sourceMethod].includes('offset');
+    const hasWhere = APPLICABLE_METHODS[methodName].includes('where');
+    const hasInclude = APPLICABLE_METHODS[methodName].includes('include');
+    const hasOrder = APPLICABLE_METHODS[methodName].includes('order');
+    const hasPayload = APPLICABLE_METHODS[methodName].includes('payload');
+    const hasLimit = APPLICABLE_METHODS[methodName].includes('limit');
+    const hasOffset = APPLICABLE_METHODS[methodName].includes('offset');
 
-      if (hasWhere) {
-        const whereValidation = concatToJoiObject(
-          self.requestValidatorWhere.build(),
-          _.get(validators, 'query'),
-        );
-        validators = _.set(validators, 'query', whereValidation);
-      }
-
-      if (hasInclude) {
-        const includeValidation = concatToJoiObject(
-          self.requestValidatorInclude.build(),
-          _.get(validators, 'query'),
-        );
-        validators = _.set(validators, 'query', includeValidation);
-      }
-
-      if (hasOrder) {
-        const orderValidation = concatToJoiObject(
-          self.requestValidatorOrder.build(),
-          _.get(validators, 'query'),
-        );
-        validators = _.set(validators, 'query', orderValidation);
-      }
-
-      if (hasPayload) {
-        const payloadValidation = concatToJoiObject(
-          self.requestValidatorPayload.build(),
-          _.get(validators, 'payload'),
-        );
-        validators = _.set(validators, 'payload', payloadValidation);
-      }
-
-      if (hasLimit) {
-        const limitValidation = concatToJoiObject(
-          self.requestValidatorLimit.build(),
-          _.get(validators, 'query'),
-        );
-        validators = _.set(validators, 'query', limitValidation);
-      }
-
-      if (hasOffset) {
-        const offsetValidation = concatToJoiObject(
-          self.requestValidatorOffset.build(),
-          _.get(validators, 'query'),
-        );
-        validators = _.set(validators, 'query', offsetValidation);
-      }
-
-      const tokenValidation = concatToJoiObject(
-        self.requestValidatorToken.build(),
+    if (hasWhere) {
+      const whereValidation = concatToJoiObject(
+        this.requestValidatorWhere.build(),
         _.get(validators, 'query'),
       );
-      validators = _.set(validators, 'query', tokenValidation);
+      _.set(validators, 'query', whereValidation);
+    }
 
-      self[sourceMethod] = validators;
-    });
+    if (hasInclude) {
+      const includeValidation = concatToJoiObject(
+        this.requestValidatorInclude.build(),
+        _.get(validators, 'query'),
+      );
+      _.set(validators, 'query', includeValidation);
+    }
+
+    if (hasOrder) {
+      const orderValidation = concatToJoiObject(
+        this.requestValidatorOrder.build(),
+        _.get(validators, 'query'),
+      );
+      _.set(validators, 'query', orderValidation);
+    }
+
+    if (hasPayload) {
+      const payloadValidation = concatToJoiObject(
+        this.requestValidatorPayload.build(),
+        _.get(validators, 'payload'),
+      );
+      _.set(validators, 'payload', payloadValidation);
+    }
+
+    if (hasLimit) {
+      const limitValidation = concatToJoiObject(
+        this.requestValidatorLimit.build(),
+        _.get(validators, 'query'),
+      );
+      _.set(validators, 'query', limitValidation);
+    }
+
+    if (hasOffset) {
+      const offsetValidation = concatToJoiObject(
+        this.requestValidatorOffset.build(),
+        _.get(validators, 'query'),
+      );
+      _.set(validators, 'query', offsetValidation);
+    }
+
+    const tokenValidation = concatToJoiObject(
+      this.requestValidatorToken.build(),
+      _.get(validators, 'query'),
+    );
+    _.set(validators, 'query', tokenValidation);
+
+    return validators;
   }
 }

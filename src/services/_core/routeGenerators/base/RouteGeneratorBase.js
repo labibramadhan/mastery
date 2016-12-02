@@ -6,14 +6,11 @@ const authStrategiesConfig = requireF('setup/config/authStrategiesConfig');
 export default class RouteGeneratorBase {
   constructor({
     handler,
-    methodName,
     methodConf,
     model,
-    requestValidators,
+    validations,
   }) {
-    requestValidators.build();
-
-    this.validations = requestValidators[methodName];
+    this.validations = validations;
     this.handler = handler;
     this.tags = ['api', 'generator', model.name];
     this.authenticate = _.has(methodConf, 'authenticate') && methodConf.authenticate;

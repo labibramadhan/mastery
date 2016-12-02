@@ -16,6 +16,19 @@ export const concatToJoiObject = (joiObject, candidate) => {
   return joiObject.keys(candidate);
 };
 
+export const mergeJoiObject = (leftObject, rightObject, keys) => {
+  const mergedObject = _.clone(leftObject);
+  _.forEach(keys, (key) => {
+    if (_.has(mergedObject, key) || _.has(rightObject, key)) {
+      if (!_.has(mergedObject, key) && _.has(rightObject, key)) {
+        _.set(mergedObject, key, rightObject[key]);
+      } else if (_.has(mergedObject, key) && _.has(rightObject, key)) {
+        _.set(mergedObject, key, concatToJoiObject(mergedObject[key], rightObject[key]));
+      }
+    }
+  });
+};
+
 export const associateModel = (models, modelName) => {
   const associations = conf.get(`models:${modelName}:relationships`);
   _.each(associations, (association) => {

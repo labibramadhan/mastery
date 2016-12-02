@@ -9,13 +9,13 @@ export default class RouteGeneratorBaseGeneral extends RouteGeneratorBase {
   }) {
     const methodConf = conf.get(`models:${model.name}:methods:${methodName}`);
     const requestValidators = new RequestValidators(model);
+    const validations = requestValidators.build(methodName);
 
     super({
       handler,
       methodConf,
-      methodName,
       model,
-      requestValidators,
+      validations,
     });
 
     this.permissions = [`${model.name}:${methodName}`, `${model.name}:own:${methodName}`];

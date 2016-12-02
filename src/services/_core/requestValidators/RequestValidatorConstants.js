@@ -60,4 +60,6 @@ export default class RequestValidatorConstants {
     $any: Joi.any(),
     $col: Joi.any(),
   }
+
+  static VALIDATABLE_REQUEST = ['query', 'params', 'payload'];
 }
