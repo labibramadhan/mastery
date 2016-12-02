@@ -4,7 +4,6 @@ export default class PreHandlerValidatorFindAll {
   constructor(model) {
     this.model = model;
     this.ownerFields = conf.get(`models:${model.name}:ownerFields`);
-    this.pk = conf.get(`models:${this.model.name}:pk`);
   }
 
   validateOwn = async () => {

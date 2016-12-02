@@ -12,9 +12,7 @@ export default class RouteGeneratorCreate extends RouteGeneratorBaseGeneral {
       model,
     });
 
-    const singular = conf.get(`models:${model.name}:singular`) || model.name;
-
     this.method = 'PUT';
-    this.path = singular;
+    this.path = model.name;
   }
 }

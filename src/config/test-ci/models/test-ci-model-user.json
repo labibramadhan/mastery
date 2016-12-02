@@ -2,9 +2,7 @@
   "user": {
     "database": "main",
     "public": true,
-    "singular": "user",
     "plural": "users",
-    "pk": "id",
     "ownerFields": ["id"],
     "methods": {
       "findAll": {

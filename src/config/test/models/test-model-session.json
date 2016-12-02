@@ -2,9 +2,7 @@
   "session": {
     "database": "main",
     "public": true,
-    "singular": "session",
     "plural": "sessions",
-    "pk": "id",
     "ownerFields": ["userId"],
     "methods": {
       "findAll": {

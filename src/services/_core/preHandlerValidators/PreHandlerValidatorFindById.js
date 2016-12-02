@@ -7,13 +7,12 @@ export default class PreHandlerValidatorFindById {
   constructor(model) {
     this.model = model;
     this.ownerFields = conf.get(`models:${model.name}:ownerFields`);
-    this.pk = conf.get(`models:${this.model.name}:pk`);
   }
 
   notExist = async () => {
     const count = await this.model.count({
       where: {
-        [this.pk]: this.request.params.pk,
+        [this.model.primaryKeyField]: this.request.params.pk,
       },
     });
     if (!count) {
@@ -35,7 +34,7 @@ export default class PreHandlerValidatorFindById {
     });
     const count = await this.model.count({
       where: {
-        [this.pk]: this.request.params.pk,
+        [this.model.primaryKeyField]: this.request.params.pk,
         $or: whereOr,
       },
     });

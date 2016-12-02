@@ -5,7 +5,6 @@ export default class PreHandlerValidatorAssociationFindAll {
     this.model = model;
     this.association = association;
     this.ownerFields = conf.get(`models:${model.name}:ownerFields`);
-    this.pk = conf.get(`models:${this.model.name}:pk`);
   }
 
   invalidOwnChild = async () => {

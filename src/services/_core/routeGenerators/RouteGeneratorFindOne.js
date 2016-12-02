@@ -12,9 +12,7 @@ export default class RouteGeneratorFindOne extends RouteGeneratorBaseGeneral {
       model,
     });
 
-    const singular = conf.get(`models:${model.name}:singular`) || model.name;
-
     this.method = 'GET';
-    this.path = singular;
+    this.path = model.name;
   }
 }

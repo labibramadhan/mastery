@@ -19,9 +19,7 @@ export default class RouteGeneratorAssociationFindAll extends RouteGeneratorBase
       model,
     });
 
-    const singular = conf.get(`models:${model.name}:singular`) || model.name;
-
     this.method = 'GET';
-    this.path = path.join(singular, '{pk}', association.as);
+    this.path = path.join(model.name, '{pk}', association.as);
   }
 }
