@@ -5,6 +5,11 @@ export default class BootServer {
     const bootDatabases = new BootDatabases();
     await bootDatabases.boot();
 
+    // boot all model relationships/associations
+    const BootModelsAssociations = requireF('services/_core/boot/BootModelsAssociations');
+    const bootModels = new BootModelsAssociations();
+    await bootModels.boot();
+
     // boot local plugins from /plugins/**/*.js
     const BootPlugins = requireF('services/_core/boot/BootPlugins');
     const bootPlugins = new BootPlugins();

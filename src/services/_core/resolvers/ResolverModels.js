@@ -9,20 +9,16 @@ export default class ResolverModels {
 
   getModel = (modelName) => {
     const database = conf.get(`models:${modelName}:database`);
-    return this.databases[database].models[modelName];
+    return this.databases[database].sequelize.models[modelName];
   }
 
   getModels = (modelNames) => {
     const self = this;
     const modelNamesArray = _.castArray(modelNames);
-    let modelsFound = {};
+    const modelsFound = {};
     _.each(modelNamesArray, (modelName) => {
       const database = conf.get(`models:${modelName}:database`);
-      const modelInstance = self.databases[database].models[modelName];
-      modelsFound = {
-        [modelName]: modelInstance,
-        ...modelsFound,
-      };
+      modelsFound[modelName] = self.databases[database].sequelize.models[modelName];
     });
     return modelsFound;
   }

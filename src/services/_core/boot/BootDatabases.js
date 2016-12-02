@@ -14,13 +14,12 @@ export default class BootDatabases {
   boot = async () => {
     const self = this;
     const databases = conf.get('databases');
+    const sequelizeCollection = {};
     const options = _.map(databases, (database, name) => {
       const {
         db,
         username,
         password,
-        sync,
-        forceSync,
         debug,
       } = database;
 
@@ -34,6 +33,7 @@ export default class BootDatabases {
       ]);
 
       const sequelize = new Sequelize(db, username || '', password || '', dbConfig);
+      sequelizeCollection[name] = sequelize;
       const models = self.resolverModels.getModelConfs({ database: name });
       const resolvedModels = _.map(models, (modelConf, modelName) => {
         let modelPath;
@@ -52,8 +52,8 @@ export default class BootDatabases {
         name,
         models: resolvedModels,
         sequelize,
-        sync,
-        forceSync,
+        sync: false,
+        forceSync: false,
         debug,
       };
     });

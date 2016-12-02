@@ -11,5 +11,11 @@
     ".idea": true
   },
   "javascript.validate.enable": false,
-  "workbench.editor.enablePreview": false
+  "workbench.editor.enablePreview": false,
+  "shortcuts.buttons": [
+    "file-binary , workbench.action.tasks.build , Run build task",
+    "beaker , workbench.action.tasks.test , Run test task",
+    "terminal , workbench.action.terminal.toggleTerminal , Toggle terminal panel",
+    "bug, workbench.action.debug.start, Launch debug"
+  ]
 }

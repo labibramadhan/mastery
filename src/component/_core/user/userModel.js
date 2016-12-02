@@ -1,9 +1,5 @@
 import bcrypt from 'bcrypt';
 
-const {
-  associateModel,
-} = requireF('services/_core/commonServices');
-
 export default (sequelize, dataTypes) =>
 sequelize.define('user', {
   username: {
@@ -62,11 +58,6 @@ sequelize.define('user', {
     unique: true,
     fields: ['email'],
   }],
-  classMethods: {
-    associate: (models) => {
-      associateModel(models, 'user');
-    },
-  },
   instanceMethods: {
     validPassword(password) {
       // check if password match with current user encrypted password

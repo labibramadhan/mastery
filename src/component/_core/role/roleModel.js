@@ -1,7 +1,3 @@
-const {
-  associateModel,
-} = requireF('services/_core/commonServices');
-
 export default (sequelize, dataTypes) =>
 sequelize.define('role', {
   name: {
@@ -11,9 +7,4 @@ sequelize.define('role', {
 }, {
   schema: 'core',
   freezeTableName: true,
-  classMethods: {
-    associate: (models) => {
-      associateModel(models, 'role');
-    },
-  },
 });
