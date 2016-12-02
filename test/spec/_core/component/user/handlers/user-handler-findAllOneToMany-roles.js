@@ -9,7 +9,7 @@ import mockUsers from '../../../../../helpers/mock-users';
 
 const prefix = conf.get('prefix');
 
-describe(`GET findAllOneToMany ${URI(`${prefix}user/{id}/roles`).addQuery({
+describe(`GET findAllOneToMany ${URI(`${prefix}user/{pk}/roles`).addQuery({
   name: 'admin',
 })}`, () => {
   before(async function before() {

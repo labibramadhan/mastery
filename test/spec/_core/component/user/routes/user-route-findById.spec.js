@@ -6,13 +6,13 @@ import setup from '../../../../../helpers/setup';
 
 const prefix = conf.get('prefix');
 
-describe(`existence GET findById ${prefix}user/{id}`, () => {
+describe(`existence GET findById ${prefix}user/{pk}`, () => {
   before(async () => {
     await setup();
   });
 
   it('exists', () => {
-    const thisPath = path.join(prefix, 'user', '{id}');
+    const thisPath = path.join(prefix, 'user', '{pk}');
     const thisMethod = 'GET';
 
     const routes = server.table()[0].table;

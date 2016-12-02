@@ -9,7 +9,7 @@ import mockUsers from '../../../../../helpers/mock-users';
 
 const prefix = conf.get('prefix');
 
-describe(`POST update ${prefix}user/{id}`, () => {
+describe(`POST update ${prefix}user/{pk}`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();

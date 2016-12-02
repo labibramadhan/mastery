@@ -20,7 +20,7 @@ export default class PreHandlerValidatorAssociationFindAll {
       return false;
     }
 
-    const parent = await this.model.findById(this.request.params.id);
+    const parent = await this.model.findById(this.request.params.pk);
     const child = await parent[this.association.accessors.get]();
     const invalid = _.filter(this.ownerFields, field =>
       child[field] !== this.request.auth.credentials.id).length;

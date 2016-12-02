@@ -27,46 +27,46 @@ const preHandlerValidator = async function preHandlerValidator(request, reply) {
 
     let invalid;
 
-    if (!invalid && config.method === 'findAll') {
+    if (!invalid && config.name === 'findAll') {
       const preHandlerValidatorFindAll = new PreHandlerValidatorFindAll(model);
       invalid = await preHandlerValidatorFindAll.validate(request);
     }
 
-    if (!invalid && config.method === 'findOne') {
+    if (!invalid && config.name === 'findOne') {
       const preHandlerValidatorFindOne = new PreHandlerValidatorFindOne(model);
       invalid = await preHandlerValidatorFindOne.validate(request);
     }
 
-    if (!invalid && (config.method === 'findById' || inherit.includes('findById'))) {
+    if (!invalid && (config.name === 'findById' || inherit.includes('findById'))) {
       const preHandlerValidatorFindById = new PreHandlerValidatorFindById(model);
       invalid = await preHandlerValidatorFindById.validate(request);
     }
 
-    if (!invalid && config.method === 'count') {
+    if (!invalid && config.name === 'count') {
       const preHandlerValidatorCount = new PreHandlerValidatorCount(model);
       invalid = await preHandlerValidatorCount.validate(request);
     }
 
-    if (!invalid && config.method === 'update') {
+    if (!invalid && config.name === 'update') {
       const preHandlerValidatorUpdate = new PreHandlerValidatorUpdate(model);
       invalid = await preHandlerValidatorUpdate.validate(request);
     }
 
     if (config.association) {
       const association = model.associations[config.association];
-      if (!invalid && config.method === 'findAllOneToMany') {
+      if (!invalid && config.name === 'findAllOneToMany') {
         const preHandlerValidatorAssociationFindAll =
           new PreHandlerValidatorAssociationFindAll(model, association);
         invalid = await preHandlerValidatorAssociationFindAll.validate(request);
       }
 
-      if (!invalid && config.method === 'countOneToMany') {
+      if (!invalid && config.name === 'countOneToMany') {
         const preHandlerValidatorAssociationCount =
           new PreHandlerValidatorAssociationCount(model, association);
         invalid = await preHandlerValidatorAssociationCount.validate(request);
       }
 
-      if (!invalid && config.method === 'findOneOneToOne') {
+      if (!invalid && config.name === 'findOneOneToOne') {
         const preHandlerValidatorAssociationFindOne =
           new PreHandlerValidatorAssociationFindOne(model, association);
         invalid = await preHandlerValidatorAssociationFindOne.validate(request);

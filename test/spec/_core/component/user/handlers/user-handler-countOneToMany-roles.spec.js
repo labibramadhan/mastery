@@ -9,7 +9,7 @@ import mockUsers from '../../../../../helpers/mock-users';
 
 const prefix = conf.get('prefix');
 
-describe(`GET countOneToMnay ${prefix}user/{id}/roles/count`, () => {
+describe(`GET countOneToMnay ${prefix}user/{pk}/roles/count`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();

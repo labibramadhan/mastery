@@ -17,6 +17,6 @@ export default class RouteGeneratorUpdate extends RouteGeneratorBaseGeneral {
     const singular = conf.get(`models:${model.name}:singular`) || model.name;
 
     this.method = 'POST';
-    this.path = path.join(singular, '{id}');
+    this.path = path.join(singular, '{pk}');
   }
 }

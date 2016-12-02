@@ -13,7 +13,7 @@ export default class PreHandlerValidatorFindById {
   notExist = async () => {
     const count = await this.model.count({
       where: {
-        [this.pk]: this.request.params.id,
+        [this.pk]: this.request.params.pk,
       },
     });
     if (!count) {
@@ -35,7 +35,7 @@ export default class PreHandlerValidatorFindById {
     });
     const count = await this.model.count({
       where: {
-        [this.pk]: this.request.params.id,
+        [this.pk]: this.request.params.pk,
         $or: whereOr,
       },
     });

@@ -38,6 +38,6 @@ export default class RequestValidatorsAssociation {
     const validatorsChild = requestValidatorsChild.build(methodName);
     validators = mergeJoiObject(validators, validatorsChild, VALIDATABLE_REQUEST);
 
-    return validatorsChild;
+    return validators;
   }
 }

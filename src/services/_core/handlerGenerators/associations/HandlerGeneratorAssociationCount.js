@@ -28,7 +28,7 @@ export default class HandlerGeneratorAssociationCount {
    */
   handler = async (request, reply) => {
     try {
-      const modelInstance = await this.model.findById(request.params.id);
+      const modelInstance = await this.model.findById(request.params.pk);
       const expectedMethodName = `count${_.upperFirst(_.camelCase(this.association.as))}`;
       const result = await modelInstance[expectedMethodName](request.queryAPI);
       return reply({ count: result });

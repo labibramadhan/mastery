@@ -27,6 +27,7 @@ export const mergeJoiObject = (leftObject, rightObject, keys) => {
       }
     }
   });
+  return mergedObject;
 };
 
 export const associateModel = (models, modelName) => {

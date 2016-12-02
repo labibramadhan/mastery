@@ -18,11 +18,15 @@ export default class RequestValidatorConstants {
       'order',
       'offset',
     ],
-    findById: [],
+    findById: [
+      'pk',
+    ],
     create: [
       'payload',
     ],
-    update: [],
+    update: [
+      'pk',
+    ],
     findAllOneToMany: [
       'where',
       'include',

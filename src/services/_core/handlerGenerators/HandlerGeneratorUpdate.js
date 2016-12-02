@@ -7,7 +7,7 @@ export default class HandlerGeneratorUpdate {
 
   handler = async (request, reply) => {
     try {
-      const result = await this.model.findById(request.params.id);
+      const result = await this.model.findById(request.params.pk);
       result.update(request.payload);
       return reply(result.toJSON());
     } catch (e) {
