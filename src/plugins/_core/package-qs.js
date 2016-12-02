@@ -4,7 +4,7 @@ import url from 'url';
 
 const {
   getPackage,
-} = requireF('services/_core/commonServices');
+} = requireF('services/_core/CommonServices');
 
 exports.register = (server, options, next) => {
   server.ext('onRequest', (request, reply) => {

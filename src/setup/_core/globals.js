@@ -3,7 +3,7 @@ import path from 'path';
 // define rootPath first, needed for requireF
 global.rootPath = path.resolve(path.join(__dirname, '..', '..'));
 
-const { requireF } = require(path.resolve(path.join(rootPath, 'services/_core/commonServices')));
+const { requireF } = require(path.resolve(path.join(rootPath, 'services/_core/CommonServices')));
 global.requireF = requireF;
 
 const BootConfigs = requireF('services/_core/boot/BootConfigs');

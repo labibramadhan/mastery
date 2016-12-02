@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 const {
   getPackage,
-} = requireF('services/_core/commonServices');
+} = requireF('services/_core/CommonServices');
 
 const RequestValidatorConstants = requireF('services/_core/requestValidators/RequestValidatorConstants');
 

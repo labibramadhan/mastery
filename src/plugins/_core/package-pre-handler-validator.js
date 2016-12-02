@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 const {
   getPackage,
-} = requireF('services/_core/commonServices');
+} = requireF('services/_core/CommonServices');
 
 const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
 

@@ -29,7 +29,7 @@ const run = async () => {
 
   const {
     getPackage,
-  } = requireF('services/_core/commonServices');
+  } = requireF('services/_core/CommonServices');
   const pkg = getPackage();
   server.register([
     Inert,

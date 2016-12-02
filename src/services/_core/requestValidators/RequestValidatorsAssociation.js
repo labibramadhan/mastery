@@ -6,7 +6,7 @@ const RequestValidatorConstants = requireF('services/_core/requestValidators/Req
 
 const {
   mergeJoiObject,
-} = requireF('services/_core/commonServices');
+} = requireF('services/_core/CommonServices');
 
 export default class RequestValidatorsAssociation {
   constructor({
