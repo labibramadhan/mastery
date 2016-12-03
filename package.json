@@ -11,7 +11,11 @@
     "api",
     "rest",
     "sequelize",
-    "generator"
+    "generator",
+    "boilerplate",
+    "starter",
+    "basecode",
+    "springboard"
   ],
   "scripts": {
     "lint": "eslint src test --fix",
