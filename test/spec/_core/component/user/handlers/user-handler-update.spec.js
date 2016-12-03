@@ -1,11 +1,12 @@
-import URI from 'urijs';
 import HttpStatus from 'http-status-codes';
+import URI from 'urijs';
 import {
   assert,
 } from 'chai';
+import qs from 'qs';
 
-import setup from '../../../../../helpers/setup';
-import mockUsers from '../../../../../helpers/mock-users';
+const setup = require('../../../../../helpers/setup');
+const mockUsers = require('../../../../../helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
@@ -41,9 +42,9 @@ describe(`POST update ${prefix}user/{pk}`, () => {
       admin1,
     } = this.users;
 
-    const thisTestUrl = URI(`${prefix}user/${admin1.id}`).addQuery({
+    const thisTestUrl = URI(`${prefix}user/${admin1.id}`).query(qs.stringify({
       token: this.token,
-    }).toString();
+    })).toString();
 
     const userObj = {
       username: 'admin1updated',

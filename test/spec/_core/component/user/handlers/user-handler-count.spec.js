@@ -1,11 +1,12 @@
-import URI from 'urijs';
 import HttpStatus from 'http-status-codes';
+import URI from 'urijs';
 import {
   assert,
 } from 'chai';
+import qs from 'qs';
 
-import setup from '../../../../../helpers/setup';
-import mockUsers from '../../../../../helpers/mock-users';
+const setup = require('../../../../../helpers/setup');
+const mockUsers = require('../../../../../helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
@@ -37,13 +38,16 @@ describe(`GET count ${prefix}users/count`, () => {
   });
 
   it('works', async function it() {
-    const thisTestUrl = URI(`${prefix}users/count`).addQuery({
-      username: [
-        'authenticated1',
-        'authenticated2',
-      ],
+    const thisTestUrl = URI(`${prefix}users/count`).query(qs.stringify({
+      where: {
+        username: {
+          $or: {
+            $in: ['authenticated1', 'authenticated2'],
+          },
+        },
+      },
       token: this.token,
-    }).toString();
+    })).toString();
 
     const {
       result,

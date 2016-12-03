@@ -1,7 +1,7 @@
 # MasteryJS
 
-[![Build Status](https://travis-ci.org/labibramadhan/mastery.svg?branch=master)](https://travis-ci.org/labibramadhan/mastery)
+Scalable API boilerplate/starter build on top of Hapi and Sequelize.
 
-Scalable API boilerplate build on top of HapiJS and SequelizeJS.
+[![Build Status](https://travis-ci.org/labibramadhan/mastery.svg?branch=master)](https://travis-ci.org/labibramadhan/mastery)
 
 Documentation coming ASAP

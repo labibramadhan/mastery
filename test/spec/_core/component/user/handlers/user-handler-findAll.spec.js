@@ -1,12 +1,12 @@
-import URI from 'urijs';
-import qs from 'qs';
 import HttpStatus from 'http-status-codes';
+import URI from 'urijs';
 import {
   assert,
 } from 'chai';
+import qs from 'qs';
 
-import setup from '../../../../../helpers/setup';
-import mockUsers from '../../../../../helpers/mock-users';
+const setup = require('../../../../../helpers/setup');
+const mockUsers = require('../../../../../helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
@@ -38,11 +38,19 @@ describe(`GET findAll ${prefix}users`, () => {
   });
 
   it('works', async function it() {
-    const { admin2 } = this.users;
-    const { adminRole } = this.roles;
+    const {
+      admin2,
+    } = this.users;
+    const {
+      adminRole,
+    } = this.roles;
 
     const thisTestUrl = URI(`${prefix}users`).query(qs.stringify({
-      username: { $not: 'admin1' },
+      where: {
+        username: {
+          $not: 'admin1',
+        },
+      },
       include: {
         model: 'role',
         where: {
@@ -57,8 +65,7 @@ describe(`GET findAll ${prefix}users`, () => {
         },
       },
       order: [
-        'username asc',
-        {
+        'username asc', {
           model: 'role',
           field: 'name',
           sort: 'asc',

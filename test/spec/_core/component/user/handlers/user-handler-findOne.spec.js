@@ -1,11 +1,12 @@
-import URI from 'urijs';
 import HttpStatus from 'http-status-codes';
+import URI from 'urijs';
 import {
   assert,
 } from 'chai';
+import qs from 'qs';
 
-import setup from '../../../../../helpers/setup';
-import mockUsers from '../../../../../helpers/mock-users';
+const setup = require('../../../../../helpers/setup');
+const mockUsers = require('../../../../../helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
@@ -37,14 +38,22 @@ describe(`GET findById ${prefix}user/{pk}`, () => {
   });
 
   it('works', async function it() {
-    const { authenticated2 } = this.users;
-    const { authenticatedRole } = this.roles;
+    const {
+      authenticated2,
+    } = this.users;
+    const {
+      authenticatedRole,
+    } = this.roles;
 
-    const thisTestUrl = URI(`${prefix}user`).addQuery({
-      username: 'authenticated2',
-      include: JSON.stringify({ model: 'role' }),
+    const thisTestUrl = URI(`${prefix}user`).query(qs.stringify({
+      where: {
+        username: 'authenticated2',
+      },
+      include: JSON.stringify({
+        model: 'role',
+      }),
       token: this.token,
-    }).toString();
+    })).toString();
 
     const {
       result,

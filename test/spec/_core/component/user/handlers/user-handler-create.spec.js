@@ -1,11 +1,12 @@
-import URI from 'urijs';
 import HttpStatus from 'http-status-codes';
+import URI from 'urijs';
 import {
   assert,
 } from 'chai';
+import qs from 'qs';
 
-import setup from '../../../../../helpers/setup';
-import mockUsers from '../../../../../helpers/mock-users';
+const setup = require('../../../../../helpers/setup');
+const mockUsers = require('../../../../../helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
@@ -37,9 +38,9 @@ describe(`PUT create ${prefix}user`, () => {
   });
 
   it('works', async function it() {
-    const thisTestUrl = URI(`${prefix}user`).addQuery({
+    const thisTestUrl = URI(`${prefix}user`).query(qs.stringify({
       token: this.token,
-    }).toString();
+    })).toString();
 
     const userObj = {
       username: 'admin0',

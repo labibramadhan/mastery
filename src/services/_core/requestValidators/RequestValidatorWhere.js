@@ -8,16 +8,30 @@ export default class RequestValidatorWhere {
     this.model = model;
   }
 
-  build() {
+  buildRaw() {
+    const {
+      SEQUELIZE_OPERATORS,
+    } = RequestValidatorConstants;
     const modelAttributes = _.keys(this.model.attributes);
     const validAttributes = modelAttributes.reduce((params, attribute) => {
-      // TODO: use joi-sequelize
       params[attribute] = Joi.any(); // eslint-disable-line no-param-reassign
       return params;
     }, {});
-    return Joi.object().keys({
+    return {
       ...validAttributes,
-      ...RequestValidatorConstants.SEQUELIZE_OPERATORS,
+      ...SEQUELIZE_OPERATORS,
+    };
+  }
+
+  buildForInclude() {
+    return Joi.object().keys({
+      ...this.buildRaw(),
+    });
+  }
+
+  build() {
+    return Joi.object().keys({
+      where: this.buildRaw(),
     });
   }
 }

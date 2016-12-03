@@ -1,5 +1,5 @@
-import _ from 'lodash';
 import Joi from 'joi';
+import _ from 'lodash';
 
 const RequestValidatorWhere = requireF('services/_core/requestValidators/RequestValidatorWhere');
 
@@ -23,7 +23,7 @@ export default class RequestValidatorInclude {
       validIncludeModel = [...validIncludeModel, thisValidIncludeString];
 
       this.requestValidatorWhere.model = m;
-      const whereValidation = this.requestValidatorWhere.build();
+      const whereValidation = this.requestValidatorWhere.buildForInclude();
       validIncludeWhere = [...validIncludeWhere, Joi.alternatives().when('model', {
         is: m.name,
         then: whereValidation,
