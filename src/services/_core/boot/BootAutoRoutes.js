@@ -8,6 +8,7 @@ const RouteGeneratorFindById = requireF('services/_core/routeGenerators/RouteGen
 const RouteGeneratorCount = requireF('services/_core/routeGenerators/RouteGeneratorCount');
 const RouteGeneratorCreate = requireF('services/_core/routeGenerators/RouteGeneratorCreate');
 const RouteGeneratorUpdate = requireF('services/_core/routeGenerators/RouteGeneratorUpdate');
+const RouteGeneratorDelete = requireF('services/_core/routeGenerators/RouteGeneratorDelete');
 const RouteGeneratorAssociationFindAll = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationFindAll');
 const RouteGeneratorAssociationCount = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationCount');
 const RouteGeneratorAssociationFindOne = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationFindOne');
@@ -55,6 +56,11 @@ export default class BootAutoRoutes {
         if (_.has(enabledModel, 'methods.update') && enabledModel.methods.update) {
           const routeGeneratorUpdate = new RouteGeneratorUpdate(model);
           routes.push(routeGeneratorUpdate.generate());
+        }
+
+        if (_.has(enabledModel, 'methods.delete') && enabledModel.methods.delete) {
+          const routeGeneratorDelete = new RouteGeneratorDelete(model);
+          routes.push(routeGeneratorDelete.generate());
         }
 
         if (_.has(enabledModel, 'methods.associations')) {

@@ -9,7 +9,7 @@ export default class ResolverModels {
 
   getModel = (modelName) => {
     const database = conf.get(`models:${modelName}:database`);
-    return this.databases[database].sequelize.models[modelName];
+    return this.databases[database].models[modelName];
   }
 
   getModels = (modelNames) => {
@@ -18,7 +18,7 @@ export default class ResolverModels {
     const modelsFound = {};
     _.each(modelNamesArray, (modelName) => {
       const database = conf.get(`models:${modelName}:database`);
-      modelsFound[modelName] = self.databases[database].sequelize.models[modelName];
+      modelsFound[modelName] = self.databases[database].models[modelName];
     });
     return modelsFound;
   }

@@ -17,5 +17,6 @@
     "beaker , workbench.action.tasks.test , Run test task",
     "terminal , workbench.action.terminal.toggleTerminal , Toggle terminal panel",
     "bug, workbench.action.debug.start, Launch debug"
-  ]
+  ],
+  "local-history.daysLimit": 3
 }

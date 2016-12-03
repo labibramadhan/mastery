@@ -6,6 +6,7 @@
     "add-module-exports",
     "transform-runtime",
     "transform-class-properties",
+    "transform-es2015-classes",
     "transform-es2015-modules-commonjs"
   ],
   "sourceMaps": "inline"

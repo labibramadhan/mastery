@@ -7,13 +7,11 @@ export default class RouteGeneratorAssociationFindOne extends RouteGeneratorBase
   constructor(model, association) {
     const methodName = 'findOneOneToOne';
     const methodAlias = 'findOne';
-    const inherit = 'findById';
     const handlerGenerator = new HandlerGeneratorAssociationFindOne(model, association);
 
     super({
       association,
       handler: handlerGenerator.handler,
-      inherit,
       methodAlias,
       methodName,
       model,

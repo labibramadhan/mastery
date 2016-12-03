@@ -1,38 +1,28 @@
-const RequestValidatorsAssociation = requireF('services/_core/requestValidators/RequestValidatorsAssociation');
+import _ from 'lodash';
+
 const RouteGeneratorBase = requireF('services/_core/routeGenerators/base/RouteGeneratorBase');
 
 export default class RouteGeneratorBaseAssociation extends RouteGeneratorBase {
   constructor({
     association,
-    inherit,
     handler,
-    methodName,
     methodAlias,
+    methodName,
     model,
   }) {
     const name = methodAlias || methodName;
     const methodConf = conf.get(`models:${model.name}:methods:associations:${association.as}:${name}`);
-    const requestValidators = new RequestValidatorsAssociation({
-      association,
-      model,
-    });
-    const validations = requestValidators.build({
-      inherit,
-      methodName,
-    });
 
     super({
       handler,
       methodConf,
       model,
-      validations,
     });
 
     this.permissions = [`${model.name}:${association.as}:${name}`, `${model.name}:own:${association.as}:${name}`, `${model.name}:own:${association.as}:own:${name}`];
-    this.identifier = {
-      name: methodName,
-      inherit,
-      association: association.as,
-    };
+
+    _.set(this.identifier, 'name', methodName);
+    _.set(this.identifier, 'preHandlerValidators', [`${model.name}.findById`, `${model.name}.${association.target.name}.${methodName}`]);
+    _.set(this.identifier, 'requestValidators', [`${model.name}.findById`, `${association.target.name}.${methodName}`]);
   }
 }

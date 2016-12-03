@@ -1,4 +1,5 @@
-const RequestValidators = requireF('services/_core/requestValidators/RequestValidators');
+import _ from 'lodash';
+
 const RouteGeneratorBase = requireF('services/_core/routeGenerators/base/RouteGeneratorBase');
 
 export default class RouteGeneratorBaseGeneral extends RouteGeneratorBase {
@@ -8,19 +9,17 @@ export default class RouteGeneratorBaseGeneral extends RouteGeneratorBase {
     model,
   }) {
     const methodConf = conf.get(`models:${model.name}:methods:${methodName}`);
-    const requestValidators = new RequestValidators(model);
-    const validations = requestValidators.build(methodName);
 
     super({
       handler,
       methodConf,
       model,
-      validations,
     });
 
     this.permissions = [`${model.name}:${methodName}`, `${model.name}:own:${methodName}`];
-    this.identifier = {
-      name: methodName,
-    };
+
+    _.set(this.identifier, 'name', methodName);
+    _.set(this.identifier, 'preHandlerValidators', [`${model.name}.${methodName}`]);
+    _.set(this.identifier, 'requestValidators', [`${model.name}.${methodName}`]);
   }
 }

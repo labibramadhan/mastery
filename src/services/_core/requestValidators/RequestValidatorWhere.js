@@ -1,10 +1,10 @@
-import _ from 'lodash';
 import Joi from 'joi';
+import _ from 'lodash';
 
 const RequestValidatorConstants = requireF('services/_core/requestValidators/RequestValidatorConstants.js');
 
 export default class RequestValidatorWhere {
-  constructor(model) {
+  constructor(models, model) {
     this.model = model;
   }
 

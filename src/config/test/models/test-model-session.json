@@ -8,6 +8,12 @@
       "findAll": {
         "authenticate": true
       },
+      "findOne": {
+        "authenticate": true
+      },
+      "findById": {
+        "authenticate": true
+      },
       "count": {
         "authenticate": true
       },
@@ -17,10 +23,7 @@
       "update": {
         "authenticate": true
       },
-      "findOne": {
-        "authenticate": true
-      },
-      "findById": {
+      "delete": {
         "authenticate": true
       },
       "associations": {

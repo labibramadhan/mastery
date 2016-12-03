@@ -31,7 +31,7 @@ const preHandlerQueryParser = async function preHandlerQueryParser(request, repl
 
   if (tags && tags.includes('generator')) {
     let queries = {};
-    const methodName = request.route.settings.plugins.package.name;
+    const methodName = request.route.settings.plugins.generator.name;
 
     if (APPLICABLE_METHODS[methodName].includes('where')) {
       const where = queryParserWhere.parse(request.query);

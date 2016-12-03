@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 export default class RequestValidatorPayload {
-  constructor(model) {
+  constructor(models, model) {
     this.model = model;
   }
 

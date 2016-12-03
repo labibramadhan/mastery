@@ -27,6 +27,9 @@ export default class RequestValidatorConstants {
     update: [
       'pk',
     ],
+    delete: [
+      'pk',
+    ],
     findAllOneToMany: [
       'where',
       'include',

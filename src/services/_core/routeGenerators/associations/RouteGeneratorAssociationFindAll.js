@@ -7,13 +7,11 @@ export default class RouteGeneratorAssociationFindAll extends RouteGeneratorBase
   constructor(model, association) {
     const methodName = 'findAllOneToMany';
     const methodAlias = 'findAll';
-    const inherit = 'findById';
     const handlerGenerator = new HandlerGeneratorAssociationFindAll(model, association);
 
     super({
       association,
       handler: handlerGenerator.handler,
-      inherit,
       methodAlias,
       methodName,
       model,
