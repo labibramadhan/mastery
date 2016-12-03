@@ -1,5 +1,7 @@
 import Boom from 'boom';
 
+const HandlerErrorFormatter = requireF('services/_core/HandlerErrorFormatter');
+
 export default class HandlerGeneratorUpdate {
   constructor(model) {
     this.model = model;
@@ -11,7 +13,8 @@ export default class HandlerGeneratorUpdate {
       result.update(request.payload);
       return reply(result.toJSON());
     } catch (e) {
-      return reply(Boom.badRequest(e));
+      const handlerErrorFormatter = new HandlerErrorFormatter(request);
+      return reply(Boom.badRequest(handlerErrorFormatter.format(e)));
     }
   }
 }

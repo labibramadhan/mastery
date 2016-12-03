@@ -1,5 +1,7 @@
-import _ from 'lodash';
 import Boom from 'boom';
+import _ from 'lodash';
+
+const HandlerErrorFormatter = requireF('services/_core/HandlerErrorFormatter');
 
 /**
  * Generate the findAll handler of an association of belongsToMany/hasMany
@@ -33,7 +35,8 @@ export default class HandlerGeneratorAssociationFindAll {
       const results = await modelInstance[expectedMethodName](request.queryAPI);
       return reply(results);
     } catch (e) {
-      return reply(Boom.badRequest(e));
+      const handlerErrorFormatter = new HandlerErrorFormatter(request);
+      return reply(Boom.badRequest(handlerErrorFormatter.format(e)));
     }
   }
 }

@@ -1,5 +1,7 @@
-import _ from 'lodash';
 import Boom from 'boom';
+import _ from 'lodash';
+
+const HandlerErrorFormatter = requireF('services/_core/HandlerErrorFormatter');
 
 /**
  * Generate the findOne handler of an association of belongsTo/hasOne
@@ -33,7 +35,8 @@ export default class HandlerGeneratorAssociationFindOne {
       const result = await modelInstance[expectedMethodName]();
       return reply(result.toJSON());
     } catch (e) {
-      return reply(Boom.badRequest(e));
+      const handlerErrorFormatter = new HandlerErrorFormatter(request);
+      return reply(Boom.badRequest(handlerErrorFormatter.format(e)));
     }
   }
 }

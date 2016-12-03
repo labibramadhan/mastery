@@ -1,5 +1,7 @@
 import Boom from 'boom';
 
+const HandlerErrorFormatter = requireF('services/_core/HandlerErrorFormatter');
+
 /**
  * Generate the findAll handler of a single model
  *
@@ -28,7 +30,8 @@ export default class HandlerGeneratorFindAll {
       const results = await this.model.findAll(request.queryAPI);
       return reply(results);
     } catch (e) {
-      return reply(Boom.badRequest(e));
+      const handlerErrorFormatter = new HandlerErrorFormatter(request);
+      return reply(Boom.badRequest(handlerErrorFormatter.format(e)));
     }
   }
 }

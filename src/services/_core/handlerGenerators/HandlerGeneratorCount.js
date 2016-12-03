@@ -1,5 +1,7 @@
 import Boom from 'boom';
 
+const HandlerErrorFormatter = requireF('services/_core/HandlerErrorFormatter');
+
 /**
  * Generate the count handler of a single model
  *
@@ -30,7 +32,8 @@ export default class HandlerGeneratorCount {
         count: result,
       });
     } catch (e) {
-      return reply(Boom.badRequest(e));
+      const handlerErrorFormatter = new HandlerErrorFormatter(request);
+      return reply(Boom.badRequest(handlerErrorFormatter.format(e)));
     }
   }
 }

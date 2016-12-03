@@ -1,5 +1,7 @@
 import Boom from 'boom';
 
+const HandlerErrorFormatter = requireF('services/_core/HandlerErrorFormatter');
+
 /**
  * Generate the findOne handler of a single model
  *
@@ -28,7 +30,8 @@ export default class HandlerGeneratorFindOne {
       const result = await this.model.findOne(request.queryAPI);
       return reply(result.toJSON());
     } catch (e) {
-      return reply(Boom.badRequest(e));
+      const handlerErrorFormatter = new HandlerErrorFormatter(request);
+      return reply(Boom.badRequest(handlerErrorFormatter.format(e)));
     }
   }
 }
