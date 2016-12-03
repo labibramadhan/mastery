@@ -2,7 +2,7 @@ import _ from 'lodash';
 import path from 'path';
 
 export default class CommonServices {
-  static requireF = file => require(path.join(rootPath, file));
+  static requireF = (file: string) => require(path.join(rootPath, file));
 
   static getPackage = () => {
     const rootPath = path.resolve(path.join(__dirname, '..', '..', '..'));
