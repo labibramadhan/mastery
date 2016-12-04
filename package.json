@@ -1,11 +1,11 @@
 {
-  "name": "mastery",
+  "name": "mastery-framework",
   "version": "0.0.1",
   "main": "build/index.js",
   "license": "Apache-2.0",
   "author": "Muhammad Labib Ramadhan",
   "email": "mlabib.ramadhan@gmail.com",
-  "url": "https://hithub.com/labibramadhan/mastery",
+  "url": "https://hithub.com/labibramadhan/mastery-framework",
   "keywords": [
     "hapi",
     "api",
