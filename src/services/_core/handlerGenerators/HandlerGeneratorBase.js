@@ -1,6 +1,6 @@
 import Boom from 'boom';
 
-const HandlerErrorFormatter = requireF('services/_core/HandlerErrorFormatter');
+const HandlerErrorFormatter = requireF('services/_core/formatters/HandlerErrorFormatter');
 
 export default class HandlerGeneratorBase {
   constructor(model, association) {
