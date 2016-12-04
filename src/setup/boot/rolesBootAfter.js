@@ -15,16 +15,10 @@ export default async () => {
   // loop each roles name
   for (const roleName of availableRolesNames) { // eslint-disable-line no-restricted-syntax
     // check if this role name already persists in database
-    const roleExists = await role.findOne({
+    await role.findOrCreate({
       where: {
         name: roleName,
       },
     });
-    if (!roleExists) {
-      // if not, insert a new one
-      await role.create({
-        name: roleName,
-      });
-    }
   }
 };

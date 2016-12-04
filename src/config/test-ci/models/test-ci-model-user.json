@@ -1,47 +1,23 @@
 {
   "user": {
     "database": "main",
-    "public": true,
     "plural": "users",
     "ownerFields": ["id"],
     "methods": {
-      "findAll": {
-        "authenticate": true,
-        "authentications": {
-          "include": ["role", "session"]
-        }
-      },
-      "count": {
-        "authenticate": true
-      },
-      "create": {
-        "authenticate": true
-      },
-      "update": {
-        "authenticate": true
-      },
-      "findOne": {
-        "authenticate": true
-      },
-      "findById": {
-        "authenticate": true
-      },
+      "findAll": {},
+      "count": {},
+      "create": {},
+      "update": {},
+      "findOne": {},
+      "findById": {},
       "associations": {
         "roles": {
-          "findAll": {
-            "authenticate": true
-          },
-          "count": {
-            "authenticate": true
-          }
+          "findAll": {},
+          "count": {}
         },
         "sessions": {
-          "findAll": {
-            "authenticate": true
-          },
-          "count": {
-            "authenticate": true
-          }
+          "findAll": {},
+          "count": {}
         }
       }
     },

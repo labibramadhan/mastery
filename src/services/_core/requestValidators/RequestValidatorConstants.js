@@ -30,17 +30,17 @@ export default class RequestValidatorConstants {
     delete: [
       'pk',
     ],
-    findAllOneToMany: [
+    associationFindAll: [
       'where',
       'include',
       'order',
       'limit',
       'offset',
     ],
-    countOneToMany: [
+    associationCount: [
       'where',
     ],
-    findOneOneToOne: [],
+    associationFindOne: [],
   };
 
   static SEQUELIZE_OPERATORS = {

@@ -13,6 +13,22 @@ const RouteGeneratorAssociationFindAll = requireF('services/_core/routeGenerator
 const RouteGeneratorAssociationCount = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationCount');
 const RouteGeneratorAssociationFindOne = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationFindOne');
 
+const routeGeneratorClasses = {
+  findAll: RouteGeneratorFindAll,
+  findOne: RouteGeneratorFindOne,
+  findById: RouteGeneratorFindById,
+  count: RouteGeneratorCount,
+  create: RouteGeneratorCreate,
+  update: RouteGeneratorUpdate,
+  delete: RouteGeneratorDelete,
+
+  associations: {
+    findAll: RouteGeneratorAssociationFindAll,
+    findOne: RouteGeneratorAssociationFindOne,
+    count: RouteGeneratorAssociationCount,
+  },
+};
+
 export default class BootAutoRoutes {
   constructor() {
     this.resolverModels = new ResolverModels();
@@ -21,75 +37,27 @@ export default class BootAutoRoutes {
   boot() {
     const self = this;
     const routes = [];
-    const enabledModels = this.resolverModels.getModelConfs({
-      public: true,
-    });
-    _.forEach(enabledModels, (enabledModel, modelName) => {
-      if (_.has(enabledModel, 'methods')) {
+    const modelsConf = conf.get('models');
+    _.forEach(modelsConf, (modelConf, modelName) => {
+      if (_.has(modelConf, 'methods')) {
         const model = self.resolverModels.getModel(modelName);
 
-        if (_.has(enabledModel, 'methods.findAll') && enabledModel.methods.findAll) {
-          const routeGeneratorFindAll = new RouteGeneratorFindAll(model);
-          routes.push(routeGeneratorFindAll.generate());
-        }
+        _.forEach(_.omit(modelConf.methods, 'associations'), (methodConf, methodName) => {
+          if (_.has(routeGeneratorClasses, methodName)) {
+            const routeGenerator = new routeGeneratorClasses[methodName](model);
+            routes.push(routeGenerator.generate());
+          }
+        });
 
-        if (_.has(enabledModel, 'methods.findOne') && enabledModel.methods.findOne) {
-          const routeGeneratorFindOne = new RouteGeneratorFindOne(model);
-          routes.push(routeGeneratorFindOne.generate());
-        }
-
-        if (_.has(enabledModel, 'methods.findById') && enabledModel.methods.findById) {
-          const routeGeneratorFindById = new RouteGeneratorFindById(model);
-          routes.push(routeGeneratorFindById.generate());
-        }
-
-        if (_.has(enabledModel, 'methods.count') && enabledModel.methods.count) {
-          const routeGeneratorCount = new RouteGeneratorCount(model);
-          routes.push(routeGeneratorCount.generate());
-        }
-
-        if (_.has(enabledModel, 'methods.create') && enabledModel.methods.create) {
-          const routeGeneratorCreate = new RouteGeneratorCreate(model);
-          routes.push(routeGeneratorCreate.generate());
-        }
-
-        if (_.has(enabledModel, 'methods.update') && enabledModel.methods.update) {
-          const routeGeneratorUpdate = new RouteGeneratorUpdate(model);
-          routes.push(routeGeneratorUpdate.generate());
-        }
-
-        if (_.has(enabledModel, 'methods.delete') && enabledModel.methods.delete) {
-          const routeGeneratorDelete = new RouteGeneratorDelete(model);
-          routes.push(routeGeneratorDelete.generate());
-        }
-
-        if (_.has(enabledModel, 'methods.associations')) {
-          _.forEach(enabledModel.methods.associations, (associationMethods, associationAs) => {
-            if (_.has(model, `associations.${associationAs}`)) {
-              if (_.has(associationMethods, 'findAll')) {
-                const routeGeneratorAssociationFindAll = new RouteGeneratorAssociationFindAll(
-                  model,
-                  model.associations[associationAs],
-                );
-                routes.push(routeGeneratorAssociationFindAll.generate());
+        if (_.has(modelConf.methods, 'associations')) {
+          _.forEach(modelConf.methods.associations, (associationMethods, associationAs) => {
+            _.forEach(associationMethods, (associationMethodConf, associationMethodName) => {
+              if (_.has(routeGeneratorClasses, `associations.${associationMethodName}`)) {
+                // eslint-disable-next-line dot-notation
+                const routeGenerator = new routeGeneratorClasses['associations'][associationMethodName](model, model.associations[associationAs]);
+                routes.push(routeGenerator.generate());
               }
-
-              if (_.has(associationMethods, 'count')) {
-                const routeGeneratorAssociationCount = new RouteGeneratorAssociationCount(
-                  model,
-                  model.associations[associationAs],
-                );
-                routes.push(routeGeneratorAssociationCount.generate());
-              }
-
-              if (_.has(associationMethods, 'findOne')) {
-                const routeGeneratorAssociationFindOne = new RouteGeneratorAssociationFindOne(
-                  model,
-                  model.associations[associationAs],
-                );
-                routes.push(routeGeneratorAssociationFindOne.generate());
-              }
-            }
+            });
           });
         }
       }

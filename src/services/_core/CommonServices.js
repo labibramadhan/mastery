@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import glob from 'glob';
 import path from 'path';
 
 export default class CommonServices {
@@ -34,4 +35,15 @@ export default class CommonServices {
     });
     return mergedObject;
   };
+
+  static globSyncMultiple = (patterns: Array) => {
+    let results = [];
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const pattern of _.castArray(patterns)) {
+      const files = glob.sync(pattern);
+      results = _.concat(results, files);
+    }
+    return results;
+  }
 }

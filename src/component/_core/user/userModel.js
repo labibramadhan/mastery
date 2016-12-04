@@ -74,9 +74,10 @@ sequelize.define('user', {
           name: 'authenticated',
         },
       });
-
-      // give the default 'authenticated' role
-      await user.addRoles(authenticatedRole);
+      if (authenticatedRole) {
+        // give the default 'authenticated' role
+        await user.addRoles(authenticatedRole);
+      }
     },
   },
 });

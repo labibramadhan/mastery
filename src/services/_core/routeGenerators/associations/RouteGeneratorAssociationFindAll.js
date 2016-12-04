@@ -5,14 +5,12 @@ const HandlerGeneratorAssociationFindAll = requireF('services/_core/handlerGener
 
 export default class RouteGeneratorAssociationFindAll extends RouteGeneratorBaseAssociation {
   constructor(model, association) {
-    const methodName = 'findAllOneToMany';
-    const methodAlias = 'findAll';
+    const methodName = 'associationFindAll';
     const handlerGenerator = new HandlerGeneratorAssociationFindAll(model, association);
 
     super({
       association,
       handler: handlerGenerator.handler,
-      methodAlias,
       methodName,
       model,
     });

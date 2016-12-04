@@ -8,13 +8,11 @@ const authStrategiesConfig = requireF('setup/config/authStrategiesConfig');
 export default class RouteGeneratorBase {
   constructor({
     handler,
-    methodConf,
     model,
   }) {
     this.identifier = {};
     this.handler = handler;
     this.tags = ['api', 'generator', model.name];
-    this.authenticate = _.has(methodConf, 'authenticate') && methodConf.authenticate;
   }
 
   generate() {
@@ -33,10 +31,8 @@ export default class RouteGeneratorBase {
     _.set(options, 'config.tags', this.tags);
     _.set(options, 'config.plugins.generator', this.identifier);
 
-    if (this.authenticate) {
-      _.set(options, 'config.auth.strategies', Object.keys(authStrategiesConfig));
-      _.set(options, 'config.auth.scope', this.permissions);
-    }
+    _.set(options, 'config.auth.strategies', Object.keys(authStrategiesConfig));
+    _.set(options, 'config.auth.scope', this.permissions);
 
     return options;
   }

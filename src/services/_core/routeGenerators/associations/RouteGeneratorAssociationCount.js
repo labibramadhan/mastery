@@ -5,14 +5,12 @@ const HandlerGeneratorAssociationCount = requireF('services/_core/handlerGenerat
 
 export default class RouteGeneratorAssociationFindAll extends RouteGeneratorBaseAssociation {
   constructor(model, association) {
-    const methodName = 'countOneToMany';
-    const methodAlias = 'count';
+    const methodName = 'associationCount';
     const handlerGenerator = new HandlerGeneratorAssociationCount(model, association);
 
     super({
       association,
       handler: handlerGenerator.handler,
-      methodAlias,
       methodName,
       model,
     });

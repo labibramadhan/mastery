@@ -24,9 +24,9 @@ const validatorClasses = {
   update: PreHandlerValidatorUpdate,
   delete: PreHandlerValidatorDelete,
 
-  findAllOneToMany: PreHandlerValidatorAssociationFindAll,
-  countOneToMany: PreHandlerValidatorAssociationCount,
-  findOneOneToOne: PreHandlerValidatorAssociationFindOne,
+  associationFindAll: PreHandlerValidatorAssociationFindAll,
+  associationFindOne: PreHandlerValidatorAssociationFindOne,
+  associationCount: PreHandlerValidatorAssociationCount,
 };
 
 const preHandlerValidator = async function preHandlerValidator(request, reply) {

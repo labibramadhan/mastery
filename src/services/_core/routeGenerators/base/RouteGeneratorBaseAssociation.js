@@ -6,12 +6,11 @@ export default class RouteGeneratorBaseAssociation extends RouteGeneratorBase {
   constructor({
     association,
     handler,
-    methodAlias,
     methodName,
     model,
   }) {
-    const name = methodAlias || methodName;
-    const methodConf = conf.get(`models:${model.name}:methods:associations:${association.as}:${name}`);
+    const methodNameKey = _.camelCase(methodName.replace('association', ''));
+    const methodConf = conf.get(`models:${model.name}:methods:associations:${association.as}:${methodNameKey}`);
 
     super({
       handler,
@@ -19,7 +18,11 @@ export default class RouteGeneratorBaseAssociation extends RouteGeneratorBase {
       model,
     });
 
-    this.permissions = [`${model.name}:${association.as}:${name}`, `${model.name}:own:${association.as}:${name}`, `${model.name}:own:${association.as}:own:${name}`];
+    this.permissions = [
+      `${model.name}:${association.as}:${methodNameKey}`,
+      `${model.name}:own:${association.as}:${methodNameKey}`,
+      `${model.name}:own:${association.as}:own:${methodNameKey}`,
+    ];
 
     _.set(this.identifier, 'name', methodName);
     _.set(this.identifier, 'preHandlerValidators', [`${model.name}.findById`, `${model.name}.${association.target.name}.${methodName}`]);
