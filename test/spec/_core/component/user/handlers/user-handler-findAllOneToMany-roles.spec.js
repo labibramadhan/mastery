@@ -10,9 +10,7 @@ const mockUsers = require('../../../../../helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
-describe(`GET findAllOneToMany ${URI(`${prefix}user/{pk}/roles`).addQuery({
-  name: 'admin',
-})}`, () => {
+describe(`GET findAllOneToMany ${prefix}user/{pk}/roles`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
