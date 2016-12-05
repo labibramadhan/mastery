@@ -2,21 +2,21 @@ import _ from 'lodash';
 
 const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
 
-const RouteGeneratorFindAll = requireF('services/_core/routeGenerators/RouteGeneratorFindAll');
-const RouteGeneratorFindOne = requireF('services/_core/routeGenerators/RouteGeneratorFindOne');
-const RouteGeneratorFindById = requireF('services/_core/routeGenerators/RouteGeneratorFindById');
-const RouteGeneratorCount = requireF('services/_core/routeGenerators/RouteGeneratorCount');
-const RouteGeneratorCreate = requireF('services/_core/routeGenerators/RouteGeneratorCreate');
-const RouteGeneratorUpdate = requireF('services/_core/routeGenerators/RouteGeneratorUpdate');
-const RouteGeneratorDelete = requireF('services/_core/routeGenerators/RouteGeneratorDelete');
-const RouteGeneratorAssociationFindAll = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationFindAll');
-const RouteGeneratorAssociationFindOne = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationFindOne');
-const RouteGeneratorAssociationCount = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationCount');
-const RouteGeneratorAssociationCreate = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationCreate');
-const RouteGeneratorAssociationAdd = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationAdd');
-const RouteGeneratorAssociationAddMultiple = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationAddMultiple');
-const RouteGeneratorAssociationRemove = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationRemove');
-const RouteGeneratorAssociationRemoveMultiple = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationRemoveMultiple');
+const RouteGeneratorFindAll = requireF('services/_core/generators/routes/RouteGeneratorFindAll');
+const RouteGeneratorFindOne = requireF('services/_core/generators/routes/RouteGeneratorFindOne');
+const RouteGeneratorFindById = requireF('services/_core/generators/routes/RouteGeneratorFindById');
+const RouteGeneratorCount = requireF('services/_core/generators/routes/RouteGeneratorCount');
+const RouteGeneratorCreate = requireF('services/_core/generators/routes/RouteGeneratorCreate');
+const RouteGeneratorUpdate = requireF('services/_core/generators/routes/RouteGeneratorUpdate');
+const RouteGeneratorDelete = requireF('services/_core/generators/routes/RouteGeneratorDelete');
+const RouteGeneratorAssociationFindAll = requireF('services/_core/generators/routes/associations/RouteGeneratorAssociationFindAll');
+const RouteGeneratorAssociationFindOne = requireF('services/_core/generators/routes/associations/RouteGeneratorAssociationFindOne');
+const RouteGeneratorAssociationCount = requireF('services/_core/generators/routes/associations/RouteGeneratorAssociationCount');
+const RouteGeneratorAssociationCreate = requireF('services/_core/generators/routes/associations/RouteGeneratorAssociationCreate');
+const RouteGeneratorAssociationAdd = requireF('services/_core/generators/routes/associations/RouteGeneratorAssociationAdd');
+const RouteGeneratorAssociationAddMultiple = requireF('services/_core/generators/routes/associations/RouteGeneratorAssociationAddMultiple');
+const RouteGeneratorAssociationRemove = requireF('services/_core/generators/routes/associations/RouteGeneratorAssociationRemove');
+const RouteGeneratorAssociationRemoveMultiple = requireF('services/_core/generators/routes/associations/RouteGeneratorAssociationRemoveMultiple');
 
 const routeGeneratorClasses = {
   findAll: RouteGeneratorFindAll,

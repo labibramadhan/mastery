@@ -6,13 +6,13 @@ const {
 
 const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
 
-const PreHandlerValidatorFindAll = requireF('services/_core/preHandlerValidators/PreHandlerValidatorFindAll');
-const PreHandlerValidatorFindOne = requireF('services/_core/preHandlerValidators/PreHandlerValidatorFindOne');
-const PreHandlerValidatorFindById = requireF('services/_core/preHandlerValidators/PreHandlerValidatorFindById');
-const PreHandlerValidatorCount = requireF('services/_core/preHandlerValidators/PreHandlerValidatorCount');
-const PreHandlerValidatorUpdate = requireF('services/_core/preHandlerValidators/PreHandlerValidatorUpdate');
-const PreHandlerValidatorDelete = requireF('services/_core/preHandlerValidators/PreHandlerValidatorDelete');
-const PreHandlerValidatorAssociationFindOne = requireF('services/_core/preHandlerValidators/associations/PreHandlerValidatorAssociationFindOne');
+const PreHandlerValidatorFindAll = requireF('services/_core/validators/preHandler/PreHandlerValidatorFindAll');
+const PreHandlerValidatorFindOne = requireF('services/_core/validators/preHandler/PreHandlerValidatorFindOne');
+const PreHandlerValidatorFindById = requireF('services/_core/validators/preHandler/PreHandlerValidatorFindById');
+const PreHandlerValidatorCount = requireF('services/_core/validators/preHandler/PreHandlerValidatorCount');
+const PreHandlerValidatorUpdate = requireF('services/_core/validators/preHandler/PreHandlerValidatorUpdate');
+const PreHandlerValidatorDelete = requireF('services/_core/validators/preHandler/PreHandlerValidatorDelete');
+const PreHandlerValidatorAssociationFindOne = requireF('services/_core/validators/preHandler/associations/PreHandlerValidatorAssociationFindOne');
 
 const validatorClasses = {
   findAll: PreHandlerValidatorFindAll,

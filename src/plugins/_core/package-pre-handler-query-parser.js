@@ -4,11 +4,11 @@ const {
   getPackage,
 } = requireF('services/_core/CommonServices');
 
-const QueryParserWhere = requireF('services/_core/queryParsers/QueryParserWhere');
-const QueryParserInclude = requireF('services/_core/queryParsers/QueryParserInclude');
-const QueryParserOrder = requireF('services/_core/queryParsers/QueryParserOrder');
-const QueryParserLimit = requireF('services/_core/queryParsers/QueryParserLimit');
-const QueryParserOffset = requireF('services/_core/queryParsers/QueryParserOffset');
+const QueryParserWhere = requireF('services/_core/parsers/query/QueryParserWhere');
+const QueryParserInclude = requireF('services/_core/parsers/query/QueryParserInclude');
+const QueryParserOrder = requireF('services/_core/parsers/query/QueryParserOrder');
+const QueryParserLimit = requireF('services/_core/parsers/query/QueryParserLimit');
+const QueryParserOffset = requireF('services/_core/parsers/query/QueryParserOffset');
 
 const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
 
