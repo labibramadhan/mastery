@@ -23,7 +23,7 @@
     "babel:build": "babel src --out-dir build",
     "build": "npm-run-all clean babel:build",
     "test": "NODE_ENV=test mocha --timeout 5000 --compilers js:babel-register --recursive test/spec/**/*.js",
-    "test-ci": "NODE_ENV=test-ci mocha -b --timeout 6000 --compilers js:babel-register --recursive test/spec/**/*.js",
+    "test-ci": "NODE_ENV=test-ci mocha -b --timeout 6500 --compilers js:babel-register --recursive test/spec/**/*.js",
     "test-debug": "NODE_ENV=test mocha -b --debug-brk=5858 --inspect --timeout 5000 --compilers js:babel-register --recursive test/spec/**/*.js"
   },
   "pre-commit": [
