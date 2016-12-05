@@ -28,7 +28,7 @@ export default async () => {
         email: 'admin@mailinator.com',
         password: 'adminpassword',
       });
-      await defaultAdmin.addRoles(adminRole);
+      await defaultAdmin.addRole(adminRole);
     }
   }
 

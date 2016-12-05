@@ -27,6 +27,6 @@ export default async () => {
     anonymousUser.save({
       validate: false,
     });
-    anonymousUser.addRoles(anonymousRole[0]);
+    anonymousUser.addRole(anonymousRole[0]);
   }
 };

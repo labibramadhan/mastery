@@ -11,28 +11,26 @@ export default async function mockUsers() {
     email: 'admin1@mailinator.com',
     password: 'Asdqwe123',
   });
-  await admin1.addRoles([authenticatedRole, adminRole]);
+  await admin1.addRole(adminRole);
 
   const admin2 = await user.create({
     username: 'admin2',
     email: 'admin2@mailinator.com',
     password: 'Asdqwe123',
   });
-  await admin2.addRoles([authenticatedRole, adminRole]);
+  await admin2.addRole(adminRole);
 
   const authenticated1 = await user.create({
     username: 'authenticated1',
     email: 'authenticated1@mailinator.com',
     password: 'Asdqwe123',
   });
-  await authenticated1.addRoles(authenticatedRole);
 
   const authenticated2 = await user.create({
     username: 'authenticated2',
     email: 'authenticated2@mailinator.com',
     password: 'Asdqwe123',
   });
-  await authenticated2.addRoles(authenticatedRole);
 
     // eslint-disable-next-line no-param-reassign
   this.users = { admin1, admin2, authenticated1, authenticated2 };
