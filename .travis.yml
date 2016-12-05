@@ -4,8 +4,8 @@ cache: yarn
 services:
   - postgresql
 before_script:
-  - psql -c 'create database hapiapistarter;' -U postgres
-  - psql -d hapiapistarter -c 'create schema core authorization postgres' -U postgres
+  - psql -c 'create database mastery;' -U postgres
+  - psql -d mastery -c 'create schema core authorization postgres' -U postgres
 script: npm run test-ci
 addons:
   apt:
