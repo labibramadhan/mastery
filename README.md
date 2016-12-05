@@ -44,7 +44,7 @@ Configure database configuration inside the development environment [database co
 
 ### Running
 
-Type ```./node_modules/.bin/babel-node index.js```
+Type ```./node_modules/.bin/babel-node src/index.js```
 
 ## License
 
