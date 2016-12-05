@@ -1,7 +1,5 @@
-import _ from 'lodash';
 import Boom from 'boom';
-
-const I18nExtended = requireF('services/_core/I18nExtended');
+import _ from 'lodash';
 
 export default class PreAssociationFindOneValidation {
   constructor(model, association) {
@@ -27,8 +25,8 @@ export default class PreAssociationFindOneValidation {
     if (invalid) {
       let message = null;
       const messageKey = `error.${this.model.name}.own.${this.association.as}.own.findOne.forbidden`;
-      if (this.i18nExtended.has(messageKey)) {
-        message = this.i18nExtended.t(messageKey);
+      if (this.request.t.has(messageKey)) {
+        message = this.request.t(messageKey);
       }
       return Boom.forbidden(message);
     }
@@ -37,7 +35,6 @@ export default class PreAssociationFindOneValidation {
 
   validate = async (request) => {
     this.request = request;
-    this.i18nExtended = new I18nExtended(this.request);
     return await await this.invalidOwnChild();
   }
 }

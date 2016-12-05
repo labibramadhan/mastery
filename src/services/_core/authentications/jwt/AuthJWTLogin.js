@@ -1,9 +1,8 @@
-import _ from 'lodash';
 import Boom from 'boom';
+import _ from 'lodash';
 import jwt from 'jsonwebtoken';
 
 const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
-const I18nExtended = requireF('services/_core/I18nExtended');
 
 const {
   maxSessions,
@@ -43,7 +42,6 @@ export default class AuthJWTLogin {
   }
 
   login = async () => {
-    const i18nExtended = new I18nExtended(this.request);
     const credentials = this.parseCredentials();
     const {
       user,
@@ -70,7 +68,7 @@ export default class AuthJWTLogin {
         },
       });
       if (existingTokenCount >= maxSessions) {
-        return Boom.unauthorized(i18nExtended.t('error.user.login.tooManySessions'));
+        return Boom.unauthorized(this.request.t('error.user.login.tooManySessions'));
       }
 
       // if valid, generate a new JWT token
@@ -87,7 +85,7 @@ export default class AuthJWTLogin {
     }
 
     // if not valid, return the user.login.failed translated message
-    return Boom.unauthorized(i18nExtended.t('error.user.login.failed'));
+    return Boom.unauthorized(this.t('error.user.login.failed'));
   }
 
   postLogin = async (user, token) => {

@@ -1,7 +1,6 @@
 import Boom from 'boom';
 import _ from 'lodash';
 
-const I18nExtended = requireF('services/_core/I18nExtended');
 const Pre404PKValidationBase = requireF('services/_core/verifier/preHandler/base/Pre404PKValidationBase');
 
 export default class PreOwnPKValidationBase extends Pre404PKValidationBase {
@@ -33,8 +32,8 @@ export default class PreOwnPKValidationBase extends Pre404PKValidationBase {
     });
     if (!count) {
       let message = null;
-      if (this.i18nExtended.has(this.ownMessageKey)) {
-        message = this.i18nExtended.t(this.ownMessageKey);
+      if (this.request.t.has(this.ownMessageKey)) {
+        message = this.request.t(this.ownMessageKey);
       }
       return Boom.forbidden(message);
     }
@@ -43,7 +42,6 @@ export default class PreOwnPKValidationBase extends Pre404PKValidationBase {
 
   async validate(request) {
     this.request = request;
-    this.i18nExtended = new I18nExtended(this.request);
     return await super.validator() || await this.validator();
   }
 }

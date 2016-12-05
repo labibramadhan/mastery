@@ -1,11 +1,9 @@
-import _ from 'lodash';
 import Sequelize from 'sequelize';
-
-const I18nExtended = requireF('services/_core/I18nExtended');
+import _ from 'lodash';
 
 export default class HandlerErrorFormatter {
   constructor(request) {
-    this.i18nExtended = new I18nExtended(request);
+    this.request = request;
   }
 
   format(e) {
@@ -15,8 +13,8 @@ export default class HandlerErrorFormatter {
       if (_.has(e, 'errors') && _.size(e.errors)) {
         _.forEach(e.errors, (error) => {
           if (_.has(error, 'message')) {
-            if (self.i18nExtended.has(error.message)) {
-              errorsFormatted.push(self.i18nExtended.t(error.message));
+            if (self.request.t.has(error.message)) {
+              errorsFormatted.push(self.request.t(error.message));
             }
           }
         });
