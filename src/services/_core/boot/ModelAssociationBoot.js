@@ -1,5 +1,5 @@
-import _ from 'lodash';
 import Promise from 'bluebird';
+import _ from 'lodash';
 
 const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
 
