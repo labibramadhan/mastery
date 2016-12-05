@@ -15,7 +15,7 @@ export default class RouteGeneratorAssociationAdd extends RouteGeneratorBaseAsso
       model,
     });
 
-    this.method = 'POST';
+    this.method = 'PUT';
     this.path = path.join(model.name, '{pk}', association.as, 'add', '{pk2}');
   }
 }

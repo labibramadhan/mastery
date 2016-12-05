@@ -15,7 +15,7 @@ export default class RouteGeneratorAssociationRemove extends RouteGeneratorBaseA
       model,
     });
 
-    this.method = 'POST';
+    this.method = 'DELETE';
     this.path = path.join(model.name, '{pk}', association.as, 'remove', '{pk2}');
   }
 }
