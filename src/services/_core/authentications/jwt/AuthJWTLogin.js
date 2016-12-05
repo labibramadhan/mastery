@@ -2,7 +2,7 @@ import _ from 'lodash';
 import Boom from 'boom';
 import jwt from 'jsonwebtoken';
 
-const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
+const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
 const I18nExtended = requireF('services/_core/I18nExtended');
 
 const {
@@ -13,7 +13,7 @@ const {
 export default class AuthJWTLogin {
   constructor(request) {
     this.request = request;
-    this.resolverModels = new ResolverModels();
+    this.modelResolver = new ModelResolver();
   }
 
   parseCredentials() {
@@ -48,7 +48,7 @@ export default class AuthJWTLogin {
     const {
       user,
       session,
-    } = this.resolverModels.getModels(['user', 'session']);
+    } = this.modelResolver.getModels(['user', 'session']);
 
     const {
       password,
@@ -91,7 +91,7 @@ export default class AuthJWTLogin {
   }
 
   postLogin = async (user, token) => {
-    const session = this.resolverModels.getModel('session');
+    const session = this.modelResolver.getModel('session');
     await session.create({ userId: user.id, token, expire: 604800 });
   }
 }

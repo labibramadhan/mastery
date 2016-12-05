@@ -4,21 +4,21 @@ const {
   getPackage,
 } = requireF('services/_core/CommonServices');
 
-const QueryParserWhere = requireF('services/_core/parsers/query/QueryParserWhere');
-const QueryParserInclude = requireF('services/_core/parsers/query/QueryParserInclude');
-const QueryParserOrder = requireF('services/_core/parsers/query/QueryParserOrder');
-const QueryParserLimit = requireF('services/_core/parsers/query/QueryParserLimit');
-const QueryParserOffset = requireF('services/_core/parsers/query/QueryParserOffset');
+const WhereParser = requireF('services/_core/parsers/query/WhereParser');
+const IncludeParser = requireF('services/_core/parsers/query/IncludeParser');
+const OrderParser = requireF('services/_core/parsers/query/OrderParser');
+const LimitParser = requireF('services/_core/parsers/query/LimitParser');
+const OffsetParser = requireF('services/_core/parsers/query/OffsetParser');
 
-const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
+const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
 
-const resolverModels = new ResolverModels();
-const models = resolverModels.getAllModels();
-const queryParserWhere = new QueryParserWhere();
-const queryParserInclude = new QueryParserInclude(models);
-const queryParserOrder = new QueryParserOrder(models);
-const queryParserLimit = new QueryParserLimit();
-const queryParserOffset = new QueryParserOffset();
+const modelResolver = new ModelResolver();
+const models = modelResolver.getAllModels();
+const whereParser = new WhereParser();
+const includeParser = new IncludeParser(models);
+const orderParser = new OrderParser(models);
+const limitParser = new LimitParser();
+const offsetParser = new OffsetParser();
 
 const preHandlerQueryParser = async function preHandlerQueryParser(request, reply) {
   const tags = request.route.settings.tags;
@@ -28,7 +28,7 @@ const preHandlerQueryParser = async function preHandlerQueryParser(request, repl
     const parsers = request.route.settings.plugins.generator.queryParsers;
 
     if (parsers.includes('where')) {
-      const where = queryParserWhere.parse(request.query);
+      const where = whereParser.parse(request.query);
       if (where && _.size(where) > 0) {
         queries = {
           ...queries,
@@ -38,7 +38,7 @@ const preHandlerQueryParser = async function preHandlerQueryParser(request, repl
     }
 
     if (parsers.includes('include')) {
-      const include = await queryParserInclude.parse(request.query);
+      const include = await includeParser.parse(request.query);
       if (include && _.size(include) > 0) {
         queries = {
           ...queries,
@@ -48,7 +48,7 @@ const preHandlerQueryParser = async function preHandlerQueryParser(request, repl
     }
 
     if (parsers.includes('order')) {
-      const order = queryParserOrder.parse(request.query);
+      const order = orderParser.parse(request.query);
       if (order && _.size(order) > 0) {
         queries = {
           ...queries,
@@ -58,7 +58,7 @@ const preHandlerQueryParser = async function preHandlerQueryParser(request, repl
     }
 
     if (parsers.includes('limit')) {
-      const limit = queryParserLimit.parse(request.query);
+      const limit = limitParser.parse(request.query);
       if (limit) {
         queries = {
           ...queries,
@@ -68,7 +68,7 @@ const preHandlerQueryParser = async function preHandlerQueryParser(request, repl
     }
 
     if (parsers.includes('offset')) {
-      const offset = queryParserOffset.parse(request.query);
+      const offset = offsetParser.parse(request.query);
       if (offset) {
         queries = {
           ...queries,

@@ -23,9 +23,9 @@ const run = async () => {
   await server.register(HapiAuthJWT2);
 
   // boot the server
-  const BootServer = requireF('services/_core/boot/BootServer');
-  const bootServer = new BootServer();
-  await bootServer.boot();
+  const ServerBoot = requireF('services/_core/boot/ServerBoot');
+  const serverBoot = new ServerBoot();
+  await serverBoot.boot();
 
   const {
     getPackage,

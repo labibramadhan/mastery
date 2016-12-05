@@ -4,11 +4,11 @@ const {
   getPackage,
 } = requireF('services/_core/CommonServices');
 
-const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
+const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
 
 exports.register = async (server, options, next) => {
-  const resolverModels = new ResolverModels();
-  const userModel = resolverModels.getModel('user');
+  const modelResolver = new ModelResolver();
+  const userModel = modelResolver.getModel('user');
 
   server.ext('onRequest', async (request, reply) => {
     if (!(_.has(request, 'query.token') || _.has(request, 'headers.authorization'))) {

@@ -23,7 +23,7 @@ export default async () => {
 
   await server.register(HapiAuthJWT2);
 
-  const BootServer = requireF('services/_core/boot/BootServer');
-  const bootServer = new BootServer();
-  await bootServer.boot();
+  const ServerBoot = requireF('services/_core/boot/ServerBoot');
+  const serverBoot = new ServerBoot();
+  await serverBoot.boot();
 };

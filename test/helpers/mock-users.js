@@ -1,7 +1,7 @@
 export default async function mockUsers() {
-  const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
-  const resolverModels = new ResolverModels();
-  const { user, role } = resolverModels.getModels(['user', 'role']);
+  const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
+  const modelResolver = new ModelResolver();
+  const { user, role } = modelResolver.getModels(['user', 'role']);
 
   const adminRole = await role.findOne({ where: { name: 'admin' } });
   const authenticatedRole = await role.findOne({ where: { name: 'authenticated' } });

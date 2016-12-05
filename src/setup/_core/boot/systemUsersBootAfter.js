@@ -1,11 +1,11 @@
-const ResolverModels = requireF('services/_core/resolvers/ResolverModels');
+const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
 
 export default async () => {
-  const resolverModels = new ResolverModels();
+  const modelResolver = new ModelResolver();
   const {
     role,
     user,
-  } = resolverModels.getModels(['role', 'user']);
+  } = modelResolver.getModels(['role', 'user']);
 
   const anonymousRole = await role.findOrCreate({
     where: {
