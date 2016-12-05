@@ -41,6 +41,17 @@ export default class RequestValidatorConstants {
       'where',
     ],
     associationFindOne: [],
+    associationCreate: [
+      'payload',
+    ],
+    associationAdd: [
+      'pk2',
+    ],
+    associationAddMultiple: [],
+    associationRemove: [
+      'pk2',
+    ],
+    associationRemoveMultiple: [],
   };
 
   static SEQUELIZE_OPERATORS = {

@@ -13,7 +13,11 @@
       "associations": {
         "roles": {
           "findAll": {},
-          "count": {}
+          "count": {},
+          "add": {},
+          "addMultiple": {},
+          "remove": {},
+          "removeMultiple": {}
         },
         "sessions": {
           "findAll": {},

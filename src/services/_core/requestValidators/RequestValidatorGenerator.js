@@ -20,6 +20,10 @@ const validatorClasses = {
     class: RequestValidatorPK,
     source: 'params',
   },
+  pk2: {
+    class: RequestValidatorPK,
+    source: 'params',
+  },
   where: {
     class: RequestValidatorWhere,
     source: 'query',
@@ -71,7 +75,7 @@ export default class RequestValidatorGenerator {
     _.forEach(APPLICABLE_METHODS[methodName], (sourceMethod) => {
       if (_.has(validatorClasses, sourceMethod)) {
         const classConfig = validatorClasses[sourceMethod];
-        const classIntance = new classConfig['class'](this.models, this.models[targetModelName]); // eslint-disable-line
+        const classIntance = new classConfig['class'](this.models, this.models[targetModelName], sourceMethod); // eslint-disable-line
         const validations = concatToJoiObject(
           classIntance.build(),
           _.get(validators, classConfig.source),

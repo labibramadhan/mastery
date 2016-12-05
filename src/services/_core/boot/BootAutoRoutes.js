@@ -10,8 +10,13 @@ const RouteGeneratorCreate = requireF('services/_core/routeGenerators/RouteGener
 const RouteGeneratorUpdate = requireF('services/_core/routeGenerators/RouteGeneratorUpdate');
 const RouteGeneratorDelete = requireF('services/_core/routeGenerators/RouteGeneratorDelete');
 const RouteGeneratorAssociationFindAll = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationFindAll');
-const RouteGeneratorAssociationCount = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationCount');
 const RouteGeneratorAssociationFindOne = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationFindOne');
+const RouteGeneratorAssociationCount = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationCount');
+const RouteGeneratorAssociationCreate = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationCreate');
+const RouteGeneratorAssociationAdd = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationAdd');
+const RouteGeneratorAssociationAddMultiple = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationAddMultiple');
+const RouteGeneratorAssociationRemove = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationRemove');
+const RouteGeneratorAssociationRemoveMultiple = requireF('services/_core/routeGenerators/associations/RouteGeneratorAssociationRemoveMultiple');
 
 const routeGeneratorClasses = {
   findAll: RouteGeneratorFindAll,
@@ -26,6 +31,11 @@ const routeGeneratorClasses = {
     findAll: RouteGeneratorAssociationFindAll,
     findOne: RouteGeneratorAssociationFindOne,
     count: RouteGeneratorAssociationCount,
+    create: RouteGeneratorAssociationCreate,
+    add: RouteGeneratorAssociationAdd,
+    addMultiple: RouteGeneratorAssociationAddMultiple,
+    remove: RouteGeneratorAssociationRemove,
+    removeMultiple: RouteGeneratorAssociationRemoveMultiple,
   },
 };
 

@@ -12,9 +12,7 @@ const PreHandlerValidatorFindById = requireF('services/_core/preHandlerValidator
 const PreHandlerValidatorCount = requireF('services/_core/preHandlerValidators/PreHandlerValidatorCount');
 const PreHandlerValidatorUpdate = requireF('services/_core/preHandlerValidators/PreHandlerValidatorUpdate');
 const PreHandlerValidatorDelete = requireF('services/_core/preHandlerValidators/PreHandlerValidatorDelete');
-const PreHandlerValidatorAssociationFindAll = requireF('services/_core/preHandlerValidators/associations/PreHandlerValidatorAssociationFindAll');
 const PreHandlerValidatorAssociationFindOne = requireF('services/_core/preHandlerValidators/associations/PreHandlerValidatorAssociationFindOne');
-const PreHandlerValidatorAssociationCount = requireF('services/_core/preHandlerValidators/associations/PreHandlerValidatorAssociationCount');
 
 const validatorClasses = {
   findAll: PreHandlerValidatorFindAll,
@@ -24,9 +22,7 @@ const validatorClasses = {
   update: PreHandlerValidatorUpdate,
   delete: PreHandlerValidatorDelete,
 
-  associationFindAll: PreHandlerValidatorAssociationFindAll,
   associationFindOne: PreHandlerValidatorAssociationFindOne,
-  associationCount: PreHandlerValidatorAssociationCount,
 };
 
 const preHandlerValidator = async function preHandlerValidator(request, reply) {

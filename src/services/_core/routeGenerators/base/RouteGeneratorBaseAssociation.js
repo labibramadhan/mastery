@@ -18,14 +18,14 @@ export default class RouteGeneratorBaseAssociation extends RouteGeneratorBase {
       model,
     });
 
+    this.parsers = ['findById', methodName];
     this.permissions = [
       `${model.name}:${association.as}:${methodNameKey}`,
       `${model.name}:own:${association.as}:${methodNameKey}`,
       `${model.name}:own:${association.as}:own:${methodNameKey}`,
     ];
+    this.requestValidators = [`${model.name}.findById`, `${association.target.name}.${methodName}`];
 
-    _.set(this.identifier, 'name', methodName);
     _.set(this.identifier, 'preHandlerValidators', [`${model.name}.findById`, `${model.name}.${association.target.name}.${methodName}`]);
-    _.set(this.identifier, 'requestValidators', [`${model.name}.findById`, `${association.target.name}.${methodName}`]);
   }
 }

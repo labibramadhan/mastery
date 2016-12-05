@@ -16,10 +16,11 @@ export default class RouteGeneratorBaseGeneral extends RouteGeneratorBase {
       model,
     });
 
+    this.parsers = methodName;
     this.permissions = [`${model.name}:${methodName}`, `${model.name}:own:${methodName}`];
+    this.requestValidators = [`${model.name}.${methodName}`];
 
     _.set(this.identifier, 'name', methodName);
     _.set(this.identifier, 'preHandlerValidators', [`${model.name}.${methodName}`]);
-    _.set(this.identifier, 'requestValidators', [`${model.name}.${methodName}`]);
   }
 }

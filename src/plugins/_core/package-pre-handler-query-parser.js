@@ -4,8 +4,6 @@ const {
   getPackage,
 } = requireF('services/_core/CommonServices');
 
-const RequestValidatorConstants = requireF('services/_core/requestValidators/RequestValidatorConstants');
-
 const QueryParserWhere = requireF('services/_core/queryParsers/QueryParserWhere');
 const QueryParserInclude = requireF('services/_core/queryParsers/QueryParserInclude');
 const QueryParserOrder = requireF('services/_core/queryParsers/QueryParserOrder');
@@ -22,18 +20,14 @@ const queryParserOrder = new QueryParserOrder(models);
 const queryParserLimit = new QueryParserLimit();
 const queryParserOffset = new QueryParserOffset();
 
-const {
-  APPLICABLE_METHODS,
-} = RequestValidatorConstants;
-
 const preHandlerQueryParser = async function preHandlerQueryParser(request, reply) {
   const tags = request.route.settings.tags;
 
-  if (tags && tags.includes('generator')) {
+  if (tags && tags.includes('generator') && _.has(request, 'route.settings.plugins.generator.queryParsers')) {
     let queries = {};
-    const methodName = request.route.settings.plugins.generator.name;
+    const parsers = request.route.settings.plugins.generator.queryParsers;
 
-    if (APPLICABLE_METHODS[methodName].includes('where')) {
+    if (parsers.includes('where')) {
       const where = queryParserWhere.parse(request.query);
       if (where && _.size(where) > 0) {
         queries = {
@@ -43,7 +37,7 @@ const preHandlerQueryParser = async function preHandlerQueryParser(request, repl
       }
     }
 
-    if (APPLICABLE_METHODS[methodName].includes('include')) {
+    if (parsers.includes('include')) {
       const include = await queryParserInclude.parse(request.query);
       if (include && _.size(include) > 0) {
         queries = {
@@ -53,7 +47,7 @@ const preHandlerQueryParser = async function preHandlerQueryParser(request, repl
       }
     }
 
-    if (APPLICABLE_METHODS[methodName].includes('order')) {
+    if (parsers.includes('order')) {
       const order = queryParserOrder.parse(request.query);
       if (order && _.size(order) > 0) {
         queries = {
@@ -63,7 +57,7 @@ const preHandlerQueryParser = async function preHandlerQueryParser(request, repl
       }
     }
 
-    if (APPLICABLE_METHODS[methodName].includes('limit')) {
+    if (parsers.includes('limit')) {
       const limit = queryParserLimit.parse(request.query);
       if (limit) {
         queries = {
@@ -73,7 +67,7 @@ const preHandlerQueryParser = async function preHandlerQueryParser(request, repl
       }
     }
 
-    if (APPLICABLE_METHODS[methodName].includes('offset')) {
+    if (parsers.includes('offset')) {
       const offset = queryParserOffset.parse(request.query);
       if (offset) {
         queries = {

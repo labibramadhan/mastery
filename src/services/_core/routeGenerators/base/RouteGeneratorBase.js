@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import path from 'path';
 
+const RequestValidatorConstants = requireF('services/_core/requestValidators/RequestValidatorConstants');
 const RequestValidatorGenerator = requireF('services/_core/requestValidators/RequestValidatorGenerator');
 
 const authStrategiesConfig = requireF('setup/config/authStrategiesConfig');
@@ -19,9 +20,13 @@ export default class RouteGeneratorBase {
     const prefix = conf.get('prefix');
     const options = {};
 
-    if (_.has(this.identifier, 'requestValidators')) {
+    const {
+      APPLICABLE_METHODS,
+    } = RequestValidatorConstants;
+
+    if (this.requestValidators) {
       const requestValidators = new RequestValidatorGenerator();
-      const validators = requestValidators.buildMultiple(this.identifier.requestValidators);
+      const validators = requestValidators.buildMultiple(this.requestValidators);
       _.set(options, 'config.validate', validators);
     }
 
@@ -33,6 +38,11 @@ export default class RouteGeneratorBase {
 
     _.set(options, 'config.auth.strategies', Object.keys(authStrategiesConfig));
     _.set(options, 'config.auth.scope', this.permissions);
+
+    const queryParsers = _.union(_.flatten(_.map(
+      _.castArray(this.parsers), parser => APPLICABLE_METHODS[parser] || [],
+    )));
+    _.set(this.identifier, 'queryParsers', queryParsers);
 
     return options;
   }

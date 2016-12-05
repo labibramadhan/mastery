@@ -11,6 +11,8 @@ export default {
     'user:findById',
     'user:roles:findAll',
     'user:roles:count',
+    'user:roles:add',
+    'user:roles:addMultiple',
 
     // sesion model permissions
     'session:findAll',
