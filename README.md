@@ -26,7 +26,7 @@ Scalable API Server framework build on top of Hapi and Sequelize. One server to 
 - [ ] Email handler
 - [ ] API Rate Limitations
 - [ ] Request Logger
-- [ ] Combine multiple routes into one route
+- [ ] Combine multiple routes (appending) into a single route
 
 ## Getting Started
 
