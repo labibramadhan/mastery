@@ -5,7 +5,7 @@ export default async () => {
   const role = modelResolver.getModel('role');
 
   // retrieve all available roles
-  const availableRoles = server.plugins[`${pkg.name}-acl`];
+  const availableRoles = server.plugins['package-acl'];
   const availableRolesNames = Object.keys(availableRoles);
 
   // loop each roles name

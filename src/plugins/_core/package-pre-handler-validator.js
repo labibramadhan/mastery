@@ -62,6 +62,6 @@ exports.register = async (server, options, next) => {
 };
 
 exports.register.attributes = {
-  name: `${pkg.name}-pre-handler-validator`,
+  name: 'package-pre-handler-validator',
   version: '1.0.0',
 };

@@ -85,6 +85,6 @@ exports.register = async (server, options, next) => {
 };
 
 exports.register.attributes = {
-  name: `${pkg.name}-pre-handler-query-parser`,
+  name: 'package-pre-handler-query-parser',
   version: '1.0.0',
 };

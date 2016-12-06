@@ -30,6 +30,6 @@ exports.register = (server, options, next) => {
 };
 
 exports.register.attributes = {
-  name: `${pkg.name}-qs`,
+  name: 'package-qs',
   version: '1.0.0',
 };

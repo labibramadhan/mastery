@@ -25,6 +25,6 @@ exports.register = async (server, options, next) => {
 };
 
 exports.register.attributes = {
-  name: `${pkg.name}-default-user`,
+  name: 'package-default-user',
   version: '1.0.0',
 };

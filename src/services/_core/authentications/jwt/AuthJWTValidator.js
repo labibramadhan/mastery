@@ -12,7 +12,7 @@ export default class AuthJWTValidator {
       user,
       role,
     } = this.modelResolver.getModels(['user', 'role']);
-    const availableRoles = server.plugins[`${pkg.name}-acl`];
+    const availableRoles = server.plugins['package-acl'];
 
     // store only id, username, and email inside decoded JWT token
     const credentials = _.pick(decoded, ['id', 'username', 'email']);

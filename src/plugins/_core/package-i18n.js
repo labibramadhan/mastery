@@ -50,6 +50,6 @@ exports.register = (server, options, next) => {
 };
 
 exports.register.attributes = {
-  name: `${pkg.name}-i18n`,
+  name: 'package-i18n',
   version: '1.0.0',
 };

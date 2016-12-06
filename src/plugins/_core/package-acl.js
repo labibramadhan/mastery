@@ -18,12 +18,12 @@ exports.register = async (server, options, next) => {
   });
 
   // eslint-disable-next-line no-param-reassign
-  server.plugins[`${pkg.name}-acl`] = availableRoles;
+  server.plugins['package-acl'] = availableRoles;
 
   return next();
 };
 
 exports.register.attributes = {
-  name: `${pkg.name}-acl`,
+  name: 'package-acl',
   version: '1.0.0',
 };
