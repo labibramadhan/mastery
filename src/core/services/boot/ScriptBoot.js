@@ -2,13 +2,13 @@ import path from 'path';
 
 const {
   globSyncMultiple,
-} = requireF('services/_core/CommonServices');
+} = requireF('core/services/CommonServices');
 
 export default class ScriptBoot {
   boot = async (hook) => {
     const bootGlobs = [
-      path.join(rootPath, 'setup', '_core', 'boot', '**', `*${hook}.js`),
-      path.join(rootPath, 'setup', 'boot', '**', `*${hook}.js`),
+      path.join(rootPath, 'core/setup/boot/**', `*${hook}.js`),
+      path.join(rootPath, 'main/setup/boot/**', `*${hook}.js`),
     ];
 
     // retrieve all available boot scripts

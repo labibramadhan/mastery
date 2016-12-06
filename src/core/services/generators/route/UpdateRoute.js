@@ -1,7 +1,7 @@
 import path from 'path';
 
-const BaseGeneralRoute = requireF('services/_core/generators/route/base/BaseGeneralRoute');
-const UpdateHandler = requireF('services/_core/generators/handler/UpdateHandler');
+const BaseGeneralRoute = requireF('core/services/generators/route/base/BaseGeneralRoute');
+const UpdateHandler = requireF('core/services/generators/handler/UpdateHandler');
 
 export default class UpdateRoute extends BaseGeneralRoute {
   constructor(model) {

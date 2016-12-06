@@ -2,10 +2,13 @@ import Sequelize from 'sequelize';
 import _ from 'lodash';
 import assert from 'assert';
 import fs from 'fs';
-import glob from 'glob';
 import path from 'path';
 
-const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
+const ModelResolver = requireF('core/services/resolvers/ModelResolver');
+
+const {
+  globSyncMultiple,
+} = requireF('core/services/CommonServices');
 
 export default class DatabaseBoot {
   constructor() {
@@ -38,7 +41,7 @@ export default class DatabaseBoot {
             },
           },
         };
-        const modelFiles = glob.sync(model.glob);
+        const modelFiles = globSyncMultiple(model.glob);
         if (modelFiles.length) {
           const modelFile = modelFiles[0];
           _.merge(modelObj, require(modelFile));
@@ -54,7 +57,7 @@ export default class DatabaseBoot {
       }
       server.databases[database.name] = database.sequelize;
     }
-  }
+  };
 
   boot = async () => {
     const self = this;
@@ -82,12 +85,13 @@ export default class DatabaseBoot {
         let modelPath;
         if (_.has(modelConf, 'location')) {
           modelPath = path.resolve(path.join(rootPath, modelConf.location));
-          if (!fs.existsSync(modelPath)) {
-            throw new Error(`${modelName} model cannot be found`);
-          }
+          assert(fs.existsSync(modelPath), i18n.t('boot.database.model.notFound'));
         } else {
           const expectedModelName = `${modelName}Model.js`;
-          modelPath = path.join(rootPath, 'component', '**', expectedModelName);
+          modelPath = [
+            path.join(rootPath, 'main/components', modelName, expectedModelName),
+            path.join(rootPath, 'core/components', modelName, expectedModelName),
+          ];
         }
         return {
           conf: modelConf,

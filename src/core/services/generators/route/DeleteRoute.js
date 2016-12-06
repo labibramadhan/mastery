@@ -1,7 +1,7 @@
 import path from 'path';
 
-const BaseGeneralRoute = requireF('services/_core/generators/route/base/BaseGeneralRoute');
-const DeleteHandler = requireF('services/_core/generators/handler/DeleteHandler');
+const BaseGeneralRoute = requireF('core/services/generators/route/base/BaseGeneralRoute');
+const DeleteHandler = requireF('core/services/generators/handler/DeleteHandler');
 
 export default class DeleteRoute extends BaseGeneralRoute {
   constructor(model) {

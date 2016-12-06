@@ -1,7 +1,7 @@
 import path from 'path';
 
-const BaseAssociationRoute = requireF('services/_core/generators/route/base/BaseAssociationRoute');
-const AddMultipleAssociationHandler = requireF('services/_core/generators/handler/associations/AddMultipleAssociationHandler');
+const BaseAssociationRoute = requireF('core/services/generators/route/base/BaseAssociationRoute');
+const AddMultipleAssociationHandler = requireF('core/services/generators/handler/associations/AddMultipleAssociationHandler');
 
 export default class AddMultipleAssociationRoute extends BaseAssociationRoute {
   constructor(model, association) {

@@ -10,13 +10,13 @@ const {
 const getAvailableLanguages = () => {
   const availableLanguages = [];
   const localesGlobs = [
-    path.join(rootPath, 'locales', '*'),
-    path.join(rootPath, 'locales', '_core', '*'),
+    path.join(rootPath, 'core/locales/*'),
+    path.join(rootPath, 'main/locales/*'),
   ];
   const locales = globSyncMultiple(localesGlobs);
   _.forEach(locales, (localePath) => {
     const localeName = path.basename(localePath);
-    if (fs.lstatSync(localePath).isDirectory() && localeName !== '_core') {
+    if (fs.lstatSync(localePath).isDirectory()) {
       availableLanguages.push(localeName);
     }
   });

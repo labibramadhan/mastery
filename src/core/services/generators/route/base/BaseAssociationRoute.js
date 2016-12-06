@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const BaseRoute = requireF('services/_core/generators/route/base/BaseRoute');
+const BaseRoute = requireF('core/services/generators/route/base/BaseRoute');
 
 export default class BaseAssociationRoute extends BaseRoute {
   constructor({

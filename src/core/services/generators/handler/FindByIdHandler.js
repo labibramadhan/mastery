@@ -1,4 +1,4 @@
-const BaseHandler = requireF('services/_core/generators/handler/BaseHandler');
+const BaseHandler = requireF('core/services/generators/handler/BaseHandler');
 
 export default class FindByIdHandler extends BaseHandler {
   query = async (request, reply) => {

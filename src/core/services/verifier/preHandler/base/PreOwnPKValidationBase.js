@@ -1,7 +1,7 @@
 import Boom from 'boom';
 import _ from 'lodash';
 
-const Pre404PKValidationBase = requireF('services/_core/verifier/preHandler/base/Pre404PKValidationBase');
+const Pre404PKValidationBase = requireF('core/services/verifier/preHandler/base/Pre404PKValidationBase');
 
 export default class PreOwnPKValidationBase extends Pre404PKValidationBase {
   constructor(model) {

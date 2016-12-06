@@ -8,7 +8,7 @@ const Vision = require('vision');
 
 process.setMaxListeners(0);
 
-require('./setup/_core/globals');
+require('./core/setup/globals');
 
 const run = async () => {
   // initialize a HapiJS server
@@ -23,7 +23,7 @@ const run = async () => {
   await server.register(HapiAuthJWT2);
 
   // boot the server
-  const ServerBoot = requireF('services/_core/boot/ServerBoot');
+  const ServerBoot = requireF('core/services/boot/ServerBoot');
   const serverBoot = new ServerBoot();
   await serverBoot.boot();
 

@@ -1,7 +1,7 @@
 import Promise from 'bluebird';
 import _ from 'lodash';
 
-const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
+const ModelResolver = requireF('core/services/resolvers/ModelResolver');
 
 export default class ModelAssociationBoot {
   constructor() {

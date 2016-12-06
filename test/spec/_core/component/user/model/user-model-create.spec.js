@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import setup from '../../../../../helpers/setup';
 
-const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
+const ModelResolver = requireF('core/services/resolvers/ModelResolver');
 
 describe('create a user', () => {
   before(async function before() {

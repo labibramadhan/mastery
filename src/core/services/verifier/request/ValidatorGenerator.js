@@ -3,17 +3,17 @@ import _ from 'lodash';
 const {
   concatToJoiObject,
   mergeJoiObject,
-} = requireF('services/_core/CommonServices');
+} = requireF('core/services/CommonServices');
 
-const ValidatorConstants = requireF('services/_core/verifier/ValidatorConstants');
-const PKValidator = requireF('services/_core/verifier/request/PKValidator');
-const WhereValidator = requireF('services/_core/verifier/request/WhereValidator');
-const IncludeValidator = requireF('services/_core/verifier/request/IncludeValidator');
-const OrderValidator = requireF('services/_core/verifier/request/OrderValidator');
-const LimitValidator = requireF('services/_core/verifier/request/LimitValidator');
-const OffsetValidator = requireF('services/_core/verifier/request/OffsetValidator');
-const PayloadValidator = requireF('services/_core/verifier/request/PayloadValidator');
-const TokenValidator = requireF('services/_core/verifier/request/TokenValidator');
+const ValidatorConstants = requireF('core/services/verifier/ValidatorConstants');
+const PKValidator = requireF('core/services/verifier/request/PKValidator');
+const WhereValidator = requireF('core/services/verifier/request/WhereValidator');
+const IncludeValidator = requireF('core/services/verifier/request/IncludeValidator');
+const OrderValidator = requireF('core/services/verifier/request/OrderValidator');
+const LimitValidator = requireF('core/services/verifier/request/LimitValidator');
+const OffsetValidator = requireF('core/services/verifier/request/OffsetValidator');
+const PayloadValidator = requireF('core/services/verifier/request/PayloadValidator');
+const TokenValidator = requireF('core/services/verifier/request/TokenValidator');
 
 const validatorClasses = {
   pk: {
@@ -54,7 +54,7 @@ const validatorClasses = {
   },
 };
 
-const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
+const ModelResolver = requireF('core/services/resolvers/ModelResolver');
 
 export default class ValidatorGenerator {
   constructor() {

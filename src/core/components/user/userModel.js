@@ -47,6 +47,7 @@ export default {
     },
     hooks: {
       async afterCreate(user) {
+        if (user.skipDefaultRole) return;
         const {
           role,
         } = this.modelManager.sequelize.models;

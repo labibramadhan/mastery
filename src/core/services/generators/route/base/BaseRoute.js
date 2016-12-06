@@ -1,10 +1,8 @@
 import _ from 'lodash';
 import path from 'path';
 
-const ValidatorConstants = requireF('services/_core/verifier/ValidatorConstants');
-const ValidatorGenerator = requireF('services/_core/verifier/request/ValidatorGenerator');
-
-const authStrategiesConfig = requireF('setup/config/authStrategiesConfig');
+const ValidatorConstants = requireF('core/services/verifier/ValidatorConstants');
+const ValidatorGenerator = requireF('core/services/verifier/request/ValidatorGenerator');
 
 export default class BaseRoute {
   constructor({
@@ -36,7 +34,7 @@ export default class BaseRoute {
     _.set(options, 'config.tags', this.tags);
     _.set(options, 'config.plugins.generator', this.identifier);
 
-    _.set(options, 'config.auth.strategies', Object.keys(authStrategiesConfig));
+    _.set(options, 'config.auth.strategies', conf.get('authStrategies'));
     _.set(options, 'config.auth.scope', this.permissions);
 
     const queryParsers = _.union(_.flatten(_.map(

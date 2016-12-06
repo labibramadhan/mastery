@@ -1,7 +1,7 @@
 import path from 'path';
 
-const BaseGeneralRoute = requireF('services/_core/generators/route/base/BaseGeneralRoute');
-const CountHandler = requireF('services/_core/generators/handler/CountHandler');
+const BaseGeneralRoute = requireF('core/services/generators/route/base/BaseGeneralRoute');
+const CountHandler = requireF('core/services/generators/handler/CountHandler');
 
 export default class CountRoute extends BaseGeneralRoute {
   constructor(model) {

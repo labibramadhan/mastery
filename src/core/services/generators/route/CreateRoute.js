@@ -1,5 +1,5 @@
-const BaseGeneralRoute = requireF('services/_core/generators/route/base/BaseGeneralRoute');
-const CreateHandler = requireF('services/_core/generators/handler/CreateHandler');
+const BaseGeneralRoute = requireF('core/services/generators/route/base/BaseGeneralRoute');
+const CreateHandler = requireF('core/services/generators/handler/CreateHandler');
 
 export default class CreateRoute extends BaseGeneralRoute {
   constructor(model) {

@@ -1,4 +1,4 @@
-const I18nBoot = requireF('services/_core/boot/I18nBoot');
+const I18nBoot = requireF('core/services/boot/I18nBoot');
 
 export default class I18nWrapper {
   constructor(i18n) {

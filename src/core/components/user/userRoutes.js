@@ -1,9 +1,9 @@
-import path from 'path';
 import Joi from 'joi';
+import path from 'path';
 
 const prefix = conf.get('prefix');
 
-const UserHandlerLogin = requireF('component/_core/user/UserHandlerLogin');
+const UserHandlerLogin = requireF('core/components/user/UserHandlerLogin');
 
 // define user component endpoint
 export default () => {

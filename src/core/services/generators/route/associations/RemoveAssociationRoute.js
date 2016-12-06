@@ -1,7 +1,7 @@
 import path from 'path';
 
-const BaseAssociationRoute = requireF('services/_core/generators/route/base/BaseAssociationRoute');
-const RemoveAssociationHandler = requireF('services/_core/generators/handler/associations/RemoveAssociationHandler');
+const BaseAssociationRoute = requireF('core/services/generators/route/base/BaseAssociationRoute');
+const RemoveAssociationHandler = requireF('core/services/generators/handler/associations/RemoveAssociationHandler');
 
 export default class RemoveAssociationRoute extends BaseAssociationRoute {
   constructor(model, association) {

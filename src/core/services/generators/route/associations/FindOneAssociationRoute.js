@@ -1,7 +1,7 @@
 import path from 'path';
 
-const BaseAssociationRoute = requireF('services/_core/generators/route/base/BaseAssociationRoute');
-const FindOneAssociationHandler = requireF('services/_core/generators/handler/associations/FindOneAssociationHandler');
+const BaseAssociationRoute = requireF('core/services/generators/route/base/BaseAssociationRoute');
+const FindOneAssociationHandler = requireF('core/services/generators/handler/associations/FindOneAssociationHandler');
 
 export default class FindOneAssociationRoute extends BaseAssociationRoute {
   constructor(model, association) {

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const BaseHandler = requireF('services/_core/generators/handler/BaseHandler');
+const BaseHandler = requireF('core/services/generators/handler/BaseHandler');
 
 export default class AddMultipleAssociationHandler extends BaseHandler {
   query = async (request, reply) => {

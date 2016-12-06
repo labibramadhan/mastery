@@ -1,7 +1,7 @@
 import path from 'path';
 
-const BaseGeneralRoute = requireF('services/_core/generators/route/base/BaseGeneralRoute');
-const FindByIdHandler = requireF('services/_core/generators/handler/FindByIdHandler');
+const BaseGeneralRoute = requireF('core/services/generators/route/base/BaseGeneralRoute');
+const FindByIdHandler = requireF('core/services/generators/handler/FindByIdHandler');
 
 export default class FindByIdRoute extends BaseGeneralRoute {
   constructor(model) {

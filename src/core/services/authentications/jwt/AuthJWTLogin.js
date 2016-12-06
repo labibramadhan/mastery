@@ -2,7 +2,7 @@ import Boom from 'boom';
 import _ from 'lodash';
 import jwt from 'jsonwebtoken';
 
-const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
+const ModelResolver = requireF('core/services/resolvers/ModelResolver');
 
 const {
   maxSessions,

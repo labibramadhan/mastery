@@ -1,3 +1,4 @@
 {
-  "boot.database.type.invalid": "Sorry %{type} is not a valid Sequelize data types."
+  "boot.database.type.invalid": "Sorry %{type} is not a valid Sequelize data types.",
+  "boot.database.model.notFound": "%{name} model cannot be found"
 }

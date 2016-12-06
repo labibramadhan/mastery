@@ -8,7 +8,7 @@ const Promise = require('bluebird');
 
 const getPort = Promise.promisify(portfinder.getPort);
 
-require('../../src/setup/_core/globals');
+require('../../src/core/setup/globals');
 
 export default async () => {
   const server = new Hapi.Server();
@@ -23,7 +23,7 @@ export default async () => {
 
   await server.register(HapiAuthJWT2);
 
-  const ServerBoot = requireF('services/_core/boot/ServerBoot');
+  const ServerBoot = requireF('core/services/boot/ServerBoot');
   const serverBoot = new ServerBoot();
   await serverBoot.boot();
 };

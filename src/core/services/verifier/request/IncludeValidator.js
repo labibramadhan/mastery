@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import _ from 'lodash';
 
-const WhereValidator = requireF('services/_core/verifier/request/WhereValidator');
+const WhereValidator = requireF('core/services/verifier/request/WhereValidator');
 
 export default class IncludeValidator {
   constructor(models) {

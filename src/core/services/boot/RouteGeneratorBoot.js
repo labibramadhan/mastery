@@ -1,22 +1,22 @@
 import _ from 'lodash';
 
-const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
+const ModelResolver = requireF('core/services/resolvers/ModelResolver');
 
-const FindAllRoute = requireF('services/_core/generators/route/FindAllRoute');
-const FindOneRoute = requireF('services/_core/generators/route/FindOneRoute');
-const FindByIdRoute = requireF('services/_core/generators/route/FindByIdRoute');
-const CountRoute = requireF('services/_core/generators/route/CountRoute');
-const CreateRoute = requireF('services/_core/generators/route/CreateRoute');
-const UpdateRoute = requireF('services/_core/generators/route/UpdateRoute');
-const DeleteRoute = requireF('services/_core/generators/route/DeleteRoute');
-const FindAllAssociationRoute = requireF('services/_core/generators/route/associations/FindAllAssociationRoute');
-const FindOneAssociationRoute = requireF('services/_core/generators/route/associations/FindOneAssociationRoute');
-const CountAssociationRoute = requireF('services/_core/generators/route/associations/CountAssociationRoute');
-const CreateAssociationRoute = requireF('services/_core/generators/route/associations/CreateAssociationRoute');
-const AddAssociationRoute = requireF('services/_core/generators/route/associations/AddAssociationRoute');
-const AddMultipleAssociationRoute = requireF('services/_core/generators/route/associations/AddMultipleAssociationRoute');
-const RemoveAssociationRoute = requireF('services/_core/generators/route/associations/RemoveAssociationRoute');
-const RemoveMultipleAssociationRoute = requireF('services/_core/generators/route/associations/RemoveMultipleAssociationRoute');
+const FindAllRoute = requireF('core/services/generators/route/FindAllRoute');
+const FindOneRoute = requireF('core/services/generators/route/FindOneRoute');
+const FindByIdRoute = requireF('core/services/generators/route/FindByIdRoute');
+const CountRoute = requireF('core/services/generators/route/CountRoute');
+const CreateRoute = requireF('core/services/generators/route/CreateRoute');
+const UpdateRoute = requireF('core/services/generators/route/UpdateRoute');
+const DeleteRoute = requireF('core/services/generators/route/DeleteRoute');
+const FindAllAssociationRoute = requireF('core/services/generators/route/associations/FindAllAssociationRoute');
+const FindOneAssociationRoute = requireF('core/services/generators/route/associations/FindOneAssociationRoute');
+const CountAssociationRoute = requireF('core/services/generators/route/associations/CountAssociationRoute');
+const CreateAssociationRoute = requireF('core/services/generators/route/associations/CreateAssociationRoute');
+const AddAssociationRoute = requireF('core/services/generators/route/associations/AddAssociationRoute');
+const AddMultipleAssociationRoute = requireF('core/services/generators/route/associations/AddMultipleAssociationRoute');
+const RemoveAssociationRoute = requireF('core/services/generators/route/associations/RemoveAssociationRoute');
+const RemoveMultipleAssociationRoute = requireF('core/services/generators/route/associations/RemoveMultipleAssociationRoute');
 
 const routeGeneratorClasses = {
   findAll: FindAllRoute,

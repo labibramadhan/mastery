@@ -23,6 +23,7 @@ export default async () => {
       username: 'anonymous',
       email: ' ',
       password: ' ',
+      skipDefaultRole: true,
     });
     anonymousUser.save({
       validate: false,

@@ -28,6 +28,9 @@
         "validate": {
           "notEmpty": true
         }
+      },
+      "skipDefaultRole": {
+        "type": "VIRTUAL"
       }
     },
     "options": {

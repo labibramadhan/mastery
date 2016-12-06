@@ -1,5 +1,5 @@
-const BaseGeneralRoute = requireF('services/_core/generators/route/base/BaseGeneralRoute');
-const FindOneHandler = requireF('services/_core/generators/handler/FindOneHandler');
+const BaseGeneralRoute = requireF('core/services/generators/route/base/BaseGeneralRoute');
+const FindOneHandler = requireF('core/services/generators/handler/FindOneHandler');
 
 export default class FindOneRoute extends BaseGeneralRoute {
   constructor(model) {

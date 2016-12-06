@@ -1,12 +1,11 @@
 import Polyglot from 'node-polyglot';
 import _ from 'lodash';
 import fs from 'fs';
-import glob from 'glob';
 import path from 'path';
 
 const {
   globSyncMultiple,
-} = requireF('services/_core/CommonServices');
+} = requireF('core/services/CommonServices');
 
 export default class I18nBoot {
   constructor() {
@@ -16,15 +15,15 @@ export default class I18nBoot {
   boot = () => {
     const localesIndexed = {};
     const localesGlobs = [
-      path.join(rootPath, 'locales', '*'),
-      path.join(rootPath, 'locales', '_core', '*'),
+      path.join(rootPath, 'core/locales/*'),
+      path.join(rootPath, 'main/locales/*'),
     ];
     const locales = globSyncMultiple(localesGlobs);
     _.forEach(locales, (localePath) => {
       const localeName = path.basename(localePath);
-      if (fs.lstatSync(localePath).isDirectory() && localeName !== '_core') {
-        const localeFilesGlob = path.resolve(path.join(localePath, '*.json'));
-        const localeFiles = glob.sync(localeFilesGlob);
+      if (fs.lstatSync(localePath).isDirectory()) {
+        const localeFilesGlob = path.join(localePath, '*.json');
+        const localeFiles = globSyncMultiple(localeFilesGlob);
         if (localeFiles.length) {
           if (!_.has(localesIndexed, localeName)) localesIndexed[localeName] = {};
           _.forEach(localeFiles, (localeFilePath) => {
