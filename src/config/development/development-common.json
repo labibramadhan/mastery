@@ -1,10 +1,4 @@
 {
-  "title": "Hapi Api Starter",
   "host": "localhost",
-  "port": 4444,
-  "prefix": "/api/v1/",
-  "secret": "VfEwXo5TMrvgQXOe3scs3KvyQRkXXseg",
-  "maxSessions": 10,
-  "defaultLocale": "en",
-  "authStrategies": ["jwt"]
+  "port": 4444
 }

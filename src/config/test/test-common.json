@@ -1,7 +1,0 @@
-{
-  "prefix": "/api/v1/",
-  "secret": "VfEwXo5TMrvgQXOe3scs3KvyQRkXXseg",
-  "maxSessions": 10,
-  "defaultLocale": "en",
-  "authStrategies": ["jwt"]
-}

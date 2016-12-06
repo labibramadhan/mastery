@@ -1,14 +1,5 @@
 {
   "main": {
-    "dialect": "postgresql",
-    "host": "localhost",
-    "port": 5432,
-    "db": "mastery",
-    "username": "postgres",
-    "password": "",
-    "sync": true,
-    "forceSync": true,
-    "debug": false,
-    "logging": false
+    "password": ""
   }
 }

@@ -8,11 +8,11 @@ const {
 } = requireF('core/services/CommonServices');
 
 export default class ConfigBoot {
-  boot = function boot() {
+  constructor() {
     nconf.use('memory');
-    const env = process.env.NODE_ENV || 'development';
-    const configGlob = path.join(rootPath, 'config', env, '*');
-    const configs = globSyncMultiple(configGlob);
+  }
+
+  bootConfigFiles = (configs) => {
     _.forEach(configs, (config, idx) => {
       if (fs.statSync(config).isDirectory()) {
         const groupName = path.basename(config);
@@ -31,6 +31,18 @@ export default class ConfigBoot {
         nconf.file(idx, config);
       }
     });
+  }
+
+  boot() {
+    const defaultConfigGlob = path.join(rootPath, 'config/default/*');
+    const defaultConfigs = globSyncMultiple(defaultConfigGlob);
+    this.bootConfigFiles(defaultConfigs);
+
+    const env = process.env.NODE_ENV || 'development';
+    const configGlob = path.join(rootPath, 'config', env, '*');
+    const configs = globSyncMultiple(configGlob);
+    this.bootConfigFiles(configs);
+
     return nconf;
   }
 }
