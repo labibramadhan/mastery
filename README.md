@@ -1,6 +1,6 @@
 # MasteryJS
 
-Scalable API Server framework build on top of Hapi and Sequelize. One server to rule all your clients, simple, stable, and easy to use.
+Scalable API Server framework build on top of [Hapi](http://hapijs.com) and [Sequelize](http://sequelizejs.com). One server to rule all your clients, simple, stable, and easy to use.
 
 [![Build Status](https://travis-ci.org/labibramadhan/mastery.svg?branch=master)](https://travis-ci.org/labibramadhan/mastery)
 
@@ -15,6 +15,7 @@ Scalable API Server framework build on top of Hapi and Sequelize. One server to 
 
 ## Main Features
 
+- [x] Supports MySQL, MariaDB, SQLite, PostgreSQL, MSSQL through [Sequelize](http://docs.sequelizejs.com/en/v3/docs/getting-started/#setting-up-a-connection)
 - [x] Internationalization (i18n) with [Polyglot.js](http://airbnb.io/polyglot.js)
 - [x] Integration with [Open API (Swagger) UI](http://swagger.io/swagger-ui) 
 - [x] JWT authentication support
@@ -23,7 +24,7 @@ Scalable API Server framework build on top of Hapi and Sequelize. One server to 
 - [ ] Build system using Gulp
 - [ ] Custom role resolver
 - [ ] File transport
-- [ ] Email handler
+- [ ] Email transport
 - [ ] API Rate Limitations
 - [ ] Request Logger
 - [ ] Combine multiple routes (appending) into a single route
@@ -41,7 +42,9 @@ Type ```npm install```
 
 ### Configuration
 
-Configure database configuration inside the development environment [database configuration file](src/config/development/databases/development-database-main.json)
+Configure database configuration inside the development environment [database configuration file](src/config/development/databases/development-database-main.json).
+
+Also, create schema 'core' inside your database.
 
 ### Running
 
