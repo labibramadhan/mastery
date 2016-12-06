@@ -27,10 +27,6 @@ const run = async () => {
   const serverBoot = new ServerBoot();
   await serverBoot.boot();
 
-  const {
-    getPackage,
-  } = requireF('services/_core/CommonServices');
-  const pkg = getPackage();
   server.register([
     Inert,
     Vision, {

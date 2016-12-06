@@ -10,8 +10,9 @@ const ConfigBoot = requireF('services/_core/boot/ConfigBoot');
 const configBoot = new ConfigBoot();
 global.conf = configBoot.boot();
 
-const I18nBoot = requireF('services/_core/boot/I18nBoot');
-const i18nBoot = new I18nBoot();
-global.i18n = i18nBoot.boot();
+const I18nWrapper = requireF('services/_core/I18nWrapper');
+global.i18n = new I18nWrapper();
+
+global.pkg = require(path.resolve(path.join(rootPath, '..', 'package.json')));
 
 global.isTest = /test/g.test(process.env.NODE_ENV);

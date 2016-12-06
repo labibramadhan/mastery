@@ -2,10 +2,6 @@ import _ from 'lodash';
 import qs from 'qs';
 import url from 'url';
 
-const {
-  getPackage,
-} = requireF('services/_core/CommonServices');
-
 exports.register = (server, options, next) => {
   server.ext('onRequest', (request, reply) => {
     const uri = request.url;
@@ -34,6 +30,6 @@ exports.register = (server, options, next) => {
 };
 
 exports.register.attributes = {
-  name: `${getPackage().name}-qs`,
+  name: `${pkg.name}-qs`,
   version: '1.0.0',
 };

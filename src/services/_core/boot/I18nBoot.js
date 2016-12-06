@@ -1,8 +1,12 @@
+import Polyglot from 'node-polyglot';
 import _ from 'lodash';
 import fs from 'fs';
 import glob from 'glob';
 import path from 'path';
-import Polyglot from 'node-polyglot';
+
+const {
+  globSyncMultiple,
+} = requireF('services/_core/CommonServices');
 
 export default class I18nBoot {
   constructor() {
@@ -11,18 +15,24 @@ export default class I18nBoot {
 
   boot = () => {
     const localesIndexed = {};
-    const localesGlob = path.resolve(path.join(rootPath, 'locales', '*'));
-    const locales = glob.sync(localesGlob);
+    const localesGlobs = [
+      path.join(rootPath, 'locales', '*'),
+      path.join(rootPath, 'locales', '_core', '*'),
+    ];
+    const locales = globSyncMultiple(localesGlobs);
     _.forEach(locales, (localePath) => {
-      if (fs.lstatSync(localePath).isDirectory()) {
-        const localeName = path.basename(localePath);
+      const localeName = path.basename(localePath);
+      if (fs.lstatSync(localePath).isDirectory() && localeName !== '_core') {
         const localeFilesGlob = path.resolve(path.join(localePath, '*.json'));
         const localeFiles = glob.sync(localeFilesGlob);
         if (localeFiles.length) {
-          localesIndexed[localeName] = {};
+          if (!_.has(localesIndexed, localeName)) localesIndexed[localeName] = {};
           _.forEach(localeFiles, (localeFilePath) => {
             const localeCategoryName = path.basename(localeFilePath).replace('.json', '').replace(`${localeName}-`, '');
-            localesIndexed[localeName][localeCategoryName] = require(localeFilePath);
+            if (!_.has(localesIndexed[localeName], localeCategoryName)) {
+              localesIndexed[localeName][localeCategoryName] = {};
+            }
+            _.merge(localesIndexed[localeName][localeCategoryName], require(localeFilePath));
           });
         }
       }

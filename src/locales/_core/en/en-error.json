@@ -1,0 +1,3 @@
+{
+  "boot.database.type.invalid": "Sorry %{type} is not a valid Sequelize data types."
+}

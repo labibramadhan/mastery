@@ -3,6 +3,41 @@
     "database": "main",
     "plural": "users",
     "ownerFields": ["id"],
+    "schema": {
+      "username": {
+        "type": "STRING",
+        "unique": true,
+        "allowNull": false,
+        "validate": {
+          "len": [4, 15]
+        }
+      },
+      "email": {
+        "type": "STRING",
+        "unique": true,
+        "allowNull": false,
+        "validate": {
+          "isEmail": true,
+          "notEmpty": true,
+          "len": [6, 255]
+        }
+      },
+      "password": {
+        "type": "STRING",
+        "allowNull": false,
+        "validate": {
+          "notEmpty": true
+        }
+      }
+    },
+    "options": {
+      "schema": "core",
+      "freezeTableName": true,
+      "indexes": [{
+        "unique": true,
+        "fields": ["email", "username"]
+      }]
+    },
     "methods": {
       "findAll": {},
       "count": {},

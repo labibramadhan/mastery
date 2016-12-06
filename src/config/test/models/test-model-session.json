@@ -3,6 +3,22 @@
     "database": "main",
     "plural": "sessions",
     "ownerFields": ["userId"],
+    "schema": {
+      "token": {
+        "type": "STRING",
+        "unique": true,
+        "allowNull": false
+      },
+      "profile": "TEXT",
+      "expire": {
+        "type": "INTEGER",
+        "allowNull": false
+      }
+    },
+    "options": {
+      "schema": "core",
+      "freezeTableName": true
+    },
     "methods": {
       "findAll": {},
       "findOne": {},

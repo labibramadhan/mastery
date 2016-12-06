@@ -5,13 +5,6 @@ import path from 'path';
 export default class CommonServices {
   static requireF = (file: string) => require(path.join(rootPath, file));
 
-  static getPackage = () => {
-    const rootPath = path.resolve(path.join(__dirname, '..', '..', '..'));
-
-    // return the contents of /package.json
-    return require(path.join(rootPath, 'package.json'));
-  };
-
   static concatToJoiObject = (joiObject, candidate) => {
     if (!candidate) return joiObject;
     else if (candidate.isJoi) return joiObject.concat(candidate);

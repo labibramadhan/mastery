@@ -16,6 +16,7 @@
     "it": true,
     "requireF": true,
     "rootPath": true,
+    "pkg": true,
     "server": true,
     "testing": true
   },

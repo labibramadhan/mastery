@@ -1,9 +1,5 @@
 import _ from 'lodash';
 
-const {
-  getPackage,
-} = requireF('services/_core/CommonServices');
-
 const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
 
 const PreFindAllValidation = requireF('services/_core/verifier/preHandler/PreFindAllValidation');
@@ -66,6 +62,6 @@ exports.register = async (server, options, next) => {
 };
 
 exports.register.attributes = {
-  name: `${getPackage().name}-pre-handler-validator`,
+  name: `${pkg.name}-pre-handler-validator`,
   version: '1.0.0',
 };

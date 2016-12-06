@@ -1,9 +1,5 @@
-import path from 'path';
 import glob from 'glob';
-
-const {
-  getPackage,
-} = requireF('services/_core/CommonServices');
+import path from 'path';
 
 exports.register = async (server, options, next) => {
   let availableRoles = {};
@@ -21,15 +17,13 @@ exports.register = async (server, options, next) => {
     };
   });
 
-  const JSONPackage = getPackage();
-
   // eslint-disable-next-line no-param-reassign
-  server.plugins[`${JSONPackage.name}-acl`] = availableRoles;
+  server.plugins[`${pkg.name}-acl`] = availableRoles;
 
   return next();
 };
 
 exports.register.attributes = {
-  name: `${getPackage().name}-acl`,
+  name: `${pkg.name}-acl`,
   version: '1.0.0',
 };

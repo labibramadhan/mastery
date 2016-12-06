@@ -1,9 +1,5 @@
 import _ from 'lodash';
 
-const {
-  getPackage,
-} = requireF('services/_core/CommonServices');
-
 const WhereParser = requireF('services/_core/parsers/query/WhereParser');
 const IncludeParser = requireF('services/_core/parsers/query/IncludeParser');
 const OrderParser = requireF('services/_core/parsers/query/OrderParser');
@@ -89,6 +85,6 @@ exports.register = async (server, options, next) => {
 };
 
 exports.register.attributes = {
-  name: `${getPackage().name}-pre-handler-query-parser`,
+  name: `${pkg.name}-pre-handler-query-parser`,
   version: '1.0.0',
 };

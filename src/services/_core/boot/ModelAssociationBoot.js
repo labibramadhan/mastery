@@ -12,7 +12,7 @@ export default class ModelAssociationBoot {
     const promises = [];
     const models = this.modelResolver.getAllModels();
     _.forEach(this.modelResolver.databases, (database, databaseName) => {
-      _.forEach(database.sequelize.models, (modelInstance) => {
+      _.forEach(database.models, (modelInstance) => {
         const relationships = conf.get(`models:${modelInstance.name}:relationships`);
         if (relationships) {
           _.forEach(relationships, (relationship) => {
@@ -31,7 +31,7 @@ export default class ModelAssociationBoot {
       const sync = conf.get(`databases:${databaseName}:sync`);
       const forceSync = conf.get(`databases:${databaseName}:forceSync`);
       if (sync) {
-        promises.push(database.sequelize.sync({
+        promises.push(database.sync({
           force: Boolean(forceSync),
         }));
       }

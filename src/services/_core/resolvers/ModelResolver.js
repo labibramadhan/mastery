@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 export default class ModelResolver {
   constructor() {
-    this.databases = server.plugins['hapi-sequelize'];
+    this.databases = server.databases;
   }
 
   getModelConfs = qualifier => _.pickBy(conf.get('models'), qualifier)

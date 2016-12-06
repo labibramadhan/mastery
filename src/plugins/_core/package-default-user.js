@@ -1,9 +1,5 @@
 import _ from 'lodash';
 
-const {
-  getPackage,
-} = requireF('services/_core/CommonServices');
-
 const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
 
 exports.register = async (server, options, next) => {
@@ -29,6 +25,6 @@ exports.register = async (server, options, next) => {
 };
 
 exports.register.attributes = {
-  name: `${getPackage().name}-default-user`,
+  name: `${pkg.name}-default-user`,
   version: '1.0.0',
 };

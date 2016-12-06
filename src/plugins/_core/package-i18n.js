@@ -1,24 +1,26 @@
 import _ from 'lodash';
 import acceptLanguage from 'accept-language';
 import fs from 'fs';
-import glob from 'glob';
 import path from 'path';
 
 const {
-  getPackage,
+  globSyncMultiple,
 } = requireF('services/_core/CommonServices');
 
 const getAvailableLanguages = () => {
   const availableLanguages = [];
-  const localesGlob = path.resolve(path.join(rootPath, 'locales', '*'));
-  const locales = glob.sync(localesGlob);
+  const localesGlobs = [
+    path.join(rootPath, 'locales', '*'),
+    path.join(rootPath, 'locales', '_core', '*'),
+  ];
+  const locales = globSyncMultiple(localesGlobs);
   _.forEach(locales, (localePath) => {
-    if (fs.lstatSync(localePath).isDirectory()) {
-      const localeName = path.basename(localePath);
+    const localeName = path.basename(localePath);
+    if (fs.lstatSync(localePath).isDirectory() && localeName !== '_core') {
       availableLanguages.push(localeName);
     }
   });
-  return availableLanguages;
+  return _.union(availableLanguages);
 };
 
 exports.register = (server, options, next) => {
@@ -35,14 +37,11 @@ exports.register = (server, options, next) => {
     // eslint-disable-next-line no-param-reassign
     request.locale = locale;
 
-    const has = key => i18n.has(`${locale}.${key}`);
-    const func = (key, params = {}) => {
-      if (!has(key)) return key;
-      return i18n.t(`${locale}.${key}`, params);
-    };
-    func.has = has;
+    const func = (key, params = {}) => i18n.t(key, params, locale);
+    func.has = key => i18n.has(key, locale);
     return func;
   };
+
   server.decorate('request', 't', t, {
     apply: true,
   });
@@ -51,6 +50,6 @@ exports.register = (server, options, next) => {
 };
 
 exports.register.attributes = {
-  name: `${getPackage().name}-i18n`,
+  name: `${pkg.name}-i18n`,
   version: '1.0.0',
 };
