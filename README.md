@@ -33,12 +33,13 @@ Scalable API Server framework build on top of [Hapi](http://hapijs.com) and [Seq
 
 ### Prerequisites
 
+1. [Git](https://git-scm.com/downloads)
 1. [NodeJS](https://nodejs.org/en/download) version 6 or greater
 1. [PostgreSQL](https://www.postgresql.org/download)
 
 ### Installation
 
-Type ```npm install```
+Type ```git clone https://github.com/labibramadhan/mastery.git && cd mastery && npm install```
 
 ### Configuration
 
