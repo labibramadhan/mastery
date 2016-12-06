@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
+const ModelResolver = requireF('core/services/resolvers/ModelResolver');
 
 exports.register = async (server, options, next) => {
   const modelResolver = new ModelResolver();

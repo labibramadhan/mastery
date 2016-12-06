@@ -1,12 +1,12 @@
 import _ from 'lodash';
 
-const WhereParser = requireF('services/_core/parsers/query/WhereParser');
-const IncludeParser = requireF('services/_core/parsers/query/IncludeParser');
-const OrderParser = requireF('services/_core/parsers/query/OrderParser');
-const LimitParser = requireF('services/_core/parsers/query/LimitParser');
-const OffsetParser = requireF('services/_core/parsers/query/OffsetParser');
+const WhereParser = requireF('core/services/parsers/query/WhereParser');
+const IncludeParser = requireF('core/services/parsers/query/IncludeParser');
+const OrderParser = requireF('core/services/parsers/query/OrderParser');
+const LimitParser = requireF('core/services/parsers/query/LimitParser');
+const OffsetParser = requireF('core/services/parsers/query/OffsetParser');
 
-const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
+const ModelResolver = requireF('core/services/resolvers/ModelResolver');
 
 const modelResolver = new ModelResolver();
 const models = modelResolver.getAllModels();

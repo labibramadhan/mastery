@@ -1,4 +1,4 @@
-const AuthJWTLogin = requireF('services/_core/authentications/jwt/AuthJWTLogin');
+const AuthJWTLogin = requireF('core/services/authentications/jwt/AuthJWTLogin');
 
 export default class UserHandlerLogin {
   constructor() {

@@ -1,14 +1,14 @@
 import _ from 'lodash';
 
-const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
+const ModelResolver = requireF('core/services/resolvers/ModelResolver');
 
-const PreFindAllValidation = requireF('services/_core/verifier/preHandler/PreFindAllValidation');
-const PreFindOneValidation = requireF('services/_core/verifier/preHandler/PreFindOneValidation');
-const PreFindByIdValidation = requireF('services/_core/verifier/preHandler/PreFindByIdValidation');
-const PreCountValidation = requireF('services/_core/verifier/preHandler/PreCountValidation');
-const PreUpdateValidation = requireF('services/_core/verifier/preHandler/PreUpdateValidation');
-const PreDeleteValidation = requireF('services/_core/verifier/preHandler/PreDeleteValidation');
-const PreAssociationFindOneValidation = requireF('services/_core/verifier/preHandler/associations/PreAssociationFindOneValidation');
+const PreFindAllValidation = requireF('core/services/verifier/preHandler/PreFindAllValidation');
+const PreFindOneValidation = requireF('core/services/verifier/preHandler/PreFindOneValidation');
+const PreFindByIdValidation = requireF('core/services/verifier/preHandler/PreFindByIdValidation');
+const PreCountValidation = requireF('core/services/verifier/preHandler/PreCountValidation');
+const PreUpdateValidation = requireF('core/services/verifier/preHandler/PreUpdateValidation');
+const PreDeleteValidation = requireF('core/services/verifier/preHandler/PreDeleteValidation');
+const PreAssociationFindOneValidation = requireF('core/services/verifier/preHandler/associations/PreAssociationFindOneValidation');
 
 const validatorClasses = {
   findAll: PreFindAllValidation,

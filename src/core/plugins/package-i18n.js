@@ -5,7 +5,7 @@ import path from 'path';
 
 const {
   globSyncMultiple,
-} = requireF('services/_core/CommonServices');
+} = requireF('core/services/CommonServices');
 
 const getAvailableLanguages = () => {
   const availableLanguages = [];

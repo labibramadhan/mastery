@@ -1,4 +1,4 @@
-const ModelResolver = requireF('services/_core/resolvers/ModelResolver');
+const ModelResolver = requireF('core/services/resolvers/ModelResolver');
 
 export default async () => {
   if (isTest) return;

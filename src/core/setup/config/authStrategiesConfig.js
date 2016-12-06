@@ -1,5 +1,5 @@
 const secret = conf.get('secret');
-const AuthJWTValidator = requireF('services/_core/authentications/jwt/AuthJWTValidator');
+const AuthJWTValidator = requireF('core/services/authentications/jwt/AuthJWTValidator');
 const authJWTValidator = new AuthJWTValidator();
 
 export default {
