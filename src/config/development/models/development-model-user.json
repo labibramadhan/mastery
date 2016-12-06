@@ -3,7 +3,7 @@
     "database": "main",
     "plural": "users",
     "ownerFields": ["id"],
-    "schema": {
+    "attributes": {
       "username": {
         "type": "STRING",
         "unique": true,

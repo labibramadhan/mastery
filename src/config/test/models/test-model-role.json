@@ -1,7 +1,7 @@
 {
   "role": {
     "database": "main",
-    "schema": {
+    "attributes": {
       "name": {
         "type": "STRING",
         "unique": true

@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 
 export default {
-  schema: {
+  attributes: {
     username: {
       validate: {
         usernamePattern: async (val, next) => {

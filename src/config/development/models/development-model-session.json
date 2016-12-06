@@ -3,7 +3,7 @@
     "database": "main",
     "plural": "sessions",
     "ownerFields": ["userId"],
-    "schema": {
+    "attributes": {
       "token": {
         "type": "STRING",
         "unique": true,

@@ -16,10 +16,11 @@ export default class DatabaseBoot {
   }
 
   normalizeSequelizeTypes = (modelObj) => {
-    _.forEach(modelObj.schema, (field, key) => {
+    _.forEach(modelObj.attributes, (field, key) => {
       const type = _.isString(field) ? field : field.type;
       assert(_.has(Sequelize, type), i18n.t('error.boot.database.type.invalid', {
-        type: key,
+        type,
+        key,
       }));
       if (_.isString(field)) {
         field = Sequelize[type]; // eslint-disable-line no-param-reassign
@@ -47,13 +48,13 @@ export default class DatabaseBoot {
           _.merge(modelObj, require(modelFile));
         }
         _.merge(modelObj, {
-          schema: model.conf.schema || {},
+          attributes: model.conf.attributes || {},
           options: model.conf.options || {},
         });
 
         this.normalizeSequelizeTypes(modelObj);
 
-        database.sequelize.define(model.name, modelObj.schema, modelObj.options);
+        database.sequelize.define(model.name, modelObj.attributes, modelObj.options);
       }
       server.databases[database.name] = database.sequelize;
     }
