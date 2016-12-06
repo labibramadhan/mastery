@@ -20,16 +20,16 @@
       "freezeTableName": true
     },
     "methods": {
-      "findAll": {},
-      "findOne": {},
-      "findById": {},
-      "count": {},
-      "create": {},
-      "update": {},
-      "delete": {},
+      "findAll": true,
+      "findOne": true,
+      "findById": true,
+      "count": true,
+      "create": true,
+      "update": true,
+      "delete": true,
       "associations": {
         "user": {
-          "findOne": {}
+          "findOne": true
         }
       }
     },

@@ -45,7 +45,7 @@ Configure database configuration inside the development environment [database co
 
 ### Running
 
-Type ```./node_modules/.bin/babel-node src/index.js```
+Type ```./node_modules/.bin/babel-node src/index.js``` and then open ```http://localhost:4444/documentation```
 
 ## License
 

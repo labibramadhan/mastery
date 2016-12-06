@@ -39,24 +39,24 @@
       }]
     },
     "methods": {
-      "findAll": {},
-      "count": {},
-      "create": {},
-      "update": {},
-      "findOne": {},
-      "findById": {},
+      "findAll": true,
+      "count": true,
+      "create": true,
+      "update": true,
+      "findOne": true,
+      "findById": true,
       "associations": {
         "roles": {
-          "findAll": {},
-          "count": {},
-          "add": {},
-          "addMultiple": {},
-          "remove": {},
-          "removeMultiple": {}
+          "findAll": true,
+          "count": true,
+          "add": true,
+          "addMultiple": true,
+          "remove": true,
+          "removeMultiple": true
         },
         "sessions": {
-          "findAll": {},
-          "count": {}
+          "findAll": true,
+          "count": true
         }
       }
     },
