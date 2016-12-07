@@ -1,0 +1,14 @@
+{
+  "database": "main",
+  "options": {
+    "schema": "core",
+    "freezeTableName": true
+  },
+  "relationships": [{
+    "type": "belongsTo",
+    "model": "user"
+  }, {
+    "type": "belongsTo",
+    "model": "role"
+  }]
+}

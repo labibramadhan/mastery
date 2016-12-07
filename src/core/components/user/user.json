@@ -1,0 +1,74 @@
+{
+  "database": "main",
+  "plural": "users",
+  "ownerFields": ["id"],
+  "attributes": {
+    "username": {
+      "type": "STRING",
+      "unique": true,
+      "allowNull": false,
+      "validate": {
+        "len": [4, 15]
+      }
+    },
+    "email": {
+      "type": "STRING",
+      "unique": true,
+      "allowNull": false,
+      "validate": {
+        "isEmail": true,
+        "notEmpty": true,
+        "len": [6, 255]
+      }
+    },
+    "password": {
+      "type": "STRING",
+      "allowNull": false,
+      "validate": {
+        "notEmpty": true
+      }
+    },
+    "skipDefaultRole": {
+      "type": "VIRTUAL"
+    }
+  },
+  "options": {
+    "schema": "core",
+    "freezeTableName": true,
+    "indexes": [{
+      "unique": true,
+      "fields": ["email", "username"]
+    }]
+  },
+  "methods": {
+    "findAll": true,
+    "count": true,
+    "create": true,
+    "update": true,
+    "findOne": true,
+    "findById": true,
+    "associations": {
+      "roles": {
+        "findAll": true,
+        "count": true,
+        "add": true,
+        "addMultiple": true,
+        "remove": true,
+        "removeMultiple": true
+      },
+      "sessions": {
+        "findAll": true,
+        "count": true
+      }
+    }
+  },
+  "relationships": [{
+    "type": "hasMany",
+    "model": "session"
+  }, {
+    "type": "belongsToMany",
+    "model": "role",
+    "through": "userRole",
+    "foreignKey": "userId"
+  }]
+}

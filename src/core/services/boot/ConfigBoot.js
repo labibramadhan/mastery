@@ -3,6 +3,8 @@ import fs from 'fs';
 import nconf from 'nconf';
 import path from 'path';
 
+const ComponentConfigBoot = requireF('core/services/boot/ComponentConfigBoot');
+
 const {
   globSyncMultiple,
 } = requireF('core/services/CommonServices');
@@ -10,6 +12,7 @@ const {
 export default class ConfigBoot {
   constructor() {
     nconf.use('memory');
+    this.componentConfigBoot = new ComponentConfigBoot(nconf);
   }
 
   bootConfigFiles = (configs) => {
@@ -42,6 +45,13 @@ export default class ConfigBoot {
     const configGlob = path.join(rootPath, 'config', env, '*');
     const configs = globSyncMultiple(configGlob);
     this.bootConfigFiles(configs);
+
+    const componentGlobs = [
+      path.join(rootPath, 'core/components/*'),
+      path.join(rootPath, 'main/components/*'),
+    ];
+    const components = globSyncMultiple(componentGlobs);
+    this.componentConfigBoot.boot(components);
 
     return nconf;
   }

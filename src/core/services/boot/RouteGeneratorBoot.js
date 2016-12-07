@@ -53,9 +53,11 @@ export default class RouteGeneratorBoot {
         const model = self.modelResolver.getModel(modelName);
 
         _.forEach(_.omit(modelConf.methods, 'associations'), (methodConf, methodName) => {
-          if (_.has(routeGeneratorClasses, methodName)) {
-            const routeGenerator = new routeGeneratorClasses[methodName](model);
-            routes.push(routeGenerator.generate());
+          if (methodConf) {
+            if (_.has(routeGeneratorClasses, methodName)) {
+              const routeGenerator = new routeGeneratorClasses[methodName](model);
+              routes.push(routeGenerator.generate());
+            }
           }
         });
 

@@ -1,0 +1,19 @@
+{
+  "database": "main",
+  "attributes": {
+    "name": {
+      "type": "STRING",
+      "unique": true
+    }
+  },
+  "options": {
+    "schema": "core",
+    "freezeTableName": true
+  },
+  "relationships": [{
+    "type": "belongsToMany",
+    "model": "user",
+    "through": "userRole",
+    "foreignKey": "roleId"
+  }]
+}

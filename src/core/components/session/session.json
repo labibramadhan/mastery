@@ -1,0 +1,39 @@
+{
+  "database": "main",
+  "plural": "sessions",
+  "ownerFields": ["userId"],
+  "attributes": {
+    "token": {
+      "type": "STRING",
+      "unique": true,
+      "allowNull": false
+    },
+    "profile": "TEXT",
+    "expire": {
+      "type": "INTEGER",
+      "allowNull": false
+    }
+  },
+  "options": {
+    "schema": "core",
+    "freezeTableName": true
+  },
+  "methods": {
+    "findAll": true,
+    "findOne": true,
+    "findById": true,
+    "count": true,
+    "create": true,
+    "update": true,
+    "delete": true,
+    "associations": {
+      "user": {
+        "findOne": true
+      }
+    }
+  },
+  "relationships": [{
+    "type": "belongsTo",
+    "model": "user"
+  }]
+}
