@@ -88,7 +88,7 @@ export default class DatabaseBoot {
           modelPath = path.resolve(path.join(rootPath, modelConf.location));
           assert(fs.existsSync(modelPath), i18n.t('boot.database.model.notFound'));
         } else {
-          const expectedModelName = `${modelName}Model.js`;
+          const expectedModelName = `${modelName}.model.js`;
           modelPath = [
             path.join(rootPath, 'main/components', modelName, expectedModelName),
             path.join(rootPath, 'core/components', modelName, expectedModelName),

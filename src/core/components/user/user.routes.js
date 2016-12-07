@@ -3,7 +3,7 @@ import path from 'path';
 
 const prefix = conf.get('prefix');
 
-const UserHandlerLogin = requireF('core/components/user/UserHandlerLogin');
+const UserHandlerLogin = requireF('core/components/user/controllers/UserHandlerLogin');
 
 // define user component endpoint
 export default () => {

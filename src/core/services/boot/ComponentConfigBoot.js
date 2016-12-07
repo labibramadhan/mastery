@@ -12,7 +12,7 @@ export default class ComponentConfigBoot {
     for (const componentPath of components) { // eslint-disable-line no-restricted-syntax
       if (fs.lstatSync(componentPath).isDirectory()) {
         const componentName = path.basename(componentPath);
-        const configFilePath = path.join(componentPath, `${componentName}.json`);
+        const configFilePath = path.join(componentPath, `${componentName}.config.json`);
         if (fs.existsSync(configFilePath)) {
           const config = require(configFilePath);
           const confKey = `models:${componentName}`;

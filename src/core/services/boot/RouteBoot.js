@@ -14,8 +14,8 @@ export default class RouteBoot {
 
   resolveRoutes = async () => {
     const routesGlobs = [
-      path.join(rootPath, 'core/components/**/*Routes.js'),
-      path.join(rootPath, 'main/components/**/*Routes.js'),
+      path.join(rootPath, 'core/components/**/*.routes.js'),
+      path.join(rootPath, 'main/components/**/*.routes.js'),
     ];
 
     // retrieve all available routes
