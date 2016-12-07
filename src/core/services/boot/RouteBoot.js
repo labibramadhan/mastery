@@ -24,7 +24,7 @@ export default class RouteBoot {
     // merge all routes in an array
     const allRoutes = [];
     _.each(routesComponent, (filePath) => {
-      const routes = require(filePath)();
+      const routes = require(filePath);
       allRoutes.push(...routes);
     });
 

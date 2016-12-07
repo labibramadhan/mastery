@@ -19,7 +19,7 @@ Scalable API Server framework build on top of [Hapi](http://hapijs.com) and [Seq
 - [x] Internationalization (i18n) with [Polyglot.js](http://airbnb.io/polyglot.js)
 - [x] Integration with [Open API (Swagger) UI](http://swagger.io/swagger-ui) 
 - [x] JWT authentication support
-- [x] Auto routes creation based on model configuration file (e.g. [user model configuration](src/config/development/models/development-model-user.json))
+- [x] Auto routes creation based on model configuration file (e.g. [user model configuration](src/core/components/user/user.config.json))
 - [x] Built-in Access Control List
 - [ ] Build system using Gulp
 - [ ] Custom role resolver
