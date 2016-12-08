@@ -1,5 +1,9 @@
 export default class ServerBoot {
   boot = async () => {
+    const PreBoot = requireF('core/services/boot/PreBoot');
+    const preBoot = new PreBoot();
+    await preBoot.boot();
+
     // boot databases and models defined in config/env/*.json
     const DatabaseBoot = requireF('core/services/boot/DatabaseBoot');
     const databaseBoot = new DatabaseBoot();
@@ -31,5 +35,9 @@ export default class ServerBoot {
 
     // boot all boot scripts from /setup/boot/**/*After.js
     await scriptBoot.boot('After');
+
+    const PostBoot = requireF('core/services/boot/PostBoot');
+    const postBoot = new PostBoot();
+    await postBoot.boot();
   }
 }
