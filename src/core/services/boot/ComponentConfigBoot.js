@@ -1,6 +1,9 @@
-import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
+
+const {
+  combineObject,
+} = requireF('core/services/CommonServices');
 
 export default class ComponentConfigBoot {
   constructor(nconf) {
@@ -17,7 +20,7 @@ export default class ComponentConfigBoot {
           const config = require(configFilePath);
           const confKey = `models:${componentName}`;
           const existingConfig = self.nconf.get(confKey) || {};
-          _.merge(existingConfig, config);
+          combineObject(existingConfig, config);
           self.nconf.set(confKey, existingConfig);
         }
       }
