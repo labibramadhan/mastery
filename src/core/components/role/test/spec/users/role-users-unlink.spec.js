@@ -3,12 +3,12 @@ import {
   assert,
 } from 'chai';
 
-const setup = require('../../../../../../test/helpers/setup');
-const mockUsers = require('../../../../../../test/helpers/mock-users');
+const setup = require('../../../../../../../test/helpers/setup');
+const mockUsers = require('../../../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
-describe(`GET associationCount ${prefix}user/{pk}/roles/count`, () => {
+describe(`DELETE unlink ${prefix}role/{pk}/users/unlink/{pk2}`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
@@ -18,21 +18,23 @@ describe(`GET associationCount ${prefix}user/{pk}/roles/count`, () => {
     const {
       admin2,
     } = this.users;
-
-    const thisTestUrl = `${prefix}user/${admin2.id}/roles/count`;
+    const {
+      adminRole,
+    } = this.roles;
+    const thisTestUrl = `${prefix}role/${adminRole.id}/users/unlink/${admin2.id}`;
 
     const {
       result,
       statusCode,
     } = await server.inject({
       url: thisTestUrl,
-      method: 'GET',
+      method: 'DELETE',
       credentials: {
-        scope: ['user:findById', 'user:roles:count'],
+        scope: ['role:findById', 'role:users:unlink'],
       },
     });
 
     assert.equal(statusCode, HttpStatus.OK);
-    assert.equal(result.count, 2);
+    assert.equal(result.unlink, 1);
   });
 });

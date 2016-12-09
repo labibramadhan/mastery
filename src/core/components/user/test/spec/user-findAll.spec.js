@@ -17,25 +17,27 @@ describe(`GET findAll ${prefix}users`, () => {
 
   it('works', async function it() {
     const {
+      admin1,
       admin2,
     } = this.users;
     const {
       adminRole,
+      authenticatedRole,
     } = this.roles;
 
     const thisTestUrl = `${prefix}users?${qs.stringify({
       where: {
         username: {
-          $not: 'admin1',
+          $not: admin1.username,
         },
       },
       include: {
         model: 'role',
         where: {
           $or: [{
-            name: 'admin',
+            name: adminRole.name,
           }, {
-            name: 'authenticated',
+            name: authenticatedRole.name,
           }],
         },
         include: {

@@ -4,12 +4,12 @@ import {
 } from 'chai';
 import qs from 'qs';
 
-const setup = require('../../../../../../test/helpers/setup');
-const mockUsers = require('../../../../../../test/helpers/mock-users');
+const setup = require('../../../../../../../test/helpers/setup');
+const mockUsers = require('../../../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
-describe(`GET count ${prefix}roles/count`, () => {
+describe(`GET associationCount ${prefix}role/{pk}/users/count`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
@@ -17,15 +17,19 @@ describe(`GET count ${prefix}roles/count`, () => {
 
   it('works', async function it() {
     const {
+      admin1,
+      admin2,
+    } = this.users;
+    const {
       adminRole,
-      authenticatedRole,
     } = this.roles;
-    const thisTestUrl = `${prefix}roles/count?${qs.stringify({
+
+    const thisTestUrl = `${prefix}role/${adminRole.id}/users/count?${qs.stringify({
       where: {
-        name: {
+        username: {
           $in: [
-            adminRole.name,
-            authenticatedRole.name,
+            admin1.username,
+            admin2.username,
           ],
         },
       },
@@ -38,7 +42,7 @@ describe(`GET count ${prefix}roles/count`, () => {
       url: thisTestUrl,
       method: 'GET',
       credentials: {
-        scope: ['role:count'],
+        scope: ['role:findById', 'role:users:count'],
       },
     });
 

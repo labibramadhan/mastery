@@ -25,7 +25,7 @@ describe(`GET findOne ${prefix}user`, () => {
 
     const thisTestUrl = `${prefix}user?${qs.stringify({
       where: {
-        username: 'authenticated2',
+        username: authenticated2.username,
       },
       include: JSON.stringify({
         model: 'role',

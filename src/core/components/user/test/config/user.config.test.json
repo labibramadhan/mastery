@@ -12,19 +12,19 @@
         "findAll": true,
         "count": true,
         "create": true,
-        "add": true,
-        "addMultiple": true,
-        "remove": true,
-        "removeMultiple": true
+        "link": true,
+        "linkMultiple": true,
+        "unlink": true,
+        "unlinkMultiple": true
       },
       "sessions": {
         "findAll": true,
         "count": true,
         "create": true,
-        "add": true,
-        "addMultiple": true,
-        "remove": true,
-        "removeMultiple": true
+        "link": true,
+        "linkMultiple": true,
+        "unlink": true,
+        "unlinkMultiple": true
       }
     }
   }

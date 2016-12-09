@@ -2,14 +2,13 @@ import HttpStatus from 'http-status-codes';
 import {
   assert,
 } from 'chai';
-import qs from 'qs';
 
 const setup = require('../../../../../../test/helpers/setup');
 const mockUsers = require('../../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
-describe(`GET count ${prefix}roles/count`, () => {
+describe(`DELETE delete ${prefix}user/{pk}`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
@@ -17,32 +16,23 @@ describe(`GET count ${prefix}roles/count`, () => {
 
   it('works', async function it() {
     const {
-      adminRole,
-      authenticatedRole,
-    } = this.roles;
-    const thisTestUrl = `${prefix}roles/count?${qs.stringify({
-      where: {
-        name: {
-          $in: [
-            adminRole.name,
-            authenticatedRole.name,
-          ],
-        },
-      },
-    }).toString()}`;
+      authenticated2,
+    } = this.users;
+
+    const thisTestUrl = `${prefix}user/${authenticated2.id}`;
 
     const {
       result,
       statusCode,
     } = await server.inject({
       url: thisTestUrl,
-      method: 'GET',
+      method: 'DELETE',
       credentials: {
-        scope: ['role:count'],
+        scope: ['user:delete'],
       },
     });
 
-    assert.equal(statusCode, HttpStatus.OK);
-    assert.equal(result.count, 2);
+    assert.equal(statusCode, HttpStatus.NO_CONTENT);
+    assert.equal(result, null);
   });
 });

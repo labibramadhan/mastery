@@ -15,12 +15,19 @@ describe(`GET findAll ${prefix}roles`, () => {
     await mockUsers.bind(this).apply();
   });
 
-  it('normal', async () => {
+  it('works', async function it() {
+    const {
+      adminRole,
+      authenticatedRole,
+    } = this.roles;
     const thisTestUrl = `${prefix}roles?${qs.stringify({
       where: {
         name: {
           $or: {
-            $in: ['anonymous', 'authenticated'],
+            $in: [
+              adminRole.name,
+              authenticatedRole.name,
+            ],
           },
         },
       },
@@ -39,5 +46,7 @@ describe(`GET findAll ${prefix}roles`, () => {
 
     assert.equal(statusCode, HttpStatus.OK);
     assert.equal(result.length, 2);
+    assert.equal(result[0].id, adminRole.id);
+    assert.equal(result[1].id, authenticatedRole.id);
   });
 });

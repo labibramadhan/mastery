@@ -44,14 +44,14 @@ export default class ValidatorConstants {
     associationCreate: [
       'payload',
     ],
-    associationAdd: [
+    associationLink: [
       'pk2',
     ],
-    associationAddMultiple: [],
-    associationRemove: [
+    associationLinkMultiple: [],
+    associationUnlink: [
       'pk2',
     ],
-    associationRemoveMultiple: [],
+    associationUnlinkMultiple: [],
   };
 
   static SEQUELIZE_OPERATORS = {

@@ -15,12 +15,19 @@ describe(`GET count ${prefix}users/count`, () => {
     await mockUsers.bind(this).apply();
   });
 
-  it('works', async () => {
+  it('works', async function it() {
+    const {
+      authenticated1,
+      authenticated2,
+    } = this.users;
     const thisTestUrl = `${prefix}users/count?${qs.stringify({
       where: {
         username: {
           $or: {
-            $in: ['authenticated1', 'authenticated2'],
+            $in: [
+              authenticated1.username,
+              authenticated2.username,
+            ],
           },
         },
       },

@@ -2,10 +2,10 @@ import _ from 'lodash';
 
 const BaseHandler = requireF('core/services/generators/handler/BaseHandler');
 
-export default class AddAssociationHandler extends BaseHandler {
+export default class LinkMultipleAssociationHandler extends BaseHandler {
   query = async (request, reply) => {
     const modelInstance = await this.model.findById(request.params.pk);
-    const results = await modelInstance[this.association.accessors.add](request.params.pk2);
+    const results = await modelInstance[this.association.accessors.addMultiple](request.payload);
     return reply(_.map(results[0], result => result.toJSON()));
   }
 }

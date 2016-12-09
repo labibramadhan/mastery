@@ -14,7 +14,7 @@ describe(`PUT create ${prefix}role`, () => {
     await mockUsers.bind(this).apply();
   });
 
-  it('normal', async () => {
+  it('works', async () => {
     const thisTestUrl = `${prefix}role`;
 
     const {

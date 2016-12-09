@@ -2,14 +2,13 @@ import HttpStatus from 'http-status-codes';
 import {
   assert,
 } from 'chai';
-import qs from 'qs';
 
-const setup = require('../../../../../../test/helpers/setup');
-const mockUsers = require('../../../../../../test/helpers/mock-users');
+const setup = require('../../../../../../../test/helpers/setup');
+const mockUsers = require('../../../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
-describe(`GET findOne ${prefix}role`, () => {
+describe(`GET associationCount ${prefix}user/{pk}/roles/count`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
@@ -17,15 +16,10 @@ describe(`GET findOne ${prefix}role`, () => {
 
   it('works', async function it() {
     const {
-      adminRole,
-    } = this.roles;
-    const thisTestUrl = `${prefix}role?${qs.stringify({
-      where: {
-        name: {
-          $eq: adminRole.name,
-        },
-      },
-    }).toString()}`;
+      admin2,
+    } = this.users;
+
+    const thisTestUrl = `${prefix}user/${admin2.id}/roles/count`;
 
     const {
       result,
@@ -34,11 +28,11 @@ describe(`GET findOne ${prefix}role`, () => {
       url: thisTestUrl,
       method: 'GET',
       credentials: {
-        scope: ['role:findOne'],
+        scope: ['user:findById', 'user:roles:count'],
       },
     });
 
     assert.equal(statusCode, HttpStatus.OK);
-    assert.equal(result.name, adminRole.name);
+    assert.equal(result.count, 2);
   });
 });
