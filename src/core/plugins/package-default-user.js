@@ -7,7 +7,7 @@ exports.register = async (server, options, next) => {
   const userModel = modelResolver.getModel('user');
 
   server.ext('onRequest', async (request, reply) => {
-    if (!(_.has(request, 'query.token') || _.has(request, 'headers.authorization'))) {
+    if (!request.auth.credentials && (!(_.has(request, 'query.token') || _.has(request, 'headers.authorization')))) {
       const anonymousUser = await userModel.findOne({
         where: {
           username: 'anonymous',

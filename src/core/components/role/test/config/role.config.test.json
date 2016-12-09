@@ -1,0 +1,22 @@
+{
+  "methods@override": {
+    "findAll": true,
+    "findOne": true,
+    "findById": true,
+    "count": true,
+    "create": true,
+    "update": true,
+    "delete": true,
+    "associations": {
+      "users": {
+        "findAll": true,
+        "count": true,
+        "create": true,
+        "add": true,
+        "addMultiple": true,
+        "remove": true,
+        "removeMultiple": true
+      }
+    }
+  }
+}

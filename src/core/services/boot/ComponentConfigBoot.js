@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
 
@@ -15,13 +16,28 @@ export default class ComponentConfigBoot {
     for (const componentPath of components) { // eslint-disable-line no-restricted-syntax
       if (fs.lstatSync(componentPath).isDirectory()) {
         const componentName = path.basename(componentPath);
-        const configFilePath = path.join(componentPath, `${componentName}.config.json`);
-        if (fs.existsSync(configFilePath)) {
-          const config = require(configFilePath);
+        const configFiles = [];
+
+        const configDefault = path.join(componentPath, `${componentName}.config.json`);
+        if (fs.existsSync(configDefault)) {
+          configFiles.push(configDefault);
+        }
+
+        if (isTest) {
+          const configTest = path.join(componentPath, `test/config/${componentName}.config.test.json`);
+          if (fs.existsSync(configTest)) {
+            configFiles.push(configTest);
+          }
+        }
+
+        if (configFiles.length) {
           const confKey = `models:${componentName}`;
-          const existingConfig = self.nconf.get(confKey) || {};
-          combineObject(existingConfig, config);
-          self.nconf.set(confKey, existingConfig);
+          _.forEach(configFiles, (configFilePath) => {
+            const config = require(configFilePath);
+            const existingConfig = self.nconf.get(confKey) || {};
+            combineObject(existingConfig, config);
+            self.nconf.set(confKey, existingConfig);
+          });
         }
       }
     }

@@ -33,8 +33,10 @@ export default class PostBoot {
 
     // start the server
     server.start(() => {
-      // eslint-disable-next-line no-console
-      console.log(`Server running at: ${server.info.uri}`);
+      if (!isTest) {
+        // eslint-disable-next-line no-console
+        console.log(`Server running at: ${server.info.uri}`);
+      }
     });
   }
 }

@@ -19,6 +19,9 @@
     "taskName": "test",
     "args": ["test"]
   }, {
+    "taskName": "test-core",
+    "args": ["run", "test-core"]
+  }, {
     "taskName": "test-debug",
     "args": ["run", "test-debug"]
   }]

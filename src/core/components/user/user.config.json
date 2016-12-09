@@ -42,11 +42,12 @@
   },
   "methods": {
     "findAll": true,
+    "findOne": true,
+    "findById": true,
     "count": true,
     "create": true,
     "update": true,
-    "findOne": true,
-    "findById": true,
+    "delete": true,
     "associations": {
       "roles": {
         "findAll": true,
