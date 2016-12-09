@@ -10,7 +10,7 @@ const mockUsers = require('../../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
-describe(`POST update ${prefix}role/{pk}`, () => {
+describe(`DELETE delete ${prefix}role/{pk}`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
@@ -29,16 +29,13 @@ describe(`POST update ${prefix}role/{pk}`, () => {
       statusCode,
     } = await server.inject({
       url: thisTestUrl,
-      payload: {
-        name: 'role1-updated',
-      },
-      method: 'POST',
+      method: 'DELETE',
       credentials: {
-        scope: ['role:update'],
+        scope: ['role:delete'],
       },
     });
 
-    assert.equal(statusCode, HttpStatus.OK);
-    assert.equal(result.name, 'role1-updated');
+    assert.equal(statusCode, HttpStatus.NO_CONTENT);
+    assert.equal(result, null);
   });
 });
