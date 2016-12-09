@@ -24,5 +24,8 @@
   }, {
     "taskName": "test-debug",
     "args": ["run", "test-debug"]
+  }, {
+    "taskName": "test-core-debug",
+    "args": ["run", "test-core-debug"]
   }]
 }

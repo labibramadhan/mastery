@@ -24,8 +24,9 @@
     "build": "npm-run-all clean babel:build",
     "test": "NODE_ENV=test mocha -b --timeout 5000 --compilers js:babel-register --recursive test/spec/**/*.js",
     "test-core": "NODE_ENV=test mocha -b --timeout 5000 --compilers js:babel-register --recursive src/**/test/spec/**/*.js",
-    "test-ci": "NODE_ENV=test-ci mocha -b --timeout 6500 --compilers js:babel-register --recursive test/spec/**/*.js",
-    "test-debug": "NODE_ENV=test mocha -b --debug-brk=5858 --inspect --timeout 5000 --compilers js:babel-register --recursive test/spec/**/*.js"
+    "test-ci": "NODE_ENV=test-ci mocha -b --timeout 6500 --compilers js:babel-register --recursive  src/**/test/spec/**/*.js test/spec/**/*.js",
+    "test-debug": "NODE_ENV=test mocha -b --debug-brk=5858 --inspect --timeout 5000 --compilers js:babel-register --recursive test/spec/**/*.js",
+    "test-core-debug": "NODE_ENV=test mocha -b --debug-brk=5858 --inspect --timeout 5000 --compilers js:babel-register --recursive src/**/test/spec/**/*.js"
   },
   "pre-commit": [
     "lint"
