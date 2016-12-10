@@ -9,7 +9,7 @@ const mockUsers = require('../../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
-describe(`GET count ${prefix}users/count`, () => {
+describe(`user count GET ${prefix}users/count`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();

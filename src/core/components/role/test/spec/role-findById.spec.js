@@ -8,7 +8,7 @@ const mockUsers = require('../../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
-describe(`GET findById ${prefix}role/{pk}`, () => {
+describe(`role findById GET ${prefix}role/{pk}`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();

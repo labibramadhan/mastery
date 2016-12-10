@@ -8,7 +8,7 @@ const mockUsers = require('../../../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
-describe(`DELETE unlinkMultiple ${prefix}user/{pk}/roles/unlink`, () => {
+describe(`user unlinkMultiple DELETE ${prefix}user/{pk}/roles/unlink`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();

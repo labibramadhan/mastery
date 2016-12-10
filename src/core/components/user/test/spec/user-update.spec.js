@@ -8,7 +8,7 @@ const mockUsers = require('../../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
-describe(`POST update ${prefix}user/{pk}`, () => {
+describe(`user update POST ${prefix}user/{pk}`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();

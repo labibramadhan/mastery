@@ -10,7 +10,7 @@ const mockUsers = require('../../../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
-describe(`PUT link ${prefix}user/{pk}/roles/link/{pk2}`, () => {
+describe(`user link PUT ${prefix}user/{pk}/roles/link/{pk2}`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();

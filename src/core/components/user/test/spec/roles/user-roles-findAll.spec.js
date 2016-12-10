@@ -9,7 +9,7 @@ const mockUsers = require('../../../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
-describe(`GET associationFindAll ${prefix}user/{pk}/roles`, () => {
+describe(`user associationFindAll GET ${prefix}user/{pk}/roles`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();

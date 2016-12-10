@@ -8,7 +8,7 @@ const mockUsers = require('../../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
-describe(`DELETE delete ${prefix}user/{pk}`, () => {
+describe(`user delete DELETE ${prefix}user/{pk}`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
