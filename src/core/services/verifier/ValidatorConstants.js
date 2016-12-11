@@ -11,6 +11,7 @@ export default class ValidatorConstants {
     ],
     count: [
       'where',
+      'include',
     ],
     findOne: [
       'where',
@@ -39,8 +40,11 @@ export default class ValidatorConstants {
     ],
     associationCount: [
       'where',
+      'include',
     ],
-    associationFindOne: [],
+    associationFindOne: [
+      'include',
+    ],
     associationCreate: [
       'payload',
     ],
