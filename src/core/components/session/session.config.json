@@ -8,8 +8,11 @@
       "unique": true,
       "allowNull": false
     },
-    "profile": "TEXT",
-    "expire": {
+    "platform": {
+      "type": "STRING",
+      "allowNull": false
+    },
+    "expiry": {
       "type": "INTEGER",
       "allowNull": false
     }

@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import moment from 'moment';
 
 const ModelResolver = requireF('core/services/resolvers/ModelResolver');
 
@@ -7,12 +8,47 @@ export default class AuthJWTValidator {
     this.modelResolver = new ModelResolver();
   }
 
+  validExistence = session => Boolean(session);
+
+  validExpiry = (session) => {
+    const currentTimestamp = moment().unix();
+    if (session.expiry < currentTimestamp) {
+      return false;
+    }
+    return true;
+  }
+
+  invalidToken = async (token) => {
+    const sessionModel = this.modelResolver.getModel('session');
+    const session = await sessionModel.findOne({
+      where: {
+        token,
+      },
+    });
+
+    if (!this.validExistence(session)) {
+      return true;
+    }
+
+    if (!this.validExpiry(session)) {
+      return true;
+    }
+
+    return false;
+  }
+
   validate = async (decoded, request, callback) => {
     const {
       user,
       role,
     } = this.modelResolver.getModels(['user', 'role']);
     const availableRoles = server.plugins['package-acl'];
+    const token = _.get(request, 'query.token') || _.get(request, 'headers.authorization');
+
+    const invalidToken = await this.invalidToken(token);
+    if (invalidToken) {
+      return callback(null, false);
+    }
 
     // store only id, username, and email inside decoded JWT token
     const credentials = _.pick(decoded, ['id', 'username', 'email']);

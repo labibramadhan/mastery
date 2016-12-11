@@ -1,6 +1,8 @@
 import Boom from 'boom';
+import Platform from 'platform';
 import _ from 'lodash';
 import jwt from 'jsonwebtoken';
+import moment from 'moment';
 
 const ModelResolver = requireF('core/services/resolvers/ModelResolver');
 
@@ -10,6 +12,8 @@ const {
 } = conf.get();
 
 export default class AuthJWTLogin {
+  DEFAULT_EXPIRY = 604800;
+
   constructor(request) {
     this.request = request;
     this.modelResolver = new ModelResolver();
@@ -22,7 +26,9 @@ export default class AuthJWTLogin {
       password,
     } = this.request.payload;
 
-    let credentials = { password };
+    let credentials = {
+      password,
+    };
 
     if (username) {
       // login with username
@@ -41,7 +47,7 @@ export default class AuthJWTLogin {
     return credentials;
   }
 
-  login = async () => {
+  login = async (request, reply) => {
     const credentials = this.parseCredentials();
     const {
       user,
@@ -59,7 +65,7 @@ export default class AuthJWTLogin {
       where: credentialsRequested,
     });
     if (instance && instance.validPassword(password)) {
-      const existingTokenCount = await session.count({
+      const existingSessions = await session.count({
         include: {
           model: user,
           where: {
@@ -67,29 +73,47 @@ export default class AuthJWTLogin {
           },
         },
       });
-      if (existingTokenCount >= maxSessions) {
+      if (existingSessions >= maxSessions) {
         return Boom.unauthorized(this.request.t('error.user.login.tooManySessions'));
       }
 
-      // if valid, generate a new JWT token
-      const token = jwt.sign({
-        id: instance.id,
-        ...credentialsRequested,
-      }, secret);
+      const token = await this.postLogin(request, instance, credentialsRequested);
 
-      this.postLogin(instance, token);
-
-      return {
+      return reply({
         token,
-      };
+      });
     }
 
     // if not valid, return the user.login.failed translated message
-    return Boom.unauthorized(this.t('error.user.login.failed'));
+    return reply(Boom.unauthorized(this.t('error.user.login.failed')));
   }
 
-  postLogin = async (user, token) => {
-    const session = this.modelResolver.getModel('session');
-    await session.create({ userId: user.id, token, expire: 604800 });
+  postLogin = async (request, user, credentialsRequested) => {
+    const sessionModel = this.modelResolver.getModel('session');
+    const expiry = moment().add(this.DEFAULT_EXPIRY, 's').unix();
+    const oldSession = await sessionModel.findOne({
+      where: {
+        userId: user.id,
+      },
+    });
+    if (oldSession) {
+      await oldSession.update({
+        expiry,
+      });
+      return oldSession.token;
+    }
+
+    const token = jwt.sign({
+      id: user.id,
+      ...credentialsRequested,
+    }, secret);
+    const platform = Platform.parse(request.headers['user-agent']);
+    await sessionModel.create({
+      userId: user.id,
+      token,
+      platform: platform.description,
+      expiry,
+    });
+    return token;
   }
 }
