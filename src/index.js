@@ -1,4 +1,4 @@
-import path from 'path';
+import Path from 'path';
 
 process.setMaxListeners(0);
 
@@ -8,7 +8,7 @@ const {
   requireAll,
 } = requireF('core/services/CommonServices');
 
-requireAll(path.join(rootPath, 'core/services/definitions/**/*.js'));
+requireAll(Path.join(rootPath, 'core/services/definitions/**/*.js'));
 
 eventEmitter.emit('Startup');
 

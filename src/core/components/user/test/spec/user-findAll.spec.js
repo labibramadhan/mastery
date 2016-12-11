@@ -1,11 +1,11 @@
 import HttpStatus from 'http-status-codes';
+import Qs from 'qs';
 import {
   assert,
 } from 'chai';
-import qs from 'qs';
 
-const setup = require('../../../../../../test/helpers/setup');
-const mockUsers = require('../../../../../../test/helpers/mock-users');
+const setup = require('../../../../test/helpers/setup');
+const mockUsers = require('../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
@@ -25,7 +25,7 @@ describe(`user findAll GET ${prefix}users`, () => {
       authenticatedRole,
     } = this.roles;
 
-    const thisTestUrl = `${prefix}users?${qs.stringify({
+    const thisTestUrl = `${prefix}users?${Qs.stringify({
       where: {
         username: {
           $not: admin1.username,

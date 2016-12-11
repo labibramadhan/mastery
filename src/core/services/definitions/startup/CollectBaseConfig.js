@@ -1,6 +1,6 @@
+import Fs from 'fs';
+import Path from 'path';
 import _ from 'lodash';
-import fs from 'fs';
-import path from 'path';
 
 const {
   Startup,
@@ -14,9 +14,9 @@ const {
 class CollectConfig { // eslint-disable-line no-unused-vars
   bootConfigFiles = (configs) => {
     _.forEach(configs, (config, idx) => {
-      if (fs.statSync(config).isDirectory()) {
-        const groupName = path.basename(config);
-        const groupConfigGlob = path.join(config, '*.json');
+      if (Fs.statSync(config).isDirectory()) {
+        const groupName = Path.basename(config);
+        const groupConfigGlob = Path.join(config, '*.json');
         const groupConfigs = globSyncMultiple(groupConfigGlob);
         if (groupConfigs.length) {
           conf.set(groupName, {});
@@ -36,12 +36,12 @@ class CollectConfig { // eslint-disable-line no-unused-vars
   boot = () => {
     conf.use('memory');
 
-    const defaultConfigGlob = path.join(rootPath, 'config/default/*');
+    const defaultConfigGlob = Path.join(rootPath, 'config/default/*');
     const defaultConfigs = globSyncMultiple(defaultConfigGlob);
     this.bootConfigFiles(defaultConfigs);
 
     const env = process.env.NODE_ENV || 'development';
-    const configGlob = path.join(rootPath, 'config', env, '*');
+    const configGlob = Path.join(rootPath, 'config', env, '*');
     const configs = globSyncMultiple(configGlob);
     this.bootConfigFiles(configs);
   }

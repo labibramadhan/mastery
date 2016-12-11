@@ -1,7 +1,7 @@
+import AcceptLanguage from 'accept-language';
+import Fs from 'fs';
+import Path from 'path';
 import _ from 'lodash';
-import acceptLanguage from 'accept-language';
-import fs from 'fs';
-import path from 'path';
 
 const {
   globSyncMultiple,
@@ -10,13 +10,13 @@ const {
 const getAvailableLanguages = () => {
   const availableLanguages = [];
   const localesGlobs = [
-    path.join(rootPath, 'core/locales/*'),
-    path.join(rootPath, 'main/locales/*'),
+    Path.join(rootPath, 'core/locales/*'),
+    Path.join(rootPath, 'main/locales/*'),
   ];
   const locales = globSyncMultiple(localesGlobs);
   _.forEach(locales, (localePath) => {
-    const localeName = path.basename(localePath);
-    if (fs.lstatSync(localePath).isDirectory()) {
+    const localeName = Path.basename(localePath);
+    if (Fs.lstatSync(localePath).isDirectory()) {
       availableLanguages.push(localeName);
     }
   });
@@ -24,14 +24,14 @@ const getAvailableLanguages = () => {
 };
 
 exports.register = (server, options, next) => {
-  acceptLanguage.languages(getAvailableLanguages());
+  AcceptLanguage.languages(getAvailableLanguages());
 
   const t = (request) => {
     let locale = conf.get('defaultLocale');
     if (_.has(request, 'headers.language')) {
       locale = request.headers.language;
     } else if (_.has(request, 'headers.[\'accept-language\']')) {
-      locale = acceptLanguage.get(request.headers['accept-language']);
+      locale = AcceptLanguage.get(request.headers['accept-language']);
     }
 
     // eslint-disable-next-line no-param-reassign

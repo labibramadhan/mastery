@@ -1,10 +1,23 @@
+import _ from 'lodash';
+
 export default async function mockUsers() {
   const ModelResolver = requireF('core/services/resolvers/ModelResolver');
   const modelResolver = new ModelResolver();
-  const { user, role } = modelResolver.getModels(['user', 'role']);
+  const {
+    user,
+    role,
+  } = modelResolver.getModels(['user', 'role']);
 
-  const adminRole = await role.findOne({ where: { name: 'admin' } });
-  const authenticatedRole = await role.findOne({ where: { name: 'authenticated' } });
+  const adminRole = await role.findOne({
+    where: {
+      name: 'admin',
+    },
+  });
+  const authenticatedRole = await role.findOne({
+    where: {
+      name: 'authenticated',
+    },
+  });
 
   const admin1 = await user.create({
     username: 'admin1',
@@ -32,9 +45,17 @@ export default async function mockUsers() {
     password: 'Asdqwe123',
   });
 
-    // eslint-disable-next-line no-param-reassign
-  this.users = { admin1, admin2, authenticated1, authenticated2 };
+  // eslint-disable-next-line no-param-reassign
+  this.users = {
+    admin1,
+    admin2,
+    authenticated1,
+    authenticated2,
+  };
 
-    // eslint-disable-next-line no-param-reassign
-  this.roles = { adminRole, authenticatedRole };
+  // eslint-disable-next-line no-param-reassign
+  this.roles = _.merge(this.roles || {}, {
+    adminRole,
+    authenticatedRole,
+  });
 }

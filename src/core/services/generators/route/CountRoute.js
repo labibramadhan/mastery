@@ -1,4 +1,4 @@
-import path from 'path';
+import Path from 'path';
 
 const BaseGeneralRoute = requireF('core/services/generators/route/base/BaseGeneralRoute');
 const CountHandler = requireF('core/services/generators/handler/CountHandler');
@@ -17,6 +17,6 @@ export default class CountRoute extends BaseGeneralRoute {
     const plural = conf.get(`models:${model.name}:plural`) || `${model.name}s`;
 
     this.method = 'GET';
-    this.path = path.join(plural, methodName);
+    this.path = Path.join(plural, methodName);
   }
 }

@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import Bcrypt from 'bcrypt';
 
 export default {
   attributes: {
@@ -32,7 +32,7 @@ export default {
       },
       set(val) {
         // save the encrypted password
-        const password = bcrypt.hashSync(val, bcrypt.genSaltSync(8), null);
+        const password = Bcrypt.hashSync(val, Bcrypt.genSaltSync(8), null);
         this.setDataValue('password', password);
       },
     },
@@ -42,7 +42,7 @@ export default {
     instanceMethods: {
       validPassword(password) {
         // check if password match with current user encrypted password
-        return bcrypt.compareSync(password, this.get('password'));
+        return Bcrypt.compareSync(password, this.get('password'));
       },
     },
     hooks: {

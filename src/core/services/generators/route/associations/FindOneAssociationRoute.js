@@ -1,4 +1,4 @@
-import path from 'path';
+import Path from 'path';
 
 const BaseAssociationRoute = requireF('core/services/generators/route/base/BaseAssociationRoute');
 const FindOneAssociationHandler = requireF('core/services/generators/handler/associations/FindOneAssociationHandler');
@@ -16,6 +16,6 @@ export default class FindOneAssociationRoute extends BaseAssociationRoute {
     });
 
     this.method = 'GET';
-    this.path = path.join(model.name, '{pk}', association.as);
+    this.path = Path.join(model.name, '{pk}', association.as);
   }
 }

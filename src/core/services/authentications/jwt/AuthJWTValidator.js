@@ -1,5 +1,5 @@
+import Moment from 'moment';
 import _ from 'lodash';
-import moment from 'moment';
 
 const ModelResolver = requireF('core/services/resolvers/ModelResolver');
 
@@ -11,7 +11,7 @@ export default class AuthJWTValidator {
   validExistence = session => Boolean(session);
 
   validExpiry = (session) => {
-    const currentTimestamp = moment().unix();
+    const currentTimestamp = Moment().unix();
     if (session.expiry < currentTimestamp) {
       return false;
     }

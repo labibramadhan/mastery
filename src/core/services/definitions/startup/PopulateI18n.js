@@ -1,6 +1,6 @@
+import Fs from 'fs';
+import Path from 'path';
 import _ from 'lodash';
-import fs from 'fs';
-import path from 'path';
 
 const {
   Startup,
@@ -15,19 +15,19 @@ export default class I18nBoot { // eslint-disable-line no-unused-vars
   boot = () => {
     const localesIndexed = {};
     const localesGlobs = [
-      path.join(rootPath, 'core/locales/*'),
-      path.join(rootPath, 'main/locales/*'),
+      Path.join(rootPath, 'core/locales/*'),
+      Path.join(rootPath, 'main/locales/*'),
     ];
     const locales = globSyncMultiple(localesGlobs);
     _.forEach(locales, (localePath) => {
-      const localeName = path.basename(localePath);
-      if (fs.lstatSync(localePath).isDirectory()) {
-        const localeFilesGlob = path.join(localePath, '*.json');
+      const localeName = Path.basename(localePath);
+      if (Fs.lstatSync(localePath).isDirectory()) {
+        const localeFilesGlob = Path.join(localePath, '*.json');
         const localeFiles = globSyncMultiple(localeFilesGlob);
         if (localeFiles.length) {
           if (!_.has(localesIndexed, localeName)) localesIndexed[localeName] = {};
           _.forEach(localeFiles, (localeFilePath) => {
-            const localeCategoryName = path.basename(localeFilePath).replace('.json', '').replace(`${localeName}-`, '');
+            const localeCategoryName = Path.basename(localeFilePath).replace('.json', '').replace(`${localeName}-`, '');
             if (!_.has(localesIndexed[localeName], localeCategoryName)) {
               localesIndexed[localeName][localeCategoryName] = {};
             }

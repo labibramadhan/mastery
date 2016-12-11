@@ -1,4 +1,4 @@
-import path from 'path';
+import Path from 'path';
 
 const BaseAssociationRoute = requireF('core/services/generators/route/base/BaseAssociationRoute');
 const LinkAssociationHandler = requireF('core/services/generators/handler/associations/LinkAssociationHandler');
@@ -16,6 +16,6 @@ export default class LinkAssociationRoute extends BaseAssociationRoute {
     });
 
     this.method = 'PUT';
-    this.path = path.join(model.name, '{pk}', association.as, 'link', '{pk2}');
+    this.path = Path.join(model.name, '{pk}', association.as, 'link', '{pk2}');
   }
 }

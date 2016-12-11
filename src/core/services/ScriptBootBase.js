@@ -1,5 +1,5 @@
+import Path from 'path';
 import _ from 'lodash';
-import path from 'path';
 
 const {
   globSyncMultiple,
@@ -9,8 +9,8 @@ export default class ScriptBootBase {
   constructor(hook = 'Before') {
     const hookName = _.capitalize(_.camelCase(hook));
     this.bootGlobs = [
-      path.join(rootPath, 'core/setup/scripts/**', `*${hookName}.js`),
-      path.join(rootPath, 'main/setup/scripts/**', `*${hookName}.js`),
+      Path.join(rootPath, 'core/setup/scripts/**', `*${hookName}.js`),
+      Path.join(rootPath, 'main/setup/scripts/**', `*${hookName}.js`),
     ];
   }
 

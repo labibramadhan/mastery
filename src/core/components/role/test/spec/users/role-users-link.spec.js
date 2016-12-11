@@ -3,10 +3,9 @@ import {
   assert,
 } from 'chai';
 
-const ModelResolver = requireF('core/services/resolvers/ModelResolver');
-
-const setup = require('../../../../../../../test/helpers/setup');
-const mockUsers = require('../../../../../../../test/helpers/mock-users');
+const setup = require('../../../../../test/helpers/setup');
+const mockUsers = require('../../../../../test/helpers/mock-users');
+const mockRoles = require('../../../../../test/helpers/mock-roles');
 
 const prefix = conf.get('prefix');
 
@@ -14,18 +13,17 @@ describe(`role link PUT ${prefix}role/{pk}/users/link/{pk2}`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
-    this.modelResolver = new ModelResolver();
+    await mockRoles.bind(this).apply();
   });
 
   it('works', async function it() {
     const {
       admin2,
     } = this.users;
+    const {
+      role1,
+    } = this.roles;
 
-    const roleModel = this.modelResolver.getModel('role');
-    const role1 = await roleModel.create({
-      name: 'role1',
-    });
     const thisTestUrl = `${prefix}role/${role1.id}/users/link/${admin2.id}`;
 
     const {

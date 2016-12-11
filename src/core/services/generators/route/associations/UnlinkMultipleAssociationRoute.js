@@ -1,4 +1,4 @@
-import path from 'path';
+import Path from 'path';
 
 const BaseAssociationRoute = requireF('core/services/generators/route/base/BaseAssociationRoute');
 const UnlinkMultipleAssociationHandler = requireF('core/services/generators/handler/associations/UnlinkMultipleAssociationHandler');
@@ -16,6 +16,6 @@ export default class UnlinkMultipleAssociationRoute extends BaseAssociationRoute
     });
 
     this.method = 'DELETE';
-    this.path = path.join(model.name, '{pk}', association.as, 'unlink');
+    this.path = Path.join(model.name, '{pk}', association.as, 'unlink');
   }
 }

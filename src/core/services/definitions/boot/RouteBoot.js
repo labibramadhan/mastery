@@ -1,5 +1,5 @@
+import Path from 'path';
 import _ from 'lodash';
-import path from 'path';
 
 const {
   Boot,
@@ -19,8 +19,8 @@ class RouteBoot { // eslint-disable-line no-unused-vars
 
   resolveRoutes = () => {
     const routesGlobs = [
-      path.join(rootPath, 'core/components/**/*.routes.js'),
-      path.join(rootPath, 'main/components/**/*.routes.js'),
+      Path.join(rootPath, 'core/components/**/*.routes.js'),
+      Path.join(rootPath, 'main/components/**/*.routes.js'),
     ];
 
     // retrieve all available routes

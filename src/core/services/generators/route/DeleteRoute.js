@@ -1,4 +1,4 @@
-import path from 'path';
+import Path from 'path';
 
 const BaseGeneralRoute = requireF('core/services/generators/route/base/BaseGeneralRoute');
 const DeleteHandler = requireF('core/services/generators/handler/DeleteHandler');
@@ -15,6 +15,6 @@ export default class DeleteRoute extends BaseGeneralRoute {
     });
 
     this.method = 'DELETE';
-    this.path = path.join(model.name, '{pk}');
+    this.path = Path.join(model.name, '{pk}');
   }
 }

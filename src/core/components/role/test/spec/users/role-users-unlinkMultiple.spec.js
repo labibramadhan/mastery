@@ -3,8 +3,8 @@ import {
   assert,
 } from 'chai';
 
-const setup = require('../../../../../../../test/helpers/setup');
-const mockUsers = require('../../../../../../../test/helpers/mock-users');
+const setup = require('../../../../../test/helpers/setup');
+const mockUsers = require('../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
@@ -22,6 +22,7 @@ describe(`role unlinkMultiple DELETE ${prefix}role/{pk}/users/unlink`, () => {
     const {
       adminRole,
     } = this.roles;
+
     const thisTestUrl = `${prefix}role/${adminRole.id}/users/unlink`;
 
     const {

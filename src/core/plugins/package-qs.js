@@ -1,12 +1,12 @@
+import Qs from 'qs';
+import Url from 'url';
 import _ from 'lodash';
-import qs from 'qs';
-import url from 'url';
 
 exports.register = (server, options, next) => {
   server.ext('onRequest', (request, reply) => {
     const uri = request.url;
-    const parsed = url.parse(uri, false);
-    parsed.query = qs.parse(parsed.query);
+    const parsed = Url.parse(uri, false);
+    parsed.query = Qs.parse(parsed.query);
     parsed.query = _.forEach(parsed.query, (q, k) => {
       try {
         parsed.query[k] = JSON.parse(q);

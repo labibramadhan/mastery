@@ -3,8 +3,8 @@ import {
   assert,
 } from 'chai';
 
-const setup = require('../../../../../../../test/helpers/setup');
-const mockUsers = require('../../../../../../../test/helpers/mock-users');
+const setup = require('../../../../../test/helpers/setup');
+const mockUsers = require('../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 

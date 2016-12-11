@@ -1,8 +1,8 @@
 import Boom from 'boom';
+import JWT from 'jsonwebtoken';
+import Moment from 'moment';
 import Platform from 'platform';
 import _ from 'lodash';
-import jwt from 'jsonwebtoken';
-import moment from 'moment';
 
 const ModelResolver = requireF('core/services/resolvers/ModelResolver');
 
@@ -90,7 +90,7 @@ export default class AuthJWTLogin {
 
   postLogin = async (request, user, credentialsRequested) => {
     const sessionModel = this.modelResolver.getModel('session');
-    const expiry = moment().add(this.DEFAULT_EXPIRY, 's').unix();
+    const expiry = Moment().add(this.DEFAULT_EXPIRY, 's').unix();
     const oldSession = await sessionModel.findOne({
       where: {
         userId: user.id,
@@ -103,7 +103,7 @@ export default class AuthJWTLogin {
       return oldSession.token;
     }
 
-    const token = jwt.sign({
+    const token = JWT.sign({
       id: user.id,
       ...credentialsRequested,
     }, secret);

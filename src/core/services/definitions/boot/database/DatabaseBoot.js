@@ -1,8 +1,8 @@
+import Fs from 'fs';
+import Path from 'path';
 import Sequelize from 'sequelize';
 import _ from 'lodash';
 import assert from 'assert';
-import fs from 'fs';
-import path from 'path';
 
 const ModelResolver = requireF('core/services/resolvers/ModelResolver');
 
@@ -86,13 +86,13 @@ class DatabaseBoot { // eslint-disable-line no-unused-vars
       const resolvedModels = _.map(models, (modelConf, modelName) => {
         let modelPath;
         if (_.has(modelConf, 'location')) {
-          modelPath = path.resolve(path.join(rootPath, modelConf.location));
-          assert(fs.existsSync(modelPath), i18n.t('boot.database.model.notFound'));
+          modelPath = Path.resolve(Path.join(rootPath, modelConf.location));
+          assert(Fs.existsSync(modelPath), i18n.t('boot.database.model.notFound'));
         } else {
           const expectedModelName = `${modelName}.model.js`;
           modelPath = [
-            path.join(rootPath, 'main/components', modelName, expectedModelName),
-            path.join(rootPath, 'core/components', modelName, expectedModelName),
+            Path.join(rootPath, 'main/components', modelName, expectedModelName),
+            Path.join(rootPath, 'core/components', modelName, expectedModelName),
           ];
         }
         return {

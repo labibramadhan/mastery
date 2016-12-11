@@ -1,4 +1,4 @@
-import path from 'path';
+import Path from 'path';
 
 const BaseGeneralRoute = requireF('core/services/generators/route/base/BaseGeneralRoute');
 const UpdateHandler = requireF('core/services/generators/handler/UpdateHandler');
@@ -15,6 +15,6 @@ export default class UpdateRoute extends BaseGeneralRoute {
     });
 
     this.method = 'POST';
-    this.path = path.join(model.name, '{pk}');
+    this.path = Path.join(model.name, '{pk}');
   }
 }

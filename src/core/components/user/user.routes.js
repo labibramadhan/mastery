@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import path from 'path';
+import Path from 'path';
 
 const prefix = conf.get('prefix');
 
@@ -10,7 +10,7 @@ const handlerLogin = new UserHandlerLogin();
 export default [{
   // define /user/login route
   method: 'POST',
-  path: path.join(prefix, 'user', 'login'),
+  path: Path.join(prefix, 'user', 'login'),
   handler: handlerLogin.handler,
   config: {
     tags: ['api'],

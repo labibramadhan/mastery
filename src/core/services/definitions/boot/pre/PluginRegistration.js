@@ -1,4 +1,4 @@
-import path from 'path';
+import Path from 'path';
 
 const {
   Boot,
@@ -12,7 +12,7 @@ const {
 class PluginRegistration { // eslint-disable-line no-unused-vars
   boot = async () => {
     // retrieve all available package plugins
-    const pluginGlob = path.join(rootPath, 'core/plugins/*.js');
+    const pluginGlob = Path.join(rootPath, 'core/plugins/*.js');
     const plugins = globSyncMultiple(pluginGlob);
     for (const plugin of plugins) { // eslint-disable-line no-restricted-syntax
       await server.register(require(plugin));

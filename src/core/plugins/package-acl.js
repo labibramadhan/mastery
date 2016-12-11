@@ -1,4 +1,4 @@
-import path from 'path';
+import Path from 'path';
 
 const {
   globSyncMultiple,
@@ -6,7 +6,7 @@ const {
 
 exports.register = async (server, options, next) => {
   let availableRoles = {};
-  const rolesGlob = path.resolve(path.join(rootPath, 'main/setup/roles/**/*.js'));
+  const rolesGlob = Path.resolve(Path.join(rootPath, 'main/setup/roles/**/*.js'));
 
   // retrieve all available roles and its permissions defined inside /setup/roles directory
   const rolesDefinition = globSyncMultiple(rolesGlob);

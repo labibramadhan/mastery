@@ -1,6 +1,6 @@
+import Fs from 'fs';
+import Path from 'path';
 import _ from 'lodash';
-import fs from 'fs';
-import path from 'path';
 
 const {
   Startup,
@@ -15,25 +15,25 @@ const {
 class CollectComponentConfig { // eslint-disable-line no-unused-vars
   constructor() {
     this.componentGlobs = [
-      path.join(rootPath, 'core/components/*'),
-      path.join(rootPath, 'main/components/*'),
+      Path.join(rootPath, 'core/components/*'),
+      Path.join(rootPath, 'main/components/*'),
     ];
   }
   boot = () => {
     const components = globSyncMultiple(this.componentGlobs);
     for (const componentPath of components) { // eslint-disable-line no-restricted-syntax
-      if (fs.lstatSync(componentPath).isDirectory()) {
-        const componentName = path.basename(componentPath);
+      if (Fs.lstatSync(componentPath).isDirectory()) {
+        const componentName = Path.basename(componentPath);
         const configFiles = [];
 
-        const configDefault = path.join(componentPath, `${componentName}.config.json`);
-        if (fs.existsSync(configDefault)) {
+        const configDefault = Path.join(componentPath, `${componentName}.config.json`);
+        if (Fs.existsSync(configDefault)) {
           configFiles.push(configDefault);
         }
 
         if (isTest) {
-          const configTest = path.join(componentPath, `test/config/${componentName}.config.test.json`);
-          if (fs.existsSync(configTest)) {
+          const configTest = Path.join(componentPath, `test/config/${componentName}.config.test.json`);
+          if (Fs.existsSync(configTest)) {
             configFiles.push(configTest);
           }
         }

@@ -1,13 +1,12 @@
 import HttpStatus from 'http-status-codes';
+import Qs from 'qs';
 import {
   assert,
 } from 'chai';
-import qs from 'qs';
 
-const ModelResolver = requireF('core/services/resolvers/ModelResolver');
-
-const setup = require('../../../../../../test/helpers/setup');
-const mockUsers = require('../../../../../../test/helpers/mock-users');
+const setup = require('../../../../test/helpers/setup');
+const mockUsers = require('../../../../test/helpers/mock-users');
+const mockSessions = require('../../../../test/helpers/mock-sessions');
 
 const prefix = conf.get('prefix');
 
@@ -15,7 +14,7 @@ describe(`session findAll GET ${prefix}sessions`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
-    this.modelResolver = new ModelResolver();
+    await mockSessions.bind(this).apply();
   });
 
   it('works', async function it() {
@@ -23,22 +22,12 @@ describe(`session findAll GET ${prefix}sessions`, () => {
       authenticated1,
       authenticated2,
     } = this.users;
+    const {
+      session1,
+      session2,
+    } = this.sessions;
 
-    const sessionModel = this.modelResolver.getModel('session');
-    const session1 = await sessionModel.create({
-      userId: authenticated1.id,
-      token: 'TEST1',
-      platform: 'TEST1',
-      expiry: 12345,
-    });
-    const session2 = await sessionModel.create({
-      userId: authenticated2.id,
-      token: 'TEST2',
-      platform: 'TEST2',
-      expiry: 12345,
-    });
-
-    const thisTestUrl = `${prefix}sessions?${qs.stringify({
+    const thisTestUrl = `${prefix}sessions?${Qs.stringify({
       include: {
         model: 'user',
         where: {

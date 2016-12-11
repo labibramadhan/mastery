@@ -1,5 +1,5 @@
+import Path from 'path';
 import _ from 'lodash';
-import path from 'path';
 
 const ValidatorConstants = requireF('core/services/verifier/ValidatorConstants');
 const ValidatorGenerator = requireF('core/services/verifier/request/ValidatorGenerator');
@@ -29,7 +29,7 @@ export default class BaseRoute {
     }
 
     _.set(options, 'method', this.method);
-    _.set(options, 'path', path.join(prefix, this.path));
+    _.set(options, 'path', Path.join(prefix, this.path));
     _.set(options, 'handler', this.handler);
     _.set(options, 'config.tags', this.tags);
     _.set(options, 'config.plugins.generator', this.identifier);

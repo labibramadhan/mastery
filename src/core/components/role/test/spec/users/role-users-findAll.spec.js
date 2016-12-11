@@ -1,11 +1,11 @@
 import HttpStatus from 'http-status-codes';
+import Qs from 'qs';
 import {
   assert,
 } from 'chai';
-import qs from 'qs';
 
-const setup = require('../../../../../../../test/helpers/setup');
-const mockUsers = require('../../../../../../../test/helpers/mock-users');
+const setup = require('../../../../../test/helpers/setup');
+const mockUsers = require('../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
@@ -24,7 +24,7 @@ describe(`role associationFindAll GET ${prefix}role/{pk}/users`, () => {
       adminRole,
     } = this.roles;
 
-    const thisTestUrl = `${prefix}role/${adminRole.id}/users?${qs.stringify({
+    const thisTestUrl = `${prefix}role/${adminRole.id}/users?${Qs.stringify({
       where: {
         username: {
           $in: [

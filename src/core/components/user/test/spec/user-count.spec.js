@@ -1,11 +1,11 @@
 import HttpStatus from 'http-status-codes';
+import Qs from 'qs';
 import {
   assert,
 } from 'chai';
-import qs from 'qs';
 
-const setup = require('../../../../../../test/helpers/setup');
-const mockUsers = require('../../../../../../test/helpers/mock-users');
+const setup = require('../../../../test/helpers/setup');
+const mockUsers = require('../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
@@ -20,7 +20,7 @@ describe(`user count GET ${prefix}users/count`, () => {
       authenticated1,
       authenticated2,
     } = this.users;
-    const thisTestUrl = `${prefix}users/count?${qs.stringify({
+    const thisTestUrl = `${prefix}users/count?${Qs.stringify({
       where: {
         username: {
           $or: {

@@ -1,9 +1,9 @@
+import Glob from 'glob';
+import Path from 'path';
 import _ from 'lodash';
-import glob from 'glob';
-import path from 'path';
 
 export default class CommonServices {
-  static requireF = (file: string) => require(path.join(rootPath, file));
+  static requireF = (file: string) => require(Path.join(rootPath, file));
 
   static requireAll = (pattern) => {
     const patternCollection = _.castArray(pattern);
@@ -42,7 +42,7 @@ export default class CommonServices {
 
     // eslint-disable-next-line no-restricted-syntax
     for (const pattern of _.castArray(patterns)) {
-      const files = glob.sync(pattern);
+      const files = Glob.sync(pattern);
       results = _.concat(results, files);
     }
     return results;

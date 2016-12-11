@@ -1,4 +1,4 @@
-import path from 'path';
+import Path from 'path';
 
 const BaseGeneralRoute = requireF('core/services/generators/route/base/BaseGeneralRoute');
 const FindByIdHandler = requireF('core/services/generators/handler/FindByIdHandler');
@@ -15,6 +15,6 @@ export default class FindByIdRoute extends BaseGeneralRoute {
     });
 
     this.method = 'GET';
-    this.path = path.join(model.name, '{pk}');
+    this.path = Path.join(model.name, '{pk}');
   }
 }
