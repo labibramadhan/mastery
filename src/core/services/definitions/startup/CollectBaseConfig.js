@@ -1,20 +1,17 @@
 import _ from 'lodash';
 import fs from 'fs';
-import nconf from 'nconf';
 import path from 'path';
 
-const ComponentConfigBoot = requireF('core/services/boot/ComponentConfigBoot');
+const {
+  Startup,
+} = requireF('core/services/EventsDecorator');
 
 const {
   globSyncMultiple,
 } = requireF('core/services/CommonServices');
 
-export default class ConfigBoot {
-  constructor() {
-    nconf.use('memory');
-    this.componentConfigBoot = new ComponentConfigBoot(nconf);
-  }
-
+@Startup
+class CollectConfig { // eslint-disable-line no-unused-vars
   bootConfigFiles = (configs) => {
     _.forEach(configs, (config, idx) => {
       if (fs.statSync(config).isDirectory()) {
@@ -22,21 +19,23 @@ export default class ConfigBoot {
         const groupConfigGlob = path.join(config, '*.json');
         const groupConfigs = globSyncMultiple(groupConfigGlob);
         if (groupConfigs.length) {
-          nconf.set(groupName, {});
+          conf.set(groupName, {});
           _.forEach(groupConfigs, (groupConfig) => {
             const groupConfigObj = require(groupConfig);
             _.forEach(groupConfigObj, (groupConfigVal, groupConfigKey) => {
-              nconf.set(`${groupName}:${groupConfigKey}`, groupConfigVal);
+              conf.set(`${groupName}:${groupConfigKey}`, groupConfigVal);
             });
           });
         }
       } else {
-        nconf.file(idx, config);
+        conf.file(idx, config);
       }
     });
   }
 
-  boot() {
+  boot = () => {
+    conf.use('memory');
+
     const defaultConfigGlob = path.join(rootPath, 'config/default/*');
     const defaultConfigs = globSyncMultiple(defaultConfigGlob);
     this.bootConfigFiles(defaultConfigs);
@@ -45,14 +44,5 @@ export default class ConfigBoot {
     const configGlob = path.join(rootPath, 'config', env, '*');
     const configs = globSyncMultiple(configGlob);
     this.bootConfigFiles(configs);
-
-    const componentGlobs = [
-      path.join(rootPath, 'core/components/*'),
-      path.join(rootPath, 'main/components/*'),
-    ];
-    const components = globSyncMultiple(componentGlobs);
-    this.componentConfigBoot.boot(components);
-
-    return nconf;
   }
 }

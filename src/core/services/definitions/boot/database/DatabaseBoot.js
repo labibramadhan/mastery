@@ -7,14 +7,15 @@ import path from 'path';
 const ModelResolver = requireF('core/services/resolvers/ModelResolver');
 
 const {
+  Boot,
+} = requireF('core/services/EventsDecorator');
+
+const {
   globSyncMultiple,
 } = requireF('core/services/CommonServices');
 
-export default class DatabaseBoot {
-  constructor() {
-    this.modelResolver = new ModelResolver();
-  }
-
+@Boot('database')
+class DatabaseBoot { // eslint-disable-line no-unused-vars
   normalizeSequelizeTypes = (modelObj) => {
     _.forEach(modelObj.attributes, (field, key) => {
       const type = _.isString(field) ? field : field.type;
@@ -30,7 +31,7 @@ export default class DatabaseBoot {
     });
   };
 
-  bootSequelize = async (databases) => {
+  bootSequelize = (databases) => {
     server.databases = {};
     for (const database of databases) { // eslint-disable-line no-restricted-syntax
       for (const model of database.models) { // eslint-disable-line no-restricted-syntax
@@ -58,11 +59,11 @@ export default class DatabaseBoot {
       }
       server.databases[database.name] = database.sequelize;
     }
-  };
+  }
 
-  boot = async () => {
-    const self = this;
+  boot = () => {
     const databases = conf.get('databases');
+    const modelResolver = new ModelResolver();
     const sequelizeCollection = {};
     const dbMap = _.map(databases, (database, name) => {
       const {
@@ -79,7 +80,7 @@ export default class DatabaseBoot {
 
       const sequelize = new Sequelize(db, username || '', password || '', dbConfig);
       sequelizeCollection[name] = sequelize;
-      const models = self.modelResolver.getModelConfs({
+      const models = modelResolver.getModelConfs({
         database: name,
       });
       const resolvedModels = _.map(models, (modelConf, modelName) => {
@@ -107,6 +108,6 @@ export default class DatabaseBoot {
       };
     });
 
-    return self.bootSequelize(dbMap);
+    return this.bootSequelize(dbMap);
   }
 }

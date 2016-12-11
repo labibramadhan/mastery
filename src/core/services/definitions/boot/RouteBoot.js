@@ -2,17 +2,22 @@ import _ from 'lodash';
 import path from 'path';
 
 const {
+  Boot,
+} = requireF('core/services/EventsDecorator');
+
+const {
   globSyncMultiple,
 } = requireF('core/services/CommonServices');
 
-export default class RouteBoot {
-  boot = async () => {
+@Boot()
+class RouteBoot { // eslint-disable-line no-unused-vars
+  boot = () => {
     // retrieve all available routes, pass all models from Sequelize as a single parameter
-    const allRoutes = await this.resolveRoutes();
+    const allRoutes = this.resolveRoutes();
     server.route(allRoutes);
   };
 
-  resolveRoutes = async () => {
+  resolveRoutes = () => {
     const routesGlobs = [
       path.join(rootPath, 'core/components/**/*.routes.js'),
       path.join(rootPath, 'main/components/**/*.routes.js'),

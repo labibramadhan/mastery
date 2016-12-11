@@ -1,17 +1,17 @@
-import Polyglot from 'node-polyglot';
 import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
 
 const {
+  Startup,
+} = requireF('core/services/EventsDecorator');
+
+const {
   globSyncMultiple,
 } = requireF('core/services/CommonServices');
 
-export default class I18nBoot {
-  constructor() {
-    this.polyglot = new Polyglot();
-  }
-
+@Startup
+export default class I18nBoot { // eslint-disable-line no-unused-vars
   boot = () => {
     const localesIndexed = {};
     const localesGlobs = [
@@ -37,9 +37,8 @@ export default class I18nBoot {
       }
     });
     if (_.size(localesIndexed) > 0) {
-      this.polyglot.extend(localesIndexed);
+      i18n.extend(localesIndexed);
     }
-    this.polyglot.locale(conf.get('defaultLocale'));
-    return this.polyglot;
+    i18n.locale(conf.get('defaultLocale'));
   }
 }

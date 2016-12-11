@@ -5,6 +5,14 @@ import path from 'path';
 export default class CommonServices {
   static requireF = (file: string) => require(path.join(rootPath, file));
 
+  static requireAll = (pattern) => {
+    const patternCollection = _.castArray(pattern);
+    const patternFiles = CommonServices.globSyncMultiple(patternCollection);
+    _.forEach(patternFiles, (patternFilePath) => {
+      require(patternFilePath);
+    });
+  }
+
   static concatToJoiObject = (joiObject, candidate) => {
     if (!candidate) return joiObject;
     else if (candidate.isJoi) return joiObject.concat(candidate);

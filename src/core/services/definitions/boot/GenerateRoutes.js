@@ -39,18 +39,19 @@ const routeGeneratorClasses = {
   },
 };
 
-export default class RouteGeneratorBoot {
-  constructor() {
-    this.modelResolver = new ModelResolver();
-  }
+const {
+  Boot,
+} = requireF('core/services/EventsDecorator');
 
-  boot() {
-    const self = this;
+@Boot()
+class GenerateRoutes { // eslint-disable-line no-unused-vars
+  boot = () => {
     const routes = [];
     const modelsConf = conf.get('models');
+    const modelResolver = new ModelResolver();
     _.forEach(modelsConf, (modelConf, modelName) => {
       if (_.has(modelConf, 'methods')) {
-        const model = self.modelResolver.getModel(modelName);
+        const model = modelResolver.getModel(modelName);
 
         _.forEach(_.omit(modelConf.methods, 'associations'), (methodConf, methodName) => {
           if (methodConf) {

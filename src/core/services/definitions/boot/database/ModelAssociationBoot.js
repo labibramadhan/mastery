@@ -3,15 +3,17 @@ import _ from 'lodash';
 
 const ModelResolver = requireF('core/services/resolvers/ModelResolver');
 
-export default class ModelAssociationBoot {
-  constructor() {
-    this.modelResolver = new ModelResolver();
-  }
+const {
+  Boot,
+} = requireF('core/services/EventsDecorator');
 
+@Boot('database')
+class ModelAssociationBoot { // eslint-disable-line no-unused-vars
   boot = async () => {
     const promises = [];
-    const models = this.modelResolver.getAllModels();
-    _.forEach(this.modelResolver.databases, (database, databaseName) => {
+    const modelResolver = new ModelResolver();
+    const models = modelResolver.getAllModels();
+    _.forEach(modelResolver.databases, (database, databaseName) => {
       _.forEach(database.models, (modelInstance) => {
         const relationships = conf.get(`models:${modelInstance.name}:relationships`);
         if (relationships) {

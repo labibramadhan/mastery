@@ -2,12 +2,17 @@ import Hapi from 'hapi';
 
 const HapiAuthJWT2 = require('hapi-auth-jwt2');
 
-const portfinder = require('portfinder'); //eslint-disable-line
+const portfinder = require('portfinder'); // eslint-disable-line import/no-extraneous-dependencies
 const Promise = require('bluebird');
 
 const getPort = Promise.promisify(portfinder.getPort);
 
-export default class PreBoot {
+const {
+  Boot,
+} = requireF('core/services/EventsDecorator');
+
+@Boot('initialize')
+class InitializeServer { // eslint-disable-line no-unused-vars
   boot = async () => {
     // initialize a HapiJS server
     const server = new Hapi.Server();

@@ -3,16 +3,24 @@ import fs from 'fs';
 import path from 'path';
 
 const {
+  Startup,
+} = requireF('core/services/EventsDecorator');
+
+const {
   combineObject,
+  globSyncMultiple,
 } = requireF('core/services/CommonServices');
 
-export default class ComponentConfigBoot {
-  constructor(nconf) {
-    this.nconf = nconf;
+@Startup
+class CollectComponentConfig { // eslint-disable-line no-unused-vars
+  constructor() {
+    this.componentGlobs = [
+      path.join(rootPath, 'core/components/*'),
+      path.join(rootPath, 'main/components/*'),
+    ];
   }
-
-  boot = (components) => {
-    const self = this;
+  boot = () => {
+    const components = globSyncMultiple(this.componentGlobs);
     for (const componentPath of components) { // eslint-disable-line no-restricted-syntax
       if (fs.lstatSync(componentPath).isDirectory()) {
         const componentName = path.basename(componentPath);
@@ -34,9 +42,9 @@ export default class ComponentConfigBoot {
           const confKey = `models:${componentName}`;
           _.forEach(configFiles, (configFilePath) => {
             const config = require(configFilePath);
-            const existingConfig = self.nconf.get(confKey) || {};
+            const existingConfig = conf.get(confKey) || {};
             combineObject(existingConfig, config);
-            self.nconf.set(confKey, existingConfig);
+            conf.set(confKey, existingConfig);
           });
         }
       }
