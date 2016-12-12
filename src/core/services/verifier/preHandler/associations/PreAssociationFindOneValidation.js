@@ -2,9 +2,10 @@ import Boom from 'boom';
 import _ from 'lodash';
 
 export default class PreAssociationFindOneValidation {
-  constructor(model, association) {
+  constructor(model, association, associatedModel) {
     this.model = model;
     this.association = association;
+    this.associatedModel = associatedModel;
     this.ownerFields = conf.get(`models:${model.name}:ownerFields`);
   }
 

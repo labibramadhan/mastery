@@ -5,24 +5,26 @@ import {
 
 const setup = require('../../../../../test/helpers/setup');
 const mockUsers = require('../../../../../test/helpers/mock-users');
+const mockSessions = require('../../../../../test/helpers/mock-sessions');
 
 const prefix = conf.get('prefix');
 
-describe(`role associationCreate PUT ${prefix}role/{pk}/users`, () => {
+describe(`session associationCreate PUT ${prefix}session/{pk}/user`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
+    await mockSessions.bind(this).apply();
   });
 
   it('works', async function it() {
     const {
-      adminRole,
-    } = this.roles;
+      session5,
+    } = this.sessions;
     const {
       userObj1,
     } = this.users;
 
-    const thisTestUrl = `${prefix}role/${adminRole.id}/users`;
+    const thisTestUrl = `${prefix}session/${session5.id}/user`;
 
     const {
       result,
@@ -32,7 +34,7 @@ describe(`role associationCreate PUT ${prefix}role/{pk}/users`, () => {
       method: 'PUT',
       payload: userObj1,
       credentials: {
-        scope: ['role:findById', 'role:users:create'],
+        scope: ['session:findById', 'session:user:create'],
       },
     });
 

@@ -45,12 +45,40 @@ export default async function mockUsers() {
     password: 'Asdqwe123',
   });
 
+  const userObj1 = {
+    username: 'userObj1',
+    email: 'userObj1@mailinator.com',
+    password: 'userObj1password',
+  };
+
+  const userObj2 = {
+    username: 'userObj2',
+    email: 'userObj2@mailinator.com',
+    password: 'userObj2password',
+  };
+
+  const userObj3 = {
+    username: 'userObj3',
+    email: 'userObj3@mailinator.com',
+    password: 'userObj3password',
+  };
+
+  const userObj4 = {
+    username: 'userObj4',
+    email: 'userObj4@mailinator.com',
+    password: 'userObj4password',
+  };
+
   // eslint-disable-next-line no-param-reassign
   this.users = {
     admin1,
     admin2,
     authenticated1,
     authenticated2,
+    userObj1,
+    userObj2,
+    userObj3,
+    userObj4,
   };
 
   // eslint-disable-next-line no-param-reassign

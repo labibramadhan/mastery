@@ -26,6 +26,11 @@ class ModelAssociationBoot { // eslint-disable-line no-unused-vars
             if (_.has(associationConfig, 'through')) {
               associationConfig.through = models[associationConfig.through];
             }
+            if (_.has(associationConfig, 'as')) {
+              if (type === 'hasOne' || type === 'belongsTo') {
+                associationConfig.as = model;
+              }
+            }
             modelInstance[type](models[model], associationConfig);
           });
         }

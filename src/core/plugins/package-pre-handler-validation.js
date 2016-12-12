@@ -43,7 +43,11 @@ const preHandlerValidator = async function preHandlerValidator(request, reply) {
         } else {
           const associatedModelName = validator.substring(validator.indexOf('.') + 1, validator.lastIndexOf('.'));
           const associatedModel = modelResolver.getModel(associatedModelName);
-          validatorClass = new validatorClasses[methodName](baseModel, associatedModel);
+          validatorClass = new validatorClasses[methodName](
+            baseModel,
+            baseModel.associations[associatedModelName],
+            associatedModel,
+          );
         }
         invalid = await validatorClass.validate(request);
       }
@@ -62,6 +66,6 @@ exports.register = async (server, options, next) => {
 };
 
 exports.register.attributes = {
-  name: 'package-pre-handler-validator',
+  name: 'package-pre-handler-validation',
   version: '1.0.0',
 };

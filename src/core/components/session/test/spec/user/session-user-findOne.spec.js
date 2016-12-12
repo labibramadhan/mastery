@@ -5,39 +5,40 @@ import {
 
 const setup = require('../../../../../test/helpers/setup');
 const mockUsers = require('../../../../../test/helpers/mock-users');
+const mockSessions = require('../../../../../test/helpers/mock-sessions');
 
 const prefix = conf.get('prefix');
 
-describe(`role associationCreate PUT ${prefix}role/{pk}/users`, () => {
+describe(`session associationFindOne GET ${prefix}session/{pk}/user`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
+    await mockSessions.bind(this).apply();
   });
 
   it('works', async function it() {
     const {
-      adminRole,
-    } = this.roles;
-    const {
-      userObj1,
+      admin1,
     } = this.users;
+    const {
+      session3,
+    } = this.sessions;
 
-    const thisTestUrl = `${prefix}role/${adminRole.id}/users`;
+    const thisTestUrl = `${prefix}session/${session3.id}/user`;
 
     const {
       result,
       statusCode,
     } = await server.inject({
       url: thisTestUrl,
-      method: 'PUT',
-      payload: userObj1,
+      method: 'GET',
       credentials: {
-        scope: ['role:findById', 'role:users:create'],
+        scope: ['session:findById', 'session:user:findOne'],
       },
     });
 
     assert.equal(statusCode, HttpStatus.OK);
-    assert.equal(result.username, userObj1.username);
-    assert.equal(result.email, userObj1.email.toLowerCase());
+    assert.equal(result.id, admin1.id);
+    assert.equal(result.username, admin1.username);
   });
 });

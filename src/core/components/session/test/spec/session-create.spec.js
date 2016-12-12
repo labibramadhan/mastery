@@ -18,17 +18,10 @@ describe(`session create PUT ${prefix}session`, () => {
 
   it('works', async function it() {
     const {
-      admin2,
-    } = this.users;
+      sessionObj1,
+    } = this.sessions;
 
     const thisTestUrl = `${prefix}session`;
-
-    const createObject = {
-      userId: admin2.id,
-      token: 'session5',
-      platform: 'session5',
-      expiry: 12345,
-    };
 
     const {
       result,
@@ -36,16 +29,16 @@ describe(`session create PUT ${prefix}session`, () => {
     } = await server.inject({
       url: thisTestUrl,
       method: 'PUT',
-      payload: createObject,
+      payload: sessionObj1,
       credentials: {
         scope: ['session:create'],
       },
     });
 
     assert.equal(statusCode, HttpStatus.OK);
-    assert.equal(result.userId, createObject.userId);
-    assert.equal(result.token, createObject.token);
-    assert.equal(result.platform, createObject.platform);
-    assert.equal(result.expiry, createObject.expiry);
+    assert.equal(result.userId, sessionObj1.userId);
+    assert.equal(result.token, sessionObj1.token);
+    assert.equal(result.platform, sessionObj1.platform);
+    assert.equal(result.expiry, sessionObj1.expiry);
   });
 });

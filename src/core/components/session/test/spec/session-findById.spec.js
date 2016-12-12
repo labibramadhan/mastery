@@ -37,8 +37,6 @@ describe(`session findById GET ${prefix}session/{pk}`, () => {
       },
     });
 
-    console.log(result);
-
     assert.equal(statusCode, HttpStatus.OK);
     assert.equal(result.token, session3.token);
     assert.equal(result.platform, session3.platform);
