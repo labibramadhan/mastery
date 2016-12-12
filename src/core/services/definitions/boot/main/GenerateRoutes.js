@@ -9,12 +9,12 @@ const CountRoute = requireF('core/services/generators/route/CountRoute');
 const CreateRoute = requireF('core/services/generators/route/CreateRoute');
 const UpdateRoute = requireF('core/services/generators/route/UpdateRoute');
 const DeleteRoute = requireF('core/services/generators/route/DeleteRoute');
-const FindAllAssociationRoute = requireF('core/services/generators/route/associations/FindAllAssociationRoute');
-const FindOneAssociationRoute = requireF('core/services/generators/route/associations/FindOneAssociationRoute');
+const FindAssociationRoute = requireF('core/services/generators/route/associations/FindAssociationRoute');
 const CountAssociationRoute = requireF('core/services/generators/route/associations/CountAssociationRoute');
 const CreateAssociationRoute = requireF('core/services/generators/route/associations/CreateAssociationRoute');
 const HasAssociationRoute = requireF('core/services/generators/route/associations/HasAssociationRoute');
 const HasAllAssociationRoute = requireF('core/services/generators/route/associations/HasAllAssociationRoute');
+const SetAssociationRoute = requireF('core/services/generators/route/associations/SetAssociationRoute');
 const LinkAssociationRoute = requireF('core/services/generators/route/associations/LinkAssociationRoute');
 const LinkMultipleAssociationRoute = requireF('core/services/generators/route/associations/LinkMultipleAssociationRoute');
 const UnlinkAssociationRoute = requireF('core/services/generators/route/associations/UnlinkAssociationRoute');
@@ -30,10 +30,10 @@ const routeGeneratorClasses = {
   delete: DeleteRoute,
 
   associations: {
-    findAll: FindAllAssociationRoute,
-    findOne: FindOneAssociationRoute,
+    find: FindAssociationRoute,
     count: CountAssociationRoute,
     create: CreateAssociationRoute,
+    set: SetAssociationRoute,
     has: HasAssociationRoute,
     hasAll: HasAllAssociationRoute,
     link: LinkAssociationRoute,
@@ -70,8 +70,11 @@ class GenerateRoutes { // eslint-disable-line no-unused-vars
           _.forEach(modelConf.methods.associations, (associationMethods, associationAs) => {
             _.forEach(associationMethods, (associationMethodConf, associationMethodName) => {
               if (_.has(routeGeneratorClasses, `associations.${associationMethodName}`)) {
-                // eslint-disable-next-line dot-notation
-                const routeGenerator = new routeGeneratorClasses['associations'][associationMethodName](model, model.associations[associationAs]);
+                const routeGenerator = new routeGeneratorClasses
+                  .associations[associationMethodName](
+                    model,
+                    model.associations[associationAs],
+                  );
                 routes.push(routeGenerator.generate());
               }
             });

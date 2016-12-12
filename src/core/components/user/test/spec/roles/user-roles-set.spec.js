@@ -9,7 +9,7 @@ const mockUsers = require('../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
-describe(`user associationLinkMultiple LINK ${prefix}user/{pk}/roles/link`, () => {
+describe(`user associationSet POST ${prefix}user/{pk}/roles/set`, () => {
   before(async function before() {
     await setup();
     await mockRoles.bind(this).apply();
@@ -18,34 +18,33 @@ describe(`user associationLinkMultiple LINK ${prefix}user/{pk}/roles/link`, () =
 
   it('works', async function it() {
     const {
-      authenticated1,
+      authenticated2,
     } = this.users;
     const {
-      adminRole,
-      role1,
+      role2,
+      role3,
     } = this.roles;
-
-    const thisTestUrl = `${prefix}user/${authenticated1.id}/roles/link`;
+    const thisTestUrl = `${prefix}user/${authenticated2.id}/roles/set`;
 
     const {
       result,
       statusCode,
     } = await server.inject({
       url: thisTestUrl,
-      method: 'LINK',
+      method: 'POST',
       payload: [
-        adminRole.id,
-        role1.id,
+        role2.id,
+        role3.id,
       ],
       credentials: {
-        scope: ['user:findById', 'user:roles:linkMultiple'],
+        scope: ['user:findById', 'user:roles:set'],
       },
     });
 
     assert.equal(statusCode, HttpStatus.OK);
-    assert.equal(result[0].roleId, adminRole.id);
-    assert.equal(result[0].userId, authenticated1.id);
-    assert.equal(result[1].roleId, role1.id);
-    assert.equal(result[1].userId, authenticated1.id);
+    assert.equal(result[0].userId, authenticated2.id);
+    assert.oneOf(result[0].roleId, [role2.id, role3.id]);
+    assert.equal(result[1].userId, authenticated2.id);
+    assert.oneOf(result[1].roleId, [role2.id, role3.id]);
   });
 });

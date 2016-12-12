@@ -9,7 +9,7 @@ const mockSessions = require('../../../../../test/helpers/mock-sessions');
 
 const prefix = conf.get('prefix');
 
-describe(`session associationFindOne GET ${prefix}session/{pk}/user`, () => {
+describe(`session associationSet POST ${prefix}session/{pk}/user/set/{pk2}`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
@@ -18,27 +18,27 @@ describe(`session associationFindOne GET ${prefix}session/{pk}/user`, () => {
 
   it('works', async function it() {
     const {
-      admin1,
-    } = this.users;
-    const {
-      session3,
+      session5,
     } = this.sessions;
+    const {
+      authenticated1,
+    } = this.users;
 
-    const thisTestUrl = `${prefix}session/${session3.id}/user`;
+    const thisTestUrl = `${prefix}session/${session5.id}/user/set/${authenticated1.id}`;
 
     const {
       result,
       statusCode,
     } = await server.inject({
       url: thisTestUrl,
-      method: 'GET',
+      method: 'POST',
       credentials: {
-        scope: ['session:findById', 'session:user:findOne'],
+        scope: ['session:findById', 'session:user:set'],
       },
     });
 
     assert.equal(statusCode, HttpStatus.OK);
-    assert.equal(result.id, admin1.id);
-    assert.equal(result.username, admin1.username);
+    assert.equal(result.username, authenticated1.username);
+    assert.equal(result.email, authenticated1.email);
   });
 });

@@ -9,9 +9,10 @@
     "delete": true,
     "associations": {
       "roles": {
-        "findAll": true,
+        "find": true,
         "count": true,
         "create": true,
+        "set": true,
         "has": true,
         "hasAll": true,
         "link": true,
@@ -20,9 +21,10 @@
         "unlinkMultiple": true
       },
       "sessions": {
-        "findAll": true,
+        "find": true,
         "count": true,
         "create": true,
+        "set": true,
         "has": true,
         "hasAll": true,
         "link": true,

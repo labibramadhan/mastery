@@ -9,7 +9,7 @@ const mockUsers = require('../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
-describe(`user associationFindAll GET ${prefix}user/{pk}/roles`, () => {
+describe(`user associationFind GET ${prefix}user/{pk}/roles`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
@@ -30,7 +30,7 @@ describe(`user associationFindAll GET ${prefix}user/{pk}/roles`, () => {
       url: thisTestUrl,
       method: 'GET',
       credentials: {
-        scope: ['user:findById', 'user:roles:findAll'],
+        scope: ['user:findById', 'user:roles:find'],
       },
     });
 

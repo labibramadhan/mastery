@@ -31,6 +31,10 @@ export default class ValidatorConstants {
     delete: [
       'pk',
     ],
+    associationCount: [
+      'where',
+      'include',
+    ],
     associationFindAll: [
       'where',
       'include',
@@ -38,11 +42,7 @@ export default class ValidatorConstants {
       'limit',
       'offset',
     ],
-    associationCount: [
-      'where',
-      'include',
-    ],
-    associationFindOne: [
+    associationFind: [
       'include',
     ],
     associationCreate: [
@@ -52,6 +52,10 @@ export default class ValidatorConstants {
       'pk2',
     ],
     associationHasAll: [],
+    associationSet: [
+      'pk2',
+    ],
+    associationSetMultiple: [],
     associationLink: [
       'pk2',
     ],

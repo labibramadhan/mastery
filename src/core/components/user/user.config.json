@@ -50,15 +50,16 @@
     "delete": true,
     "associations": {
       "roles": {
-        "findAll": true,
+        "find": true,
         "count": true,
+        "set": true,
         "add": true,
         "addMultiple": true,
         "remove": true,
         "removeMultiple": true
       },
       "sessions": {
-        "findAll": true,
+        "find": true,
         "count": true
       }
     }

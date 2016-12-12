@@ -1,5 +1,6 @@
 import Glob from 'glob';
 import Path from 'path';
+import Sequelize from 'sequelize';
 import _ from 'lodash';
 
 export default class CommonServices {
@@ -46,6 +47,23 @@ export default class CommonServices {
       results = _.concat(results, files);
     }
     return results;
+  }
+
+  static getResultInstances = (results) => {
+    const returnValue = _.filter(results, (instances) => {
+      if (_.isArray(instances)) {
+        return _.filter(instances, (instance) => {
+          if (instance instanceof Sequelize.Instance) {
+            return instance.toJSON();
+          }
+          return false;
+        });
+      } else if (_.isObject(instances) && instances instanceof Sequelize.Instance) {
+        return [instances];
+      }
+      return false;
+    });
+    return _.union(...returnValue);
   }
 
   static combineObject = (source, obj, defaultMode = '@extend', parentKey = '') => {

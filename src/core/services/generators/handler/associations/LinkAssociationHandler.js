@@ -11,6 +11,6 @@ export default class LinkAssociationHandler extends BaseHandler {
     if (result.length) {
       return reply(result[0]);
     }
-    return reply().code(HttpStatus.NO_CONTENT);
+    return reply().code(HttpStatus.NOT_MODIFIED);
   }
 }

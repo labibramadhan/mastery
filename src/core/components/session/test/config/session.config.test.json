@@ -9,8 +9,9 @@
     "delete": true,
     "associations": {
       "user": {
-        "findOne": true,
-        "create": true
+        "find": true,
+        "create": true,
+        "set": true
       }
     }
   }

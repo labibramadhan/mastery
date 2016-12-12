@@ -1,39 +1,30 @@
 import HttpStatus from 'http-status-codes';
-import Qs from 'qs';
 import {
   assert,
 } from 'chai';
 
 const setup = require('../../../../../test/helpers/setup');
 const mockUsers = require('../../../../../test/helpers/mock-users');
+const mockSessions = require('../../../../../test/helpers/mock-sessions');
 
 const prefix = conf.get('prefix');
 
-describe(`role associationFindAll GET ${prefix}role/{pk}/users`, () => {
+describe(`session associationFind GET ${prefix}session/{pk}/user`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
+    await mockSessions.bind(this).apply();
   });
 
   it('works', async function it() {
     const {
       admin1,
-      admin2,
     } = this.users;
     const {
-      adminRole,
-    } = this.roles;
+      session3,
+    } = this.sessions;
 
-    const thisTestUrl = `${prefix}role/${adminRole.id}/users?${Qs.stringify({
-      where: {
-        username: {
-          $in: [
-            admin1.username,
-            admin2.username,
-          ],
-        },
-      },
-    }).toString()}`;
+    const thisTestUrl = `${prefix}session/${session3.id}/user`;
 
     const {
       result,
@@ -42,13 +33,12 @@ describe(`role associationFindAll GET ${prefix}role/{pk}/users`, () => {
       url: thisTestUrl,
       method: 'GET',
       credentials: {
-        scope: ['role:findById', 'role:users:findAll'],
+        scope: ['session:findById', 'session:user:find'],
       },
     });
 
     assert.equal(statusCode, HttpStatus.OK);
-    assert.equal(result.length, 2);
-    assert.equal(result[0].id, admin1.id);
-    assert.equal(result[1].id, admin2.id);
+    assert.equal(result.id, admin1.id);
+    assert.equal(result.username, admin1.username);
   });
 });
