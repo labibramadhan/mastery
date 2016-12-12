@@ -9,7 +9,7 @@ const {
   globSyncMultiple,
 } = requireF('core/services/CommonServices');
 
-@Boot()
+@Boot('main')
 class RouteBoot { // eslint-disable-line no-unused-vars
   boot = () => {
     // retrieve all available routes, pass all models from Sequelize as a single parameter

@@ -6,7 +6,7 @@ export default class BootServer {
 
     await eventEmitter.emit('Boot:Pre');
 
-    await eventEmitter.emit('Boot');
+    await eventEmitter.emit('Boot:Main');
 
     await eventEmitter.emit('Boot:Post');
 

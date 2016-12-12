@@ -43,7 +43,7 @@ const {
   Boot,
 } = requireF('core/services/EventsDecorator');
 
-@Boot()
+@Boot('main')
 class GenerateRoutes { // eslint-disable-line no-unused-vars
   boot = () => {
     const routes = [];
