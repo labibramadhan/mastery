@@ -13,6 +13,8 @@ const FindAllAssociationRoute = requireF('core/services/generators/route/associa
 const FindOneAssociationRoute = requireF('core/services/generators/route/associations/FindOneAssociationRoute');
 const CountAssociationRoute = requireF('core/services/generators/route/associations/CountAssociationRoute');
 const CreateAssociationRoute = requireF('core/services/generators/route/associations/CreateAssociationRoute');
+const HasAssociationRoute = requireF('core/services/generators/route/associations/HasAssociationRoute');
+const HasAllAssociationRoute = requireF('core/services/generators/route/associations/HasAllAssociationRoute');
 const LinkAssociationRoute = requireF('core/services/generators/route/associations/LinkAssociationRoute');
 const LinkMultipleAssociationRoute = requireF('core/services/generators/route/associations/LinkMultipleAssociationRoute');
 const UnlinkAssociationRoute = requireF('core/services/generators/route/associations/UnlinkAssociationRoute');
@@ -32,6 +34,8 @@ const routeGeneratorClasses = {
     findOne: FindOneAssociationRoute,
     count: CountAssociationRoute,
     create: CreateAssociationRoute,
+    has: HasAssociationRoute,
+    hasAll: HasAllAssociationRoute,
     link: LinkAssociationRoute,
     linkMultiple: LinkMultipleAssociationRoute,
     unlink: UnlinkAssociationRoute,

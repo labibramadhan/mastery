@@ -3,29 +3,27 @@ import {
   assert,
 } from 'chai';
 
-const ModelResolver = requireF('core/services/resolvers/ModelResolver');
-
 const setup = require('../../../../../test/helpers/setup');
 const mockUsers = require('../../../../../test/helpers/mock-users');
+const mockRoles = require('../../../../../test/helpers/mock-roles');
 
 const prefix = conf.get('prefix');
 
-describe(`user link PUT ${prefix}user/{pk}/roles/link/{pk2}`, () => {
+describe(`user associationLink LINK ${prefix}user/{pk}/roles/link/{pk2}`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
-    this.modelResolver = new ModelResolver();
+    await mockRoles.bind(this).apply();
   });
 
   it('works', async function it() {
     const {
       admin2,
     } = this.users;
+    const {
+      role1,
+    } = this.roles;
 
-    const roleModel = this.modelResolver.getModel('role');
-    const role1 = await roleModel.create({
-      name: 'role1',
-    });
     const thisTestUrl = `${prefix}user/${admin2.id}/roles/link/${role1.id}`;
 
     const {
@@ -33,7 +31,7 @@ describe(`user link PUT ${prefix}user/{pk}/roles/link/{pk2}`, () => {
       statusCode,
     } = await server.inject({
       url: thisTestUrl,
-      method: 'PUT',
+      method: 'LINK',
       credentials: {
         scope: ['user:findById', 'user:roles:link'],
       },

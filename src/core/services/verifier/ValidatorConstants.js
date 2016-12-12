@@ -48,6 +48,10 @@ export default class ValidatorConstants {
     associationCreate: [
       'payload',
     ],
+    associationHas: [
+      'pk2',
+    ],
+    associationHasAll: [],
     associationLink: [
       'pk2',
     ],

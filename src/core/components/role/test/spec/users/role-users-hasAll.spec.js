@@ -5,42 +5,41 @@ import {
 
 const setup = require('../../../../../test/helpers/setup');
 const mockUsers = require('../../../../../test/helpers/mock-users');
+const mockRoles = require('../../../../../test/helpers/mock-roles');
 
 const prefix = conf.get('prefix');
 
-describe(`role asssociationUnlinkMultiple UNLINK ${prefix}role/{pk}/users/unlink`, () => {
+describe(`role associationHasAll POST ${prefix}role/{pk}/users/has`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
+    await mockRoles.bind(this).apply();
   });
 
   it('works', async function it() {
     const {
-      authenticated1,
+      admin1,
       admin2,
     } = this.users;
     const {
       adminRole,
     } = this.roles;
 
-    const thisTestUrl = `${prefix}role/${adminRole.id}/users/unlink`;
+    const thisTestUrl = `${prefix}role/${adminRole.id}/users/has`;
 
     const {
       result,
       statusCode,
     } = await server.inject({
       url: thisTestUrl,
-      method: 'UNLINK',
-      payload: [
-        authenticated1.id,
-        admin2.id,
-      ],
+      method: 'POST',
+      payload: [admin1.id, admin2.id],
       credentials: {
-        scope: ['role:findById', 'role:users:unlinkMultiple'],
+        scope: ['role:findById', 'role:users:hasAll'],
       },
     });
 
     assert.equal(statusCode, HttpStatus.OK);
-    assert.equal(result.unlink, 1);
+    assert.equal(result, null);
   });
 });

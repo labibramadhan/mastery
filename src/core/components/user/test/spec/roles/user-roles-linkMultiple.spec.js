@@ -10,7 +10,7 @@ const mockUsers = require('../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
-describe(`user linkMultiple PUT ${prefix}user/{pk}/roles/link`, () => {
+describe(`user associationLinkMultiple LINK ${prefix}user/{pk}/roles/link`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
@@ -36,7 +36,7 @@ describe(`user linkMultiple PUT ${prefix}user/{pk}/roles/link`, () => {
       statusCode,
     } = await server.inject({
       url: thisTestUrl,
-      method: 'PUT',
+      method: 'LINK',
       payload: [
         adminRole.id,
         role1.id,

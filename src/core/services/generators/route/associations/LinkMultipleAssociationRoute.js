@@ -15,7 +15,7 @@ export default class LinkMultipleAssociationRoute extends BaseAssociationRoute {
       model,
     });
 
-    this.method = 'PUT';
+    this.method = 'LINK';
     this.path = Path.join(model.name, '{pk}', association.as, 'link');
   }
 }

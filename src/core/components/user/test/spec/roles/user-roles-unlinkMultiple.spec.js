@@ -8,7 +8,7 @@ const mockUsers = require('../../../../../test/helpers/mock-users');
 
 const prefix = conf.get('prefix');
 
-describe(`user unlinkMultiple DELETE ${prefix}user/{pk}/roles/unlink`, () => {
+describe(`user associationUnlinkMultiple UNLINK ${prefix}user/{pk}/roles/unlink`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
@@ -29,7 +29,7 @@ describe(`user unlinkMultiple DELETE ${prefix}user/{pk}/roles/unlink`, () => {
       statusCode,
     } = await server.inject({
       url: thisTestUrl,
-      method: 'DELETE',
+      method: 'UNLINK',
       payload: [
         adminRole.id,
         authenticatedRole.id,

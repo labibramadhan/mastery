@@ -9,7 +9,7 @@ const mockRoles = require('../../../../../test/helpers/mock-roles');
 
 const prefix = conf.get('prefix');
 
-describe(`role link PUT ${prefix}role/{pk}/users/link/{pk2}`, () => {
+describe(`role associationLink LINK ${prefix}role/{pk}/users/link/{pk2}`, () => {
   before(async function before() {
     await setup();
     await mockUsers.bind(this).apply();
@@ -31,7 +31,7 @@ describe(`role link PUT ${prefix}role/{pk}/users/link/{pk2}`, () => {
       statusCode,
     } = await server.inject({
       url: thisTestUrl,
-      method: 'PUT',
+      method: 'LINK',
       credentials: {
         scope: ['role:findById', 'role:users:link'],
       },

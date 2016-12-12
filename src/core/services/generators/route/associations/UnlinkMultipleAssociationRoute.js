@@ -15,7 +15,7 @@ export default class UnlinkMultipleAssociationRoute extends BaseAssociationRoute
       model,
     });
 
-    this.method = 'DELETE';
+    this.method = 'UNLINK';
     this.path = Path.join(model.name, '{pk}', association.as, 'unlink');
   }
 }
