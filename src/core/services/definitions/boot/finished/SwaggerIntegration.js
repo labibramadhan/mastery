@@ -3,13 +3,11 @@ if (!isTest) {
   const Inert = require('inert');
   const Vision = require('vision');
 
+  const CombineObject = requireF('core/services/utility/CombineObject');
+
   const {
     Boot,
   } = requireF('core/services/EventsDecorator');
-
-  const {
-    combineObject,
-  } = requireF('core/services/CommonServices');
 
   @Boot('finished')
   class SwaggerIntegration { // eslint-disable-line no-unused-vars
@@ -22,14 +20,15 @@ if (!isTest) {
         },
       };
 
-      combineObject(hapiSwaggerConf, conf.get('swagger') || {});
+      const combineObject = new CombineObject();
+      const combinedObject = combineObject.combine(hapiSwaggerConf, conf.get('swagger') || {});
 
       await server.register([
         Inert,
         Vision, {
           tags: ['api'],
           register: HapiSwagger,
-          options: hapiSwaggerConf,
+          options: combinedObject,
         },
       ]);
     }

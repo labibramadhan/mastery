@@ -2,12 +2,13 @@ import Fs from 'fs';
 import Path from 'path';
 import _ from 'lodash';
 
+const CombineObject = requireF('core/services/utility/CombineObject');
+
 const {
   Startup,
 } = requireF('core/services/EventsDecorator');
 
 const {
-  combineObject,
   globSyncMultiple,
 } = requireF('core/services/CommonServices');
 
@@ -20,6 +21,7 @@ class CollectComponentConfig { // eslint-disable-line no-unused-vars
     ];
   }
   boot = () => {
+    const combineObject = new CombineObject();
     const components = globSyncMultiple(this.componentGlobs);
     for (const componentPath of components) { // eslint-disable-line no-restricted-syntax
       if (Fs.lstatSync(componentPath).isDirectory()) {
@@ -43,8 +45,8 @@ class CollectComponentConfig { // eslint-disable-line no-unused-vars
           _.forEach(configFiles, (configFilePath) => {
             const config = require(configFilePath);
             const existingConfig = conf.get(confKey) || {};
-            combineObject(existingConfig, config);
-            conf.set(confKey, existingConfig);
+            const combinedObject = combineObject.combine(existingConfig, config);
+            conf.set(confKey, combinedObject);
           });
         }
       }
