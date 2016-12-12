@@ -1,7 +1,7 @@
 import Boom from 'boom';
 import _ from 'lodash';
 
-export default class PreAssociationFindOneValidation {
+export default class PreAssociationFindValidation {
   constructor(model, association, associatedModel) {
     this.model = model;
     this.association = association;
@@ -12,8 +12,8 @@ export default class PreAssociationFindOneValidation {
   invalidOwnChild = async () => {
     if (!this.ownerFields ||
       !_.has(this.request, 'auth.credentials.scope') ||
-      this.request.auth.credentials.scope.includes(`${this.model.name}:${this.association.as}:findOne`) ||
-      this.request.auth.credentials.scope.includes(`${this.model.name}:own:${this.association.as}:findOne`)
+      this.request.auth.credentials.scope.includes(`${this.model.name}:${this.association.as}:find`) ||
+      this.request.auth.credentials.scope.includes(`${this.model.name}:own:${this.association.as}:find`)
     ) {
       return false;
     }
@@ -25,7 +25,7 @@ export default class PreAssociationFindOneValidation {
 
     if (invalid) {
       let message = null;
-      const messageKey = `error.${this.model.name}.own.${this.association.as}.own.findOne.forbidden`;
+      const messageKey = `error.${this.model.name}.own.${this.association.as}.own.find.forbidden`;
       if (this.request.t.has(messageKey)) {
         message = this.request.t(messageKey);
       }

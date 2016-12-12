@@ -26,6 +26,6 @@ export default class BaseAssociationRoute extends BaseRoute {
     ];
     this.requestValidators = [`${model.name}.findById`, `${association.target.name}.${methodName}`];
 
-    _.set(this.identifier, 'preHandlerValidators', [`${model.name}.findById`, `${model.name}.${association.target.name}.${methodName}`]);
+    _.set(this.identifier, 'preHandlerValidators', [`${model.name}.findById`, `${model.name}.${association.as}.${methodName}`]);
   }
 }

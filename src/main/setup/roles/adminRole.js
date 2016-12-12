@@ -9,7 +9,7 @@ export default {
     'user:delete',
     'user:findOne',
     'user:findById',
-    'user:roles:findAll',
+    'user:roles:find',
     'user:roles:count',
     'user:roles:set',
     'user:roles:add',
@@ -22,6 +22,6 @@ export default {
     'session:delete',
     'session:findOne',
     'session:findById',
-    'session:user:findOne',
+    'session:user:find',
   ],
 };

@@ -1,5 +1,5 @@
-import _ from 'lodash';
 import Boom from 'boom';
+import _ from 'lodash';
 
 export default class PreFindOneValidation {
   constructor(model) {

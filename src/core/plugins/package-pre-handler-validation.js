@@ -8,7 +8,7 @@ const PreFindByIdValidation = requireF('core/services/verifier/preHandler/PreFin
 const PreCountValidation = requireF('core/services/verifier/preHandler/PreCountValidation');
 const PreUpdateValidation = requireF('core/services/verifier/preHandler/PreUpdateValidation');
 const PreDeleteValidation = requireF('core/services/verifier/preHandler/PreDeleteValidation');
-const PreAssociationFindOneValidation = requireF('core/services/verifier/preHandler/associations/PreAssociationFindOneValidation');
+const PreAssociationFindValidation = requireF('core/services/verifier/preHandler/associations/PreAssociationFindValidation');
 
 const validatorClasses = {
   findAll: PreFindAllValidation,
@@ -18,7 +18,7 @@ const validatorClasses = {
   update: PreUpdateValidation,
   delete: PreDeleteValidation,
 
-  associationFindOne: PreAssociationFindOneValidation,
+  associationFind: PreAssociationFindValidation,
 };
 
 const preHandlerValidator = async function preHandlerValidator(request, reply) {
@@ -41,12 +41,10 @@ const preHandlerValidator = async function preHandlerValidator(request, reply) {
         if (!association) {
           validatorClass = new validatorClasses[methodName](baseModel);
         } else {
-          const associatedModelName = validator.substring(validator.indexOf('.') + 1, validator.lastIndexOf('.'));
-          const associatedModel = modelResolver.getModel(associatedModelName);
+          const associationAs = validator.substring(validator.indexOf('.') + 1, validator.lastIndexOf('.'));
           validatorClass = new validatorClasses[methodName](
             baseModel,
-            baseModel.associations[associatedModelName],
-            associatedModel,
+            baseModel.associations[associationAs],
           );
         }
         invalid = await validatorClass.validate(request);

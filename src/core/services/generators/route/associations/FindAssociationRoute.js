@@ -30,14 +30,9 @@ export default class FindAssociationRoute extends BaseAssociationRoute {
     this.path = Path.join(model.name, '{pk}', association.as);
 
     if (association.associationType === 'BelongsToMany' || association.associationType === 'HasMany') {
-      this.requestValidators = [
-        ..._.remove(this.requestValidators, val => val !== `${association.target.name}.${methodName}`),
-        `${association.target.name}.${methodName}All`,
-      ];
-      this.parsers = [
-        ..._.remove(this.parsers, val => val !== methodName),
-        `${methodName}All`,
-      ];
+      this.requestValidators = [`${model.name}.findById`, `${association.target.name}.${methodName}All`];
+      this.parsers = ['findById', `${methodName}All`];
+      _.set(this.identifier, 'preHandlerValidators', [`${model.name}.findById`, `${model.name}.${association.as}.${methodName}All`]);
     }
   }
 }

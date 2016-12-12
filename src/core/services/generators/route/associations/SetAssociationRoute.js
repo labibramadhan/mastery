@@ -31,14 +31,9 @@ export default class SetAssociationRoute extends BaseAssociationRoute {
     this.method = 'POST';
     if (association.associationType === 'BelongsToMany' || association.associationType === 'HasMany') {
       pathParts = _.remove(pathParts, val => val !== '{pk2}');
-      this.requestValidators = [
-        ..._.remove(this.requestValidators, val => val !== `${association.target.name}.${methodName}`),
-        `${association.target.name}.${methodName}All`,
-      ];
-      this.parsers = [
-        ..._.remove(this.parsers, val => val !== methodName),
-        `${methodName}All`,
-      ];
+      this.requestValidators = [`${model.name}.findById`, `${association.target.name}.${methodName}All`];
+      this.parsers = ['findById', `${methodName}All`];
+      _.set(this.identifier, 'preHandlerValidators', [`${model.name}.findById`, `${model.name}.${association.as}.${methodName}All`]);
     }
 
     this.path = Path.join(...pathParts);
