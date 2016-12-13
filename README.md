@@ -16,10 +16,11 @@ Scalable API Server framework build on top of [Hapi](http://hapijs.com) and [Seq
 ## Main Features
 
 - [x] Supports MySQL, MariaDB, SQLite, PostgreSQL, MSSQL through [Sequelize](http://docs.sequelizejs.com/en/v3/docs/getting-started/#setting-up-a-connection)
+- [x] Auto routes creation based on model configuration file (e.g. [user model configuration](src/core/components/user/user.config.json))
+- [x] Flexible base and components configurations
 - [x] Internationalization (i18n) with [Polyglot.js](http://airbnb.io/polyglot.js)
 - [x] Integration with [Open API (Swagger) UI](http://swagger.io/swagger-ui) 
 - [x] JWT authentication support
-- [x] Auto routes creation based on model configuration file (e.g. [user model configuration](src/core/components/user/user.config.json))
 - [x] Built-in Access Control List
 - [ ] Build system using Gulp
 - [ ] Custom role resolver
