@@ -43,7 +43,7 @@ Type ```git clone https://github.com/labibramadhan/mastery.git && cd mastery && 
 
 ### Configuration
 
-Configure database configuration inside the development environment [database configuration file](src/config/development/databases/development-database-main.json).
+Configure database configuration inside the development environment [database configuration file](src/config/databases/database-main.json).
 
 Also, create schema 'core' inside your database.
 
