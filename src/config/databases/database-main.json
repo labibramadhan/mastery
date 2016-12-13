@@ -3,9 +3,17 @@
     "dialect": "postgresql",
     "host": "localhost",
     "port": 5432,
-    "db": "mastery",
+    "db": {
+      "$filter": "env",
+      "test": "mastery-test",
+      "$default": "mastery"
+    },
     "username": "postgres",
-    "password": "sukses123",
+    "password": {
+      "$filter": "env",
+      "test-ci": "",
+      "$default": "sukses123"
+    },
     "sync": true,
     "forceSync": true,
     "debug": false,

@@ -1,5 +1,7 @@
 {
   "title": "MasteryJS",
+  "host": "127.0.0.1",
+  "port": 4444,
   "prefix": "/api/v1/",
   "secret": "VfEwXo5TMrvgQXOe3scs3KvyQRkXXseg",
   "maxSessions": 10,

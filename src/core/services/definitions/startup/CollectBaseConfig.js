@@ -2,6 +2,9 @@ import Fs from 'fs';
 import Path from 'path';
 import _ from 'lodash';
 
+const CombineObject = requireF('core/services/utility/CombineObject');
+const ContextualObject = requireF('core/services/utility/ContextualObject');
+
 const {
   Startup,
 } = requireF('core/services/EventsDecorator');
@@ -12,37 +15,38 @@ const {
 
 @Startup
 class CollectConfig { // eslint-disable-line no-unused-vars
-  bootConfigFiles = (configs) => {
-    _.forEach(configs, (config, idx) => {
-      if (Fs.statSync(config).isDirectory()) {
-        const groupName = Path.basename(config);
-        const groupConfigGlob = Path.join(config, '*.json');
+  bootConfigFiles = (configPaths) => {
+    let configMaster = {};
+    const combineObject = new CombineObject();
+    const contextualObject = new ContextualObject();
+    _.forEach(configPaths, (configPath) => {
+      if (Fs.statSync(configPath).isDirectory()) {
+        const groupName = Path.basename(configPath);
+        const groupConfigGlob = Path.join(configPath, '*.json');
         const groupConfigs = globSyncMultiple(groupConfigGlob);
         if (groupConfigs.length) {
-          conf.set(groupName, {});
           _.forEach(groupConfigs, (groupConfig) => {
             const groupConfigObj = require(groupConfig);
-            _.forEach(groupConfigObj, (groupConfigVal, groupConfigKey) => {
-              conf.set(`${groupName}:${groupConfigKey}`, groupConfigVal);
+            configMaster = combineObject.combine(configMaster, {
+              [groupName]: groupConfigObj,
             });
+            configMaster = contextualObject.parse(configMaster);
           });
         }
       } else {
-        conf.file(idx, config);
+        const configObj = require(configPath);
+        configMaster = combineObject.combine(configMaster, configObj);
+        configMaster = contextualObject.parse(configMaster);
       }
     });
+    conf.defaults(configMaster);
   }
 
   boot = () => {
     conf.use('memory');
 
-    const defaultConfigGlob = Path.join(rootPath, 'config/default/*');
-    const defaultConfigs = globSyncMultiple(defaultConfigGlob);
-    this.bootConfigFiles(defaultConfigs);
-
-    const env = process.env.NODE_ENV || 'development';
-    const configGlob = Path.join(rootPath, 'config', env, '*');
-    const configs = globSyncMultiple(configGlob);
-    this.bootConfigFiles(configs);
+    const configGlob = Path.join(rootPath, 'config/*');
+    const configPaths = globSyncMultiple(configGlob);
+    this.bootConfigFiles(configPaths);
   }
 }
