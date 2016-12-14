@@ -22,7 +22,8 @@ Scalable API Server framework build on top of [Hapi](http://hapijs.com) and [Seq
 - [x] Integration with [Open API (Swagger) UI](http://swagger.io/swagger-ui) 
 - [x] JWT authentication support
 - [x] Built-in Access Control List
-- [ ] Create Project, Start + Stop Server, and Build system using [MasteryJS CLI](https://github.com/labibramadhan/mastery-cli)
+- [x] [PM2 Production Process Manager](https://github.com/Unitech/pm2) support
+- [ ] Create Project, Server Management, and Build system using [MasteryJS CLI](https://github.com/labibramadhan/mastery-cli)
 - [ ] Custom role resolver
 - [ ] File transport
 - [ ] Email transport
