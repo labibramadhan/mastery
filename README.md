@@ -17,13 +17,13 @@ Scalable API Server framework build on top of [Hapi](http://hapijs.com) and [Seq
 
 - [x] Supports MySQL, MariaDB, SQLite, PostgreSQL, MSSQL through [Sequelize](http://docs.sequelizejs.com/en/v3/docs/getting-started/#setting-up-a-connection)
 - [x] Auto routes creation based on model configuration file (e.g. [user model configuration](src/core/components/user/user.config.json))
-- [x] Flexible base and components configurations
+- [x] Flexible base and component configurations
 - [x] Internationalization (i18n) with [Polyglot.js](http://airbnb.io/polyglot.js)
 - [x] Integration with [Open API (Swagger) UI](http://swagger.io/swagger-ui) 
 - [x] JWT authentication support
 - [x] Built-in Access Control List
 - [x] [PM2 Production Process Manager](https://github.com/Unitech/pm2) support
-- [ ] Create Project, Server Management, and Build system using [MasteryJS CLI](https://github.com/labibramadhan/mastery-cli)
+- [ ] Create Project, Server Management, and Build System using [MasteryJS CLI](https://github.com/labibramadhan/mastery-cli)
 - [ ] Custom role resolver
 - [ ] File transport
 - [ ] Email transport

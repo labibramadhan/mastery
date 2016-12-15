@@ -2,11 +2,6 @@ import Hapi from 'hapi';
 
 const HapiAuthJWT2 = require('hapi-auth-jwt2');
 
-const portfinder = require('portfinder'); // eslint-disable-line import/no-extraneous-dependencies
-const Promise = require('bluebird');
-
-const getPort = Promise.promisify(portfinder.getPort);
-
 const {
   Boot,
 } = requireF('core/services/EventsDecorator');
@@ -18,8 +13,17 @@ class InitializeServer { // eslint-disable-line no-unused-vars
     const server = new Hapi.Server();
     global.server = server;
 
+    let port = conf.get('port');
+
+    if (isTest) {
+      const Promise = require('bluebird');
+      const portfinder = require('portfinder'); // eslint-disable-line import/no-extraneous-dependencies
+      const getPort = Promise.promisify(portfinder.getPort);
+      port = await getPort();
+    }
+
     server.connection({
-      port: !isTest ? conf.get('port') : await getPort(),
+      port,
       host: !isTest ? conf.get('host') : '0.0.0.0',
     });
 
