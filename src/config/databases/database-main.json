@@ -3,16 +3,16 @@
     "dialect": "postgresql",
     "host": "localhost",
     "port": 5432,
-    "db": {
-      "$filter": "env",
-      "test": "mastery-test",
-      "$default": "mastery"
-    },
     "username": "postgres",
     "password": {
       "$filter": "env",
       "test-ci": "",
       "$default": "sukses123"
+    },
+    "db": {
+      "$filter": "env",
+      "test": "mastery-test",
+      "$default": "mastery"
     },
     "sync": true,
     "forceSync": true,

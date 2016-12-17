@@ -37,7 +37,7 @@ class ModelAssociationBoot { // eslint-disable-line no-unused-vars
       });
       const sync = conf.get(`databases:${databaseName}:sync`);
       const forceSync = conf.get(`databases:${databaseName}:forceSync`);
-      if (sync) {
+      if (sync && isMaster) {
         promises.push(database.sync({
           force: Boolean(forceSync),
         }));

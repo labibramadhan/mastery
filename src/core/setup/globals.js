@@ -1,6 +1,9 @@
 import EventEmitter from 'promise-events';
 import Nconf from 'nconf';
 import Path from 'path';
+import _ from 'lodash';
+
+global.isMaster = !_.toNumber(process.env.pm_id);
 
 global.isTest = /test/g.test(process.env.NODE_ENV);
 

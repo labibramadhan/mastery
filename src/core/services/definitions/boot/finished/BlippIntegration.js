@@ -7,6 +7,8 @@ if (!isTest) {
 
   @Boot('finished')
   class SwaggerIntegration { // eslint-disable-line no-unused-vars
-    boot = async () => server.register(HapiBlipp);
+    boot = async () => {
+      if (isMaster) server.register(HapiBlipp);
+    };
   }
 }

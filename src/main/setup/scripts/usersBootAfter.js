@@ -1,7 +1,7 @@
 const ModelResolver = requireF('core/services/resolvers/ModelResolver');
 
 export default async () => {
-  if (isTest) return;
+  if (isTest || !isMaster) return;
 
   const modelResolver = new ModelResolver();
   const {

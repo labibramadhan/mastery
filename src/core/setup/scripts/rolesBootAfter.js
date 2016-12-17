@@ -1,6 +1,8 @@
 const ModelResolver = requireF('core/services/resolvers/ModelResolver');
 
 export default async () => {
+  if (!isMaster) return;
+
   const modelResolver = new ModelResolver();
   const role = modelResolver.getModel('role');
 

@@ -13,6 +13,7 @@
     "describe": true,
     "eventEmitter": true,
     "i18n": true,
+    "isMaster": true,
     "isTest": true,
     "it": true,
     "requireF": true,
