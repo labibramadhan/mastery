@@ -3,6 +3,8 @@
 Scalable API Server framework build on top of [Hapi](http://hapijs.com) and [Sequelize](http://sequelizejs.com). One server to rule all your clients, simple, stable, and easy to use.
 
 [![Build Status](https://travis-ci.org/labibramadhan/mastery.svg?branch=master)](https://travis-ci.org/labibramadhan/mastery)
+[![Dependency Status](https://david-dm.org/labibramadhan/mastery.svg)](https://david-dm.org/labibramadhan/mastery)
+[![devDependency Status](https://david-dm.org/labibramadhan/mastery/dev-status.svg)](https://david-dm.org/labibramadhan/mastery#info=devDependencies)
 
 ## Table of Contents
 1. [Main Features](#main-features)
@@ -10,7 +12,8 @@ Scalable API Server framework build on top of [Hapi](http://hapijs.com) and [Seq
     1. [Prerequisites](#prerequisites)
     1. [Installation](#installation)
     1. [Configuration](#configuration)
-    1. [Running](#running)
+    1. [Development](#development)
+    1. [Deployment](#deployment)
 1. [License](#license)
 
 ## Main Features
@@ -23,7 +26,7 @@ Scalable API Server framework build on top of [Hapi](http://hapijs.com) and [Seq
 - [x] JWT authentication support
 - [x] Built-in Access Control List
 - [x] [PM2 Production Process Manager](https://github.com/Unitech/pm2) support
-- [ ] Create Project, Server Management, and Build System using [MasteryJS CLI](https://github.com/labibramadhan/mastery-cli)
+- [x] Create Project, Server Management, and Build System using [MasteryJS CLI](https://github.com/labibramadhan/mastery-cli)
 - [ ] Custom role resolver
 - [ ] File transport
 - [ ] Email transport
@@ -38,10 +41,15 @@ Scalable API Server framework build on top of [Hapi](http://hapijs.com) and [Seq
 1. [Git](https://git-scm.com/downloads)
 1. [NodeJS](https://nodejs.org/en/download) version 6 or greater
 1. [PostgreSQL](https://www.postgresql.org/download)
+1. [MasteryJS CLI](https://github.com/labibramadhan/mastery-cli)
 
 ### Installation
 
-Type ```git clone https://github.com/labibramadhan/mastery.git && cd mastery && npm install```
+We will use [MasteryJS CLI](https://github.com/labibramadhan/mastery-cli) helper to get started easily.
+
+You just need to type the following command and then follow the wizard on it.
+
+```>_ mastery new [destination]```
 
 ### Configuration
 
@@ -49,26 +57,59 @@ First, create a database and create schema **core** inside your database.
 
 Then, configure database connection by the [database configuration file](src/config/databases/database-main.json).
 
-### Running
+### Development
 
-Type ```./node_modules/.bin/babel-node src/index.js``` and then open ```http://localhost:4444/documentation```
+For debugging purpose, change current working directory to the root directory (a directory contains src directory and a package.json file). MasteryJS CLI will use the help of [babel-node](https://babeljs.io/docs/usage/cli/#babel-node) by using these commands:
+
+```>_ mastery serve``` (running from source)
+
+```>_ mastery serve -i``` (running & debugging from source using chrome inspector)
+
+```>_ mastery serve -p <debug-port>``` (running & debugging from source using any IDE debugger)
+
+### Deployment
+
+First, you need to build MasteryJS by this command inside your root project directory:
+
+```>_ mastery build```
+
+And then there will be a new directory called **build**. These commands will be available inside build directory:
+
+```>_ mastery start```
+
+```>_ mastery stop```
+
+```>_ mastery reload```
+
+For monitoring all MasteryJS production processes, type this command:
+
+```>_ mastery status```
 
 ## License
 
-#### (The Apache 2.0 License)
+### The MIT License (MIT)
 
-Copyright (c) 2016 Muhammad Labib Ramadhan
+Copyright © `2016` `Muhammad Labib Ramadhan`
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the “Software”), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
 
-    http://www.apache.org/licenses/LICENSE-2.0
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
 
 **[Back to top](#table-of-contents)**
