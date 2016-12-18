@@ -4,7 +4,7 @@ Scalable API Server framework build on top of [Hapi](http://hapijs.com) and [Seq
 
 [![Build Status](https://travis-ci.org/labibramadhan/mastery.svg?branch=master)](https://travis-ci.org/labibramadhan/mastery)
 [![Dependency Status](https://david-dm.org/labibramadhan/mastery.svg)](https://david-dm.org/labibramadhan/mastery)
-[![devDependency Status](https://david-dm.org/labibramadhan/mastery/dev-status.svg)](https://david-dm.org/labibramadhan/mastery#info=devDependencies)
+[![devDependency Status](https://david-dm.org/labibramadhan/mastery/dev-status.svg)](https://david-dm.org/labibramadhan/mastery?type=dev)
 
 ## Table of Contents
 1. [Main Features](#main-features)
