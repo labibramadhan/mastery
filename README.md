@@ -49,7 +49,9 @@ We will use [MasteryJS CLI](https://github.com/labibramadhan/mastery-cli) helper
 
 You just need to type the following command and then follow the wizard on it.
 
-```>_ mastery new [destination]```
+```
+>_ mastery new [destination]
+```
 
 ### Configuration
 
@@ -71,19 +73,29 @@ For debugging purpose, change current working directory to the root directory (a
 
 First, you need to build MasteryJS by this command inside your root project directory:
 
-```>_ mastery build```
+```
+>_ mastery build
+```
 
 And then there will be a new directory called **build**. These commands will be available inside build directory:
 
-```>_ mastery start```
+```
+>_ mastery start
+```
 
-```>_ mastery stop```
+```
+>_ mastery stop
+```
 
-```>_ mastery reload```
+```
+>_ mastery reload
+```
 
 For monitoring all MasteryJS production processes, type this command:
 
-```>_ mastery status```
+```
+>_ mastery status
+```
 
 ## License
 
