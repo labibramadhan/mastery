@@ -87,7 +87,7 @@ And then there will be a new directory called **build**. These commands will be 
 ```
 
 ```
->_ mastery reload
+>_ mastery restart
 ```
 
 For monitoring all MasteryJS production processes, type this command:
