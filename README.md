@@ -1,6 +1,6 @@
 # MasteryJS
 
-Scalable API Server framework build on top of [Hapi](http://hapijs.com) and [Sequelize](http://sequelizejs.com). One server to rule all your clients, simple, stable, and easy to use.
+Scalable REST API Server framework build on top of [Hapi](http://hapijs.com) and [Sequelize](http://sequelizejs.com). One server to rule all your clients, simple, stable, and easy to use.
 
 [![Build Status](https://travis-ci.org/labibramadhan/mastery.svg?branch=master)](https://travis-ci.org/labibramadhan/mastery)
 [![Dependency Status](https://david-dm.org/labibramadhan/mastery.svg)](https://david-dm.org/labibramadhan/mastery)
